@@ -16,16 +16,23 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4">
-            <h3 class="content-section-title">Users</h3>
+            <h4 class="content-section-title">Users</h4>
             <div class="content-section" id="usersContentSection">
 
                 <ul class="list-group">
 
-                {% for node in nodes %}
+                    <li class="list-group-item" id="rootListItem">{{ root.name }} <a href="{% url 'profile-detail' root.id %}"><button type="button" class="btn btn-light" id="profileButton">Profile</button></a></li>
 
-                    <li class="list-group-item">{{ node.name }} <a href="{% url 'profile-detail' node.id %}"><button type="button" class="btn btn-light" id="profileButton">Profile</button></a></li>
 
-                {% endfor %}
+                    {% for node in nodes %}
+
+                        {% if node.name != root.name %}
+
+                            <li class="list-group-item">{{ node.name }} <a href="{% url 'profile-detail' node.id %}"><button type="button" class="btn btn-light" id="profileButton">Profile</button></a></li>
+
+                        {% endif %}
+
+                    {% endfor %}
 
                 </ul>
 
@@ -34,7 +41,7 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-6">
-                    <h3 class="content-section-title">Graph</h3>
+                    <h4 class="content-section-title">Graph</h4>
                 </div>
                 <div class="col-md-6">
                     <input type="range" class="custom-range" value="1" min="1" max="5" step="1" id="slider" oninput="setSliderValue(this.value)">
@@ -103,7 +110,9 @@
             .force("collide", d3.forceCollide().strength(1).radius( (d) => d.value  ).iterations(1));
 
 
-        createGraph({{ data|safe }});
+        initialize();
+
+        // createGraph({{ data|safe }});
 
         function createGraph(data) {
 
@@ -194,6 +203,19 @@
 
         }
 
+        function initialize() {
+
+            markNode("{{ root.name }}");
+
+            var listItems = $(".list-group-item");
+            for (let i = 0; i < listItems.length; i++) {
+                if (getName(listItems[i].innerHTML) == "{{ root.name }}") {
+                    listItems[i].classList.add("active");
+                }
+            }
+
+        }
+
         function resetGraph() {
 
             svg.selectAll("line").remove();
@@ -242,6 +264,7 @@
                 if (getName(listItems[i].innerHTML) === "{{ node.name }}") {
                   listItems[i].classList.add("active");
                   selectedNode = listItems[i].innerHTML;
+                  resetSlider();
                   markNode(selectedNode);
                 }
 
@@ -284,6 +307,7 @@
 
             this.classList.add("active");
             var selectedNode = $(this).html();
+            resetSlider();
             markNode(selectedNode);
 
         });
@@ -325,6 +349,7 @@
                             listItems[i].classList.remove("active");
                             if (getName(listItems[i].innerHTML)=== myInput) {
                                 listItems[i].classList.add("active");
+                                resetSlider();
                                 markNode(listItems[i].innerHTML);
                             }
 
@@ -401,6 +426,11 @@
                 }
             }
 
+        }
+
+        function resetSlider() {
+            document.getElementById('hopsVal').innerHTML = 1;
+            document.getElementById('slider').value = 1;
         }
 
 

@@ -9,22 +9,24 @@ from django.views.generic import DetailView
 
 from .importer import create_profiles, create_Recommendations
 from .models import Profile, FollowRecommendations
-from .utils.jsonUtils import extract_connections
+from .utils.jsonUtils import extract_connections, getRoot
 
 # Create your views here.
 
 path = Path('socialgraph/static/socialgraph/')
-path = path / 'testData.json'
-#path = path / 'loadedData.json'
+#path = path / 'testData.json'
+path = path / 'loadedData.json'
 data_file = open(path)
 data = json.load(data_file)
 data_file.close()
+root = getRoot(data['nodes'])
 
 
 def home(request):
 
     context = {
-        'connections': extract_connections(data, "1 1")
+        'connections': extract_connections(data, "1 1"),
+        'root': root
     }
 
     return render(request, 'socialgraph/home.html', context)
@@ -38,7 +40,8 @@ def users(request):
 
     context = {
         'data': json.dumps(data),
-        'nodes': data['nodes'],
+        'root': root,
+        'nodes': sorted(data['nodes'], key=lambda item: item["hopLayer"]),
         'links': data['links']
     }
     create_profiles(data)
