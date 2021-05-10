@@ -53,7 +53,8 @@ def follow(request):
     recommendationList = []
 
     for node in data['nodes']:
-        if (node.get('hopLayer') < 3):
+        hoplayer = node.get('hopLayer')
+        if (hoplayer < 4 and hoplayer > 1 ):
             recommendationList.append(FollowRecommendations.create(layerNode = node.get('hopLayer'), bacnet_idNode=node.get('id'), nameNode=node.get('name'), genderNode=node.get('gender'),
                             birthdayNode=node.get('birthday'), countryNode=node.get('country'), townNode=node.get('town'),
                             languageNode=node.get('language'),

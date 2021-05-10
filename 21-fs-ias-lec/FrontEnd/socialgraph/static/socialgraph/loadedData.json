@@ -9,7 +9,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 1
     },
     {
       "BACnetID": "ec2c1184b8c411b1",
@@ -20,7 +21,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 1
     },
     {
       "BACnetID": "67d65e8511bd30e6",
@@ -31,7 +33,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 0
     },
     {
       "BACnetID": "a2ed7ea0f31c6c3f",
@@ -42,7 +45,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 2
     },
     {
       "BACnetID": "997d5cd0d4b38918",
@@ -53,7 +57,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 3
     },
     {
       "BACnetID": "42d979ac312000f9",
@@ -64,7 +69,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 4
     },
     {
       "BACnetID": "1b0d7acb251e8f28",
@@ -75,7 +81,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 1
     },
     {
       "BACnetID": "b3b2d9be77339550",
@@ -86,7 +93,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 2
     },
     {
       "BACnetID": "36dd0a750b492abd",
@@ -97,7 +105,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 1
     },
     {
       "BACnetID": "a04065f3d190553a",
@@ -108,7 +117,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 2
     },
     {
       "BACnetID": "fcab62b9bf71e0ef",
@@ -119,7 +129,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 2
     },
     {
       "BACnetID": "23428dd937d38441",
@@ -130,7 +141,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 10000
     },
     {
       "BACnetID": "6a6efcc5150363af",
@@ -141,7 +153,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 4
     },
     {
       "BACnetID": "b6a72888c1b44cca",
@@ -152,7 +165,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 5
     },
     {
       "BACnetID": "7070668d83a6113c",
@@ -163,7 +177,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 3
     },
     {
       "BACnetID": "5cfbad983bb91e95",
@@ -174,7 +189,8 @@
       "country": null,
       "town": null,
       "language": null,
-      "status": null
+      "status": null,
+      "hopLayer": 10000
     }
   ],
   "links": [

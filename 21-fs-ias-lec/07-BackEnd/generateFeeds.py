@@ -8,7 +8,6 @@ from generateJson import generateJson
 
 
 def main():
-
     # set a name to a feed
     Feeds = {}
     Persons = {}
@@ -60,7 +59,8 @@ def main():
         person.printFollowList()
         persList.append(person)
 
-    generateJson(persList)
+    # Takes a list of all Persons and the Person we are as arguments
+    generateJson(persList, Persons['vera'])
 
 
 if __name__ == "__main__":

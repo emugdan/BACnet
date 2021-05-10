@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 
 # Assumption that we have a follow list of each person in the given list.
-def generateJson(personList):
+def generateJson(personList, weAre):
     links = []
     nodes = []
     nodeIDs = {}
@@ -16,9 +16,11 @@ def generateJson(personList):
         curBACnetID = person.id.decode("utf-8")
         nodeIDs[curBACnetID] = i
 
-
+    ourID = 0
     for i in range(0, len(personList)):
         person = personList[i]
+        if person == weAre:
+            ourID = i
         node = {}
         followList = person.getFollowList()
         node['BACnetID'] = person.id.decode("utf-8")
@@ -30,11 +32,15 @@ def generateJson(personList):
         node['town'] = None
         node['language'] = None
         node['status'] = None
+        node['hopLayer'] = 10000
         nodes.append(node)
         for friend in followList:
             link = {'source': node['id'],
                     'target': nodeIDs[friend.decode("utf-8")]}
             links.append(link)
+
+    calculateHops(ourID, links, nodes, 0)
+
     data = {'nodes':nodes, 'links': links}
 
     path = Path('socialgraph/static/socialgraph/')
@@ -55,6 +61,14 @@ def generateJson(personList):
     os.chdir(backEnd)
 
     return json.dumps(data)
+
+#Calculates the Hoplayer of each node recursively
+def calculateHops(curID, Links, nodes, layer):
+    nodes[curID]['hopLayer'] = layer
+    for link in Links:
+        if link['source'] == curID:
+            if nodes[link['target']]['hopLayer'] > layer+1:
+                calculateHops(link['target'], Links, nodes, layer+1)
 
 
 
