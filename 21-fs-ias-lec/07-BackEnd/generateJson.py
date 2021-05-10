@@ -1,33 +1,30 @@
 import json
 
 
-# Assumption that we have a follow list of each person in the given list.
+
 import os
 from pathlib import Path
 
+# Assumption that we have a follow list of each person in the given list.
 def generateJson(personList):
     links = []
     nodes = []
     nodeIDs = {}
 
-    # make ids
-    for person in personList:
-        followList = person.getFollowList()
+    for i in range(0, len(personList)):
+        person = personList[i]
         curBACnetID = person.id.decode("utf-8")
-        curNodeID = makeNumeric(curBACnetID)
-        nodeIDs[curBACnetID] = curNodeID
-        for BACnetID, friend in followList.items():
-            curBACnetID = BACnetID.decode("utf-8")
-            curNodeID = makeNumeric(curBACnetID)
-            nodeIDs[curBACnetID] = curNodeID
+        nodeIDs[curBACnetID] = i
 
-    for person in personList:
+
+    for i in range(0, len(personList)):
+        person = personList[i]
         node = {}
         followList = person.getFollowList()
         node['BACnetID'] = person.id.decode("utf-8")
-        node['id'] = nodeIDs[node['BACnetID']]
-        node['name'] = node['BACnetID']  # TODO: this is just for testing
-        node['gender'] = None
+        node['id'] = nodeIDs[person.id.decode("utf-8")]
+        node['name'] = person.name
+        node['gender'] = 'female'
         node['birthday'] = None
         node['country'] = None
         node['town'] = None
@@ -60,10 +57,4 @@ def generateJson(personList):
     return json.dumps(data)
 
 
-def makeNumeric(BACnetID):
-    chars = list(BACnetID)
-    for i in range(0, len(chars)):
-        if chars[i].isalpha():
-            chars[i] = str(ord(chars[i]))
-    return int("".join(chars))
 

@@ -10,30 +10,57 @@ from generateJson import generateJson
 def main():
 
     # set a name to a feed
-    yasmin = Feed.Feed("yasmin")
-    esther = Feed.Feed("esther")
-    vera = Feed.Feed("vera")
+    Feeds = {}
+    Persons = {}
 
-    # Feed erstellen
-    yasmin.generateOwnFeed()
-    esther.generateOwnFeed()
-    vera.generateOwnFeed()
+    Feeds['yasmin'] = Feed.Feed("yasmin")
+    Feeds['esther'] = Feed.Feed("esther")
+    Feeds['vera'] = Feed.Feed("vera")
+    Feeds['pascal'] = Feed.Feed("pascal")
+    Feeds['phillip'] = Feed.Feed("phillip")
+    Feeds['sebastian'] = Feed.Feed("sebastian")
 
-    # set person
-    yasminPerson = Person.Person(yasmin.id, yasmin.name, yasmin)
-    yasminPerson.follow(esther.id, esther.name)
-    yasminPerson.follow(vera.id, vera.name)
-    yasminPerson.printFollowList()
-    yasminPerson.unfollow(vera.id)
-    yasminPerson.printFollowList()
+    Feeds['aline'] = Feed.Feed("aline")
+    Feeds['ben'] = Feed.Feed("ben")
+    Feeds['caroline'] = Feed.Feed("caroline")
+    Feeds['david'] = Feed.Feed("david")
+    Feeds['eveline'] = Feed.Feed("eveline")
+    Feeds['fitzgerald'] = Feed.Feed("fitzgerald")
+    Feeds['georgia'] = Feed.Feed("georgia")
+    Feeds['henry'] = Feed.Feed("henry")
+    Feeds['isabelle'] = Feed.Feed("isabelle")
+    Feeds['julius'] = Feed.Feed("julius")
 
-    veraPerson = Person.Person(vera.id, vera.name, vera)
-    veraPerson.follow(esther.id, esther.name)
-    veraPerson.follow(yasmin.id, yasmin.name)
-    veraPerson.printFollowList()
+    # Feeds erstellen
+    for name, feed in Feeds.items():
+        feed.generateOwnFeed()
+        Persons[name] = Person.Person(feed.id, feed.name, feed)
 
-    persons = [yasminPerson, veraPerson]
-    generateJson(persons)
+    Persons['vera'].follow(Persons['esther'].id, Persons['esther'].name)
+    Persons['vera'].follow(Persons['yasmin'].id, Persons['yasmin'].name)
+    Persons['vera'].follow(Persons['aline'].id, Persons['aline'].name)
+    Persons['vera'].follow(Persons['caroline'].id, Persons['caroline'].name)
+    Persons['esther'].follow(Persons['ben'].id, Persons['ben'].name)
+    Persons['esther'].follow(Persons['david'].id, Persons['david'].name)
+    Persons['esther'].follow(Persons['pascal'].id, Persons['pascal'].name)
+    Persons['yasmin'].follow(Persons['eveline'].id, Persons['eveline'].name)
+    Persons['pascal'].follow(Persons['phillip'].id, Persons['phillip'].name)
+    Persons['pascal'].follow(Persons['phillip'].id, Persons['phillip'].name)
+    Persons['pascal'].follow(Persons['isabelle'].id, Persons['isabelle'].name)
+    Persons['phillip'].follow(Persons['yasmin'].id, Persons['yasmin'].name)
+    Persons['phillip'].follow(Persons['sebastian'].id, Persons['sebastian'].name)
+    Persons['phillip'].follow(Persons['georgia'].id, Persons['georgia'].name)
+    Persons['sebastian'].follow(Persons['henry'].id, Persons['henry'].name)
+
+    Persons['fitzgerald'].follow(Persons['pascal'].id, Persons['pascal'].name)
+    Persons['fitzgerald'].follow(Persons['julius'].id, Persons['julius'].name)
+
+    persList = []
+    for person in Persons.values():
+        person.printFollowList()
+        persList.append(person)
+
+    generateJson(persList)
 
 
 if __name__ == "__main__":

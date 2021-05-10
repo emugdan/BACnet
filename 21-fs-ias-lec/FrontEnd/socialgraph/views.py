@@ -14,6 +14,7 @@ from .utils.jsonUtils import extract_connections
 
 path = Path('socialgraph/static/socialgraph/')
 path = path / 'testData.json'
+#path = path / 'loadedData.json'
 data_file = open(path)
 data = json.load(data_file)
 data_file.close()
