@@ -43,6 +43,7 @@ class Feed:
             key = eval(f.read())
             h = crypto.HMAC(digestmod, key["private"], key["feed_id"])
             signer = crypto.HMAC(digestmod, bytes.fromhex(h.get_private_key()))
+            #signer = crypto.HMAC(digestmod, h.get_private_key())
 
         print("Create or load " + self.name + "'s feed at data/" + self.name + "/" + self.name + "-feed.pcap")
         self.myFeed = feed.FEED(fname="data/" + self.name + "/" + self.name + "-feed.pcap", fid=h.get_feed_id(),

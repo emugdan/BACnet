@@ -4,6 +4,7 @@ sys.path.append("lib")
 
 from Feed import Feed
 from Person import Person
+from generateJson import generateJson
 
 
 def main():
@@ -30,6 +31,9 @@ def main():
     veraPerson.follow(esther.id, esther.name)
     veraPerson.follow(yasmin.id, yasmin.name)
     veraPerson.printFollowList()
+
+    persons = [yasminPerson, veraPerson]
+    generateJson(persons)
 
 
 if __name__ == "__main__":

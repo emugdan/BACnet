@@ -25,3 +25,7 @@ db.sqlite3-journal
 
 # User Media:
 21-fs-ias-lec/FrontEnd/media/profile_pics/
+
+# Feed Stuff
+*.pcap
+*.key
