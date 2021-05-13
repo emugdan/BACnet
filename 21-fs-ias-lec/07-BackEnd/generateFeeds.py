@@ -7,7 +7,9 @@ from Person import Person
 from generateJson import generateJson
 
 
-def main():
+#def main():
+# TODO: villicht das in Feed-Ordner integriere
+def generateFeed():
     # set a name to a feed
     Feeds = {}
     Persons = {}
@@ -33,8 +35,10 @@ def main():
     # Feeds erstellen
     for name, feed in Feeds.items():
         feed.generateOwnFeed()
+        # TODO: Das da in main
         Persons[name] = Person.Person(feed.id, feed.name, feed)
 
+    # TODO: Das da in main (oder gar ned nötig will wird durch gui usglöst)
     Persons['vera'].follow(Persons['esther'].id, Persons['esther'].name)
     Persons['vera'].follow(Persons['yasmin'].id, Persons['yasmin'].name)
     Persons['vera'].follow(Persons['aline'].id, Persons['aline'].name)
@@ -50,7 +54,6 @@ def main():
     Persons['phillip'].follow(Persons['sebastian'].id, Persons['sebastian'].name)
     Persons['phillip'].follow(Persons['georgia'].id, Persons['georgia'].name)
     Persons['sebastian'].follow(Persons['henry'].id, Persons['henry'].name)
-
     Persons['fitzgerald'].follow(Persons['pascal'].id, Persons['pascal'].name)
     Persons['fitzgerald'].follow(Persons['julius'].id, Persons['julius'].name)
 
@@ -63,5 +66,5 @@ def main():
     generateJson(persList, Persons['vera'])
 
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#    main()

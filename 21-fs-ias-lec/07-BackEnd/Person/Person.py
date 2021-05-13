@@ -18,10 +18,12 @@ class Person:
         if feed == None:
             self.feed = None
             self.followList = None
-            # TODO: feed und followlist über sync holen
 
         else:
             self.feed = feed
+
+    def initialFollowList(self): # TODO: am Anfang alle follows die schon in Feed sind auslesen und in followlist einfügen -> unfollow auch beachten!!
+
 
     def follow(self, id, name):
         friend = Person(id, name, None)
@@ -33,7 +35,7 @@ class Person:
 
     def unfollow(self, id):
         self.followlist.pop(id)
-        # TODO: call Feed write function
+        # TODO: unfollow auch in Feed schreiben
 
     def getFollowList(self):
         return self.followlist
