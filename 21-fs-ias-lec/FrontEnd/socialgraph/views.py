@@ -53,17 +53,19 @@ def feed(request):
 def about(request):
     return render(request, 'socialgraph/about.html', {'title': 'About'})
 
+
+"""
+This function creates and renders Follow recommendations based on the hoplayer.
+Per default I chose hoplayer 3 as there are more users within this layer as of now.
+Also, the function follow is able to handle ajax calls from the UI Layer in order
+to rerender the FollowRecommendation HTML files.
+"""
 def follow(request):
 
-    recommendationList = []
+    #Create Initial follow recommendation
+    recommendationList = FollowRecommendations.createRecommendationList(jsonData= data, maxLayer=3)
 
-    for node in data['nodes']:
-        hoplayer = node.get('hopLayer')
-        if (hoplayer < 4 and hoplayer > 1 ):
-            recommendationList.append(FollowRecommendations.create(layerNode = node.get('hopLayer'), bacnet_idNode=node.get('id'), nameNode=node.get('name'), genderNode=node.get('gender'),
-                            birthdayNode=node.get('birthday'), countryNode=node.get('country'), townNode=node.get('town'),
-                            languageNode=node.get('language'),
-                            profile_picNode=node.get('profile_pic') if node.get('profile_pic') is not None else 'default.jpg'))
+    #Add the recommendationList to the context which will be passed to the render function
     context = {
         'data': json.dumps(data),
         'nodes': data['nodes'],
@@ -71,45 +73,28 @@ def follow(request):
         'recommendations': recommendationList
     }
 
+    #In case we have received an Ajax call from the UI-Layer:
     if request.method == "POST":
+        #This response is the name of the User that was searched
         response = request.POST['text']
-        recommendationList = []
 
-        #TODO: nicefy this
+        #If the name is not empty create an updated FollowRecommendationList
         if (response):
-            for node in data['nodes']:
-                if (node.get('name') == response):
-                    recommendationList.append(
-                        FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('id'),
-                                                     nameNode=node.get('name'), genderNode=node.get('gender'),
-                                                     birthdayNode=node.get('birthday'), countryNode=node.get('country'),
-                                                     townNode=node.get('town'),
-                                                     languageNode=node.get('language'),
-                                                     profile_picNode=node.get('profile_pic') if node.get(
-                                                         'profile_pic') is not None else 'default.jpg'))
+            queryList = FollowRecommendations.createRecommendationNameSearchQuery(jsonData=data,name=response)
+        #Else just use the normal recommendationList
         else:
-            for node in data['nodes']:
-                if (node.get('hopLayer') < 3):
-                    recommendationList.append(
-                        FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('id'),
-                                                     nameNode=node.get('name'), genderNode=node.get('gender'),
-                                                     birthdayNode=node.get('birthday'), countryNode=node.get('country'),
-                                                     townNode=node.get('town'),
-                                                     languageNode=node.get('language'),
-                                                     profile_picNode=node.get('profile_pic') if node.get(
-                                                         'profile_pic') is not None else 'default.jpg'))
+            queryList = recommendationList
 
-
-
+        #Create a new context variable
         text = {
             'data': json.dumps(data),
             'nodes': data['nodes'],
             'links': data['links'],
-            'recommendations': recommendationList
+            'recommendations': queryList
         }
 
 
-
+        #Rerender the HTML file
         return render(request, 'socialgraph/FollowBody.html', text)
 
     return render(request, 'socialgraph/Follow.html', context)
