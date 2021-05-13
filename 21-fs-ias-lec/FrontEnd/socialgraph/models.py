@@ -90,10 +90,10 @@ class FollowRecommendations(models.Model):
         return recommendationList
 
     @classmethod
-    def createRecommendationNameSearchQuery(self, jsonData, name):
+    def createRecommendationsFromQuery(self, jsonData, attribute, criteria, maxlayer):
         recommendationList = []
         for node in jsonData['nodes']:
-            if (node.get('name') == name):
+            if (node.get(criteria) == attribute and node.get('hopLayer') == maxlayer):
                 recommendationList.append(
                     FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('id'),
                                                  nameNode=node.get('name'), genderNode=node.get('gender'),

@@ -78,10 +78,14 @@ def follow(request):
         #This response is the name of the User that was searched
         response = request.POST['text']
 
-        #If the name is not empty create an updated FollowRecommendationList
-        if (response):
-            queryList = FollowRecommendations.createRecommendationNameSearchQuery(jsonData=data,name=response)
-        #Else just use the normal recommendationList
+        #Gender Query
+        if (response == 'male' or response =='female'):
+            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data,attribute = response, criteria='gender', maxlayer=3)
+        #User has searched for name
+        elif (response.startswith("nq")):
+            name = response[2:len(response)]
+            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=name,
+                                                                            criteria='name', maxlayer=3)
         else:
             queryList = recommendationList
 

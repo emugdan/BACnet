@@ -28,6 +28,7 @@
         </div>
     </div>
 
+
 <div style="text-align: center;">
   <input type="text" id="searchbox"  value = "" placeholder="Search users" name = "name">
     <button onclick="callPythonFunction()">Click me</button>
@@ -37,10 +38,34 @@
 
 
 
-<div class="list-wrapper" id = 'wrapped_list'>
 
-      {% include "./FollowBody.html" %}
+ <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-6">
 
+
+    <div>
+        <h6 class="p-1 border-bottom">Filter By</h6>
+        <p class="mb-2">Gender</p>
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-action mb-2 rounded"  id = "GenderFemale" value = "female" onclick = genderBasedFilter("female")> <span class="fa fa-circle pr-1" ></span>Female </li>
+            <li class="list-group-item list-group-item-action mb-2 rounded" id = "GenderMale" value = "male" onclick = genderBasedFilter("male")> <span class="fa fa-circle pr-1" id="male"></span>Male </li>
+             <li class="list-group-item list-group-item-action mb-2 rounded" id = "ResetButton" value = "reset" onclick = genderBasedFilter("")> <span class="fa fa-circle pr-1" id="reset"></span>Reset </li>
+        </ul>
+    </div>
+
+
+            </div>
+            <div class="col-md-6">
+                {% include "./FollowBody.html" %}
+            </div>
+        </div>
+
+
+
+
+
+</div>
 </div>
 
 <script>
@@ -51,8 +76,9 @@ function myFunction() {
 // MAKE AN AJAX CALL TO VIEWS.PY
         function callPythonFunction() {
 
-            var text = document.getElementById("searchbox").value;
-            console.log(text)
+            var text = "nq" +document.getElementById("searchbox").value;
+            alert(text)
+
 
             $.ajax({
 
@@ -60,6 +86,27 @@ function myFunction() {
                 url: '{{ '' }}',
                 async: false,
                 data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: text},
+                success: function (response){
+                    $('#test').html('').replaceWith(response)
+
+                }
+
+            });
+
+        }
+
+
+         function genderBasedFilter(value) {
+
+             var gender = value;
+
+
+            $.ajax({
+
+                type: "POST",
+                url: '{{ '' }}',
+                async: false,
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: gender},
                 success: function (response){
                     $('#test').html('').replaceWith(response)
 
