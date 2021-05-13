@@ -52,3 +52,19 @@ input[type="text"]#searchbox {
 }
 
 
+.container {
+    display:flex;
+}
+.fixed {
+    width: 200px;
+	border-style: solid;
+}
+.flex-item {
+    background-color:#7887AB;
+    flex-grow: 1;
+}
+
+
+
+
+

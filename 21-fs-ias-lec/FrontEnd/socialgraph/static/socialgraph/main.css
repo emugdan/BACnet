@@ -16,8 +16,13 @@ ul {
   background-color: #5f788a;
 }
 
+.site-header .navbar-nav {
+  height: 50px;
+}
+
 .site-header .navbar-nav .nav-link {
   color: #cbd5db;
+  margin-top: 5px;
 }
 
 .site-header .navbar-nav .nav-link:hover {
@@ -29,6 +34,7 @@ ul {
 }
 
 .form-control {
+  margin-top: 8px;
   background-color: #cbd5db;
 }
 
@@ -39,6 +45,7 @@ ul {
 }
 
 #searchBtn {
+ margin-top: 8px;
   background-color: #5f788a;
   color: #cbd5db;
   border: 1px solid #cbd5db;
@@ -127,6 +134,10 @@ ul {
   border: white;
 }
 
+#rootListItem {
+  font-weight: bold;
+}
+
 #my_dataviz {
   margin-top: 10px;
   height: calc(100vh - 193px);
@@ -208,10 +219,6 @@ ul {
   margin-bottom: 0.5rem;
   text-align: center
 }
-
-
-
-
 
 
 
