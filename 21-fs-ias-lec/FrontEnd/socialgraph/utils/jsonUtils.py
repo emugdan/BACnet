@@ -104,3 +104,9 @@ def createJSONwHops(connections, nodes, id, hops):
     j.update({'links': l})
 
     return json.dumps(j)
+
+
+def getRoot(nodes):
+    for n in nodes:
+        if n.get("hopLayer") == 0:
+            return n

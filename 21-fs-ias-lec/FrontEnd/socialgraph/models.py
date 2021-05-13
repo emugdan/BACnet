@@ -73,3 +73,35 @@ class FollowRecommendations(models.Model):
                 details['Language'] = self.language
         return details
 
+    @classmethod
+    def createRecommendationList(self, jsonData, maxLayer):
+        recommendationList = []
+        for node in jsonData['nodes']:
+            hoplayer = node.get('hopLayer')
+            if (hoplayer == maxLayer):
+                recommendationList.append(
+                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('id'),
+                                                 nameNode=node.get('name'), genderNode=node.get('gender'),
+                                                 birthdayNode=node.get('birthday'), countryNode=node.get('country'),
+                                                 townNode=node.get('town'),
+                                                 languageNode=node.get('language'),
+                                                 profile_picNode=node.get('profile_pic') if node.get(
+                                                     'profile_pic') is not None else 'default.jpg'))
+        return recommendationList
+
+    @classmethod
+    def createRecommendationsFromQuery(self, jsonData, attribute, criteria, maxlayer):
+        recommendationList = []
+        for node in jsonData['nodes']:
+            if (node.get(criteria) == attribute and node.get('hopLayer') == maxlayer):
+                recommendationList.append(
+                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('id'),
+                                                 nameNode=node.get('name'), genderNode=node.get('gender'),
+                                                 birthdayNode=node.get('birthday'), countryNode=node.get('country'),
+                                                 townNode=node.get('town'),
+                                                 languageNode=node.get('language'),
+                                                 profile_picNode=node.get('profile_pic') if node.get(
+                                                     'profile_pic') is not None else 'default.jpg'))
+        return recommendationList
+
+
