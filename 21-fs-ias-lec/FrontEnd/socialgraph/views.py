@@ -86,6 +86,12 @@ def follow(request):
             name = response[2:len(response)]
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=name,
                                                                             criteria='name', maxlayer=3)
+        # User has searched for name
+        elif (response.startswith("tq")):
+            town = response[2:len(response)]
+            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=town,
+                                                                             criteria='town', maxlayer=3)
+
         else:
             queryList = recommendationList
 
