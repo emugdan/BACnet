@@ -23,6 +23,7 @@ class Person:
             self.feed = feed
 
     def initialFollowList(self): # TODO: am Anfang alle follows die schon in Feed sind auslesen und in followlist einfügen -> unfollow auch beachten!!
+        return
 
 
     def follow(self, id, name):
