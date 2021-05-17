@@ -7,14 +7,14 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.views.generic import DetailView
 
-from .importer import create_profiles, create_Recommendations
+from .importer import create_profiles
 from .models import Profile, FollowRecommendations
 from .utils.jsonUtils import extract_connections, getRoot
 
 # Create your views here.
 
 path = Path('socialgraph/static/socialgraph/')
-#path = path / 'testData.json'
+path2 = path / 'testData.json'
 path = path / 'loadedData.json'
 data_file = open(path)
 data = json.load(data_file)
@@ -22,7 +22,10 @@ data_file.close()
 root = getRoot(data['nodes'])
 
 
+
 def home(request):
+    data_file = open(path)
+    data = json.load(data_file)
 
     context = {
         'connections': extract_connections(data, "1 1"),
@@ -61,9 +64,11 @@ Also, the function follow is able to handle ajax calls from the UI Layer in orde
 to rerender the FollowRecommendation HTML files.
 """
 def follow(request):
+    data_file = open(path)
+    data = json.load(data_file)
 
     #Create Initial follow recommendation
-    recommendationList = FollowRecommendations.createRecommendationList(jsonData= data, maxLayer=3)
+    recommendationList = FollowRecommendations.createRecommendationList(jsonData= data, maxLayer=5)
 
     #Add the recommendationList to the context which will be passed to the render function
     context = {
@@ -80,17 +85,37 @@ def follow(request):
 
         #Gender Query
         if (response == 'male' or response =='female'):
-            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data,attribute = response, criteria='gender', maxlayer=3)
+            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data,attribute = response, criteria='gender', maxlayer=5)
         #User has searched for name
         elif (response.startswith("nq")):
             name = response[2:len(response)]
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=name,
-                                                                            criteria='name', maxlayer=3)
+                                                                            criteria='name', maxlayer=5)
         # User has searched for name
         elif (response.startswith("tq")):
             town = response[2:len(response)]
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=town,
-                                                                             criteria='town', maxlayer=3)
+                                                                             criteria='town', maxlayer=5)
+        #User wants to follow another user
+        elif (response.startswith("fo")):
+            #Get the id
+            id = int(response[2:len(response)])
+
+            #Open the jsonFile
+            with open(path, "r") as jsonFile:
+                temp = json.load(jsonFile)
+
+            #Overwrite the hoplayer
+            for x in temp['nodes']:
+                if x.get('id') == id:
+                    x['hopLayer'] = 1
+            #Save new json file
+            with open(path, "w") as jsonFile:
+                json.dump(temp, jsonFile)
+            data_file = open(path)
+            data = json.load(data_file)
+            #Create new recommendations
+            queryList = FollowRecommendations.createRecommendationList(jsonData=data, maxLayer=5)
 
         else:
             queryList = recommendationList
@@ -114,3 +139,8 @@ def followBody(request):
 
 class PostDetailView(DetailView):
     model = Profile
+
+
+if __name__ == "__main__":
+
+    print(data)

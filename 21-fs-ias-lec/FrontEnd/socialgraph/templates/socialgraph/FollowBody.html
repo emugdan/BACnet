@@ -1,17 +1,52 @@
 <ul class="list" id = 'test'>
 {% for person in recommendations %}
-      <a href="{% url 'profile-detail' person.bacnet_id %}">
+
     <li class="list-item">
       <div>
-        <img src="{{person.profile_pic.url}}", class="list-item-image">
+        <img src="{{person.profile_pic.url}}", class="list-item-image" >
       </div>
-      <div class="list-item-content">
+      <div class="list-item-content" >
+
+<a href="{% url 'profile-detail'  person.bacnet_id %}">
+
         <h4>{{person.name}}</h4>
         <p>{{person.gender}}</p>
         <p>{{person.town}}</p>
-      </div>
-        </a>
+          <p></p>
+
+</a>
+
+          <button class = "button" id = "button" onclick=follow("{{person.bacnet_id}}")>
+              Follow!
+          </button>
+
+ </div>
 
     </li>
       {% endfor %}
     </ul>
+
+
+<script>
+
+    function follow(x){
+        $.ajax({
+
+                type: "POST",
+                url: '{{ '' }}',
+                async: false,
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: "fo"+x},
+                success: function (response){
+                    $('#test').html('').replaceWith(response)
+
+                }
+
+            });
+    }
+
+
+
+
+
+
+</script>

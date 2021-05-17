@@ -17,29 +17,16 @@
 
 
 {% block content %}
-<div class="container">
-        <div class="content-section">
-            <div class="media">
-                <div class="media-body">
-                    <h2 class="follow-heading"></h2>
-                    <div class="follow-heading-text">  The following people might be interesting for you:.</div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 
 
-
-<p id="demo"></p>
-
+<div class="float-container">
 
 
 
- <div class="col-md-8">
-        <div class="row">
-            <div class="col-md-6">
+  <div class="float-child-left">
+
 
 
     <div>
@@ -65,24 +52,34 @@
 
 
 
-
-
         </ul>
     </div>
 
 
-            </div>
-            <div class="col-md-6">
+  </div>
+
+
+  <div class="float-child">
+
+
                 {% include "./FollowBody.html" %}
-            </div>
-        </div>
 
-
+  </div>
 
 
 
 </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
 function myFunction() {
