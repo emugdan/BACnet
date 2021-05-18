@@ -60,9 +60,7 @@ input[type="text"]#searchbox {
 }
 
 
-.container {
-    display:flex;
-}
+
 .fixed {
     width: 200px;
 	border-style: solid;
