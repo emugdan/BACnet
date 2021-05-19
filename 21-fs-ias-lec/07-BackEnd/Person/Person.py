@@ -1,7 +1,6 @@
 import sys
 
 sys.path.append("../Feed")
-import Feed
 
 
 class Person:
@@ -22,15 +21,13 @@ class Person:
         else:
             self.feed = feed
 
-    def initialFollowList(self): # TODO: am Anfang alle follows die schon in Feed sind auslesen und in followlist einfügen -> unfollow auch beachten!!
-        return
-
 
     def follow(self, id, name):
         friend = Person(id, name, None)
         self.followlist[id] = friend
         if friend.feed != None:
             self.feed.writeFollowToFeed(friend.feed)
+            # TODO: generate JSON for changes
         else:
             print("couldn't find feed for person")
 
