@@ -26,9 +26,9 @@
 
                     {% for node in nodes %}
 
-                        {% if node.name != root.name %}
+                        {% if node.name != root.name and node.hopLayer <= 5%}
 
-                            <li class="list-group-item">{{ node.name }} <a href="{% url 'profile-detail' node.id %}"><button type="button" class="btn btn-light" id="profileButton">Profile</button></a></li>
+                            <li class="list-group-item">{{ node.name }} <a href="{% url 'profile-detail' node.id %}"><button type="button" class="btn btn-light" id="profileButton1">Profile</button></a></li>
 
                         {% endif %}
 

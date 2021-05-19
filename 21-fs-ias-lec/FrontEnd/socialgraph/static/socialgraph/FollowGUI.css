@@ -52,9 +52,9 @@ input[type="text"]#searchbox {
 }
 
 
-.container {
+/* .container {
     display:flex;
-}
+} */
 .fixed {
     width: 200px;
 	border-style: solid;

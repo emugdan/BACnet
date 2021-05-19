@@ -168,6 +168,12 @@ ul {
   float: right;
 }
 
+#profileButton1 {
+  border: 1px solid grey;
+  position: relative;
+  float: right;
+}
+
 .account-img {
   height: 125px;
   width: 125px;
