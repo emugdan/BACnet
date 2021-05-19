@@ -1,53 +1,69 @@
-from generateDirectories import generateDirectories
+import generateDirectories
 from Person import Person
 from generateJson import generateJson
+from Feed import Feed
+
+import sys
+
+# add the lib to the module folder
+sys.path.append("lib")
+
 import os
+import crypto
+import feed
+import time
+
 
 def main():
-    # dummy Feeds erstellen
-    generateDirectories()
-    Persons = {}
-    persList = []
+    # dummy Feeds erstellen -> später feeds die schon geladen sind
+    generateDirectories.generateDirectories()
 
-    # TODO: über alle Ordner in Data iterieren und Personen erstellen
+    # die schon bestehenden Feeds auslesen und Feed und Personenobjekte erstellen
+    digestmod = "sha256"
     rootdir = "./data"
+    list_of_persons = []
+    mainPerson = None
+
+    # durch alle Ordner in data iterieren
     for subdir, dirs, files in os.walk(rootdir):
-        for file in files:
-            if file.endswith(".pcap"):  # BACnet
-                print(os.path.join(subdir, file))
-                # TODO read feed-Id and name from feed
-                #name =
-                #id =
-                #Persons[name] = Person.Person(feed.id, feed.name, feed)
+        for name in dirs:
+            # key der jeweiligen Person aulesen
+            with open("data/" + name + "/" + name + "-secret.key", 'r') as f:
+                key = eval(f.read())
+                h = crypto.HMAC(digestmod, key["private"], key["feed_id"])
+                if sys.platform.startswith("linux"):
+                    signer = crypto.HMAC(digestmod, bytes.fromhex(h.get_private_key()))
+                else:
+                    signer = crypto.HMAC(digestmod, h.get_private_key())
 
-    # List of all persons in local database
-    for person in Persons.values():
-        person.printFollowList()
-        persList.append(person)
+            # Feed laden
+            my_feed = feed.FEED(fname="data/" + name + "/" + name + "-feed.pcap", fid=h.get_feed_id(),
+                               signer=signer, create_if_notexisting=True, digestmod=digestmod)
 
-    '''
-    # TODO: Das da in main (oder gar ned nötig will wird durch gui usglöst)
-    Persons['vera'].follow(Persons['esther'].id, Persons['esther'].name)
-    Persons['vera'].follow(Persons['yasmin'].id, Persons['yasmin'].name)
-    Persons['vera'].follow(Persons['aline'].id, Persons['aline'].name)
-    Persons['vera'].follow(Persons['caroline'].id, Persons['caroline'].name)
-    Persons['esther'].follow(Persons['ben'].id, Persons['ben'].name)
-    Persons['esther'].follow(Persons['david'].id, Persons['david'].name)
-    Persons['esther'].follow(Persons['pascal'].id, Persons['pascal'].name)
-    Persons['yasmin'].follow(Persons['eveline'].id, Persons['eveline'].name)
-    Persons['pascal'].follow(Persons['phillip'].id, Persons['phillip'].name)
-    Persons['pascal'].follow(Persons['phillip'].id, Persons['phillip'].name)
-    Persons['pascal'].follow(Persons['isabelle'].id, Persons['isabelle'].name)
-    Persons['phillip'].follow(Persons['yasmin'].id, Persons['yasmin'].name)
-    Persons['phillip'].follow(Persons['sebastian'].id, Persons['sebastian'].name)
-    Persons['phillip'].follow(Persons['georgia'].id, Persons['georgia'].name)
-    Persons['sebastian'].follow(Persons['henry'].id, Persons['henry'].name)
-    Persons['fitzgerald'].follow(Persons['pascal'].id, Persons['pascal'].name)
-    Persons['fitzgerald'].follow(Persons['julius'].id, Persons['julius'].name)
-    '''
+            # Feed objekt erstellen
+            feed_obj = Feed.Feed(key["feed_id"], my_feed)
 
-    # Takes a list of all Persons and the Person we are as arguments
-    # generateJson(persList, Persons['vera'])
+            person = Person.Person(key["feed_id"], name, feed_obj)
+            list_of_persons.append(person)
+
+            # TODO: Wie wird Hauptperson bestimmt?
+            # Hauptperson ist vera
+            if (name == "vera"):
+                mainPerson = person
+
+    for pers in list_of_persons:
+        follow_list = pers.feed.readFollowFromFeed()
+        # Followliste vervollständigen
+        for follow_entry in follow_list:
+            for p in list_of_persons:
+                if follow_entry["Feed ID"] == p.id:
+                    pers.follow(follow_entry["Feed ID"], p.name)
+                    pers.printFollowList()
+                    break
+
+
+    # Json file for FrontEnd
+    generateJson(list_of_persons, mainPerson)
 
 if __name__ == "__main__":
     main()
