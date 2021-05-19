@@ -3,3 +3,4 @@
 - Scuttlebut-Guide: https://ssbc.github.io/scuttlebutt-protocol-guide/
 - Log File Creation: https://github.com/cn-uofbasel/BACnet/tree/master/20-fs-ias-lec/src/demo
 - Feed Controll: https://github.com/cn-uofbasel/BACnet/blob/master/20-fs-ias-lec/groups/14-feedCtrl/project.md
+- Scuttlebot: https://scuttlebot.io/docs/basics/install-the-database.html
