@@ -13,7 +13,7 @@ def generateJson(personList, weAre):
 
     for i in range(0, len(personList)):
         person = personList[i]
-        curBACnetID = person.id.decode("utf-8")
+        curBACnetID = person.id         # .decode("utf-8")]}
         nodeIDs[curBACnetID] = i
 
     ourID = 0
@@ -23,8 +23,8 @@ def generateJson(personList, weAre):
             ourID = i
         node = {}
         followList = person.getFollowList()
-        node['BACnetID'] = person.id.decode("utf-8")
-        node['id'] = nodeIDs[person.id.decode("utf-8")]
+        node['BACnetID'] = person.id  # .decode("utf-8")
+        node['id'] = nodeIDs[person.id] # .decode("utf-8")]
         node['name'] = person.name
         node['gender'] = 'female'
         node['birthday'] = None
@@ -36,7 +36,7 @@ def generateJson(personList, weAre):
         nodes.append(node)
         for friend in followList:
             link = {'source': node['id'],
-                    'target': nodeIDs[friend.decode("utf-8")]}
+                    'target': nodeIDs[friend]} # .decode("utf-8")]}
             links.append(link)
 
     calculateHops(ourID, links, nodes, 0)
