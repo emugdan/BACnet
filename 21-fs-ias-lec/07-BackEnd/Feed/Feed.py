@@ -2,75 +2,30 @@ import sys
 # add the lib to the module folder
 sys.path.append("../lib")
 
-import os
-import crypto
-import feed
 import time
 
 
 class Feed:
 
-    def __init__(self, name):
-        self.name = name
-        self.myFeed = None
-        self.id = None
+    def __init__(self, id, myFeed):
+        self.myFeed = myFeed
+        self.id = id
 
-    # generates a new Feed
-    def generateOwnFeed(self):
-        if not os.path.isdir("data"):
-            os.mkdir("data")
-
-        if not os.path.isdir("data/" + self.name):
-            os.mkdir("data/" + self.name)
-
-        # Generate a key pair
-
-        # generate a feed
-        digestmod = "sha256"
-        h, signer = None, None
-
-        # Generate a Key if non exists
-        if not os.path.isfile("data/" + self.name + "/" + self.name + "-secret.key"):
-            print("Create " + self.name + "'s key pair at data/" + self.name + "/" + self.name + "-secret.key")
-            h = crypto.HMAC(digestmod)
-            h.create()
-            with open("data/" + self.name + "/" + self.name + "-secret.key", "w") as f:
-                f.write('{\n  ' + (',\n '.join(h.as_string().split(','))[1:-1]) + '\n}')
-                signer = crypto.HMAC(digestmod, h.get_private_key())
-
-        print("Read " + self.name + "'s secret key.")
-        with open("data/" + self.name + "/" + self.name + "-secret.key", 'r') as f:
-            key = eval(f.read())
-            h = crypto.HMAC(digestmod, key["private"], key["feed_id"])
-            if sys.platform.startswith("linux"):
-                signer = crypto.HMAC(digestmod, bytes.fromhex(h.get_private_key()))
-            else:
-                signer = crypto.HMAC(digestmod, h.get_private_key())
-
-        print("Create or load " + self.name + "'s feed at data/" + self.name + "/" + self.name + "-feed.pcap")
-        self.myFeed = feed.FEED(fname="data/" + self.name + "/" + self.name + "-feed.pcap", fid=h.get_feed_id(),
-                                signer=signer, create_if_notexisting=True, digestmod=digestmod)
-        self.id = h.get_feed_id()
-
-    # adds new Follow to the Feed and add new Friend to the global followList
+    # adds new Follow to the Feed
     def writeFollowToFeed(self, newFriendsFeed):
         self.myFeed.write(["bacnet/following", time.time(), newFriendsFeed.id])
 
     # reads the followList from the Feed
     def readFollowFromFeed(self):
         followList = []
-        namelist = []
+        IDlist = []
 
         for event in self.myFeed:
             if event.content()[0] == "bacnet/following":
-                friendsName = event.content()[2]
-                if friendsName not in namelist:
-                    followList.append({"Root": self.name, "time": event.content()[1], "Feed ID": event.content()[2]})
-                    namelist.append(friendsName)
+                friends_id = event.content()[2]
+                if friends_id not in IDlist:
+                    followList.append({"Root": self.id, "time": event.content()[1], "Feed ID": event.content()[2]})
+                    IDlist.append(friends_id)
 
         followList.sort(key=lambda msg: msg["time"])
-
-         #for msg in followList:
-         #   print(msg["Root"] + " follows " + msg["Friend"])
-
         return followList
