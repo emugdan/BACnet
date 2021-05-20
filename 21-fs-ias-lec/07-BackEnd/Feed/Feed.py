@@ -1,4 +1,5 @@
 import sys
+
 # add the lib to the module folder
 sys.path.append("../lib")
 
@@ -14,6 +15,10 @@ class Feed:
     # adds new Follow to the Feed
     def writeFollowToFeed(self, newFriendsFeed):
         self.myFeed.write(["bacnet/following", time.time(), newFriendsFeed.id])
+
+    # adds new Unfollow to the Feed
+    def writeUnfollowToFeed(self, exFriendsFeed):
+        self.myFeed.write(["bacnet/unfollowing", time.time(), exFriendsFeed.id])
 
     # reads the followList from the Feed
     def readFollowFromFeed(self):

@@ -23,6 +23,7 @@ class Person:
 
 
     def follow(self, id, name):
+        #TODO: follow wird nie i Feed gschriebe, will immer e person mit emene feed wo none isch erstellt wird, me müesst also im konstruktor de feed go sueche? oder so? oder bim follow scho e perso oder feed biigeh?
         friend = Person(id, name, None)
         self.followlist[id] = friend
         if friend.feed != None:
@@ -31,8 +32,15 @@ class Person:
         else:
             print("couldn't find feed for person")
 
-    def unfollow(self, id):
+    def unfollow(self, id, name):
+        exfriend = Person(id, name, None)
         self.followlist.pop(id)
+        if exfriend.feed != None:
+            self.feed.writeUnfollowToFeed(exfriend.feed)
+            # TODO: generate JSON for changes
+        else:
+            print("couldn't find feed for person")
+
         # TODO: unfollow auch in Feed schreiben
 
     def getFollowList(self):
