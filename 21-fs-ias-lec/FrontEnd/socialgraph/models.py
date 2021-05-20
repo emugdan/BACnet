@@ -104,4 +104,11 @@ class FollowRecommendations(models.Model):
                                                      'profile_pic') is not None else 'default.jpg'))
         return recommendationList
 
+    @classmethod
+    def returnmaxHoplayer(self, json):
+        maxhoplayer = []
+        for x in json['nodes']:
+            if not (x.get('hopLayer')  == 10000):
+                maxhoplayer.append(x.get('hopLayer'))
+        return max(maxhoplayer)
 

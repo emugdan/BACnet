@@ -8,7 +8,7 @@
 
 
 .list-wrapper {
-	 max-width: 400px;
+	 max-width: 200px;
 	 margin: 50px auto;
 }
  .list {
@@ -21,7 +21,6 @@
 	 display: flex;
 	 margin: 10px;
 	 padding-bottom: 5px;
-	 padding-top: 5px;
 	 border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
  .list-item:last-child {
@@ -71,45 +70,20 @@ input[type="text"]#searchbox {
 }
 
 
-/* Style the submit button */
-form.example button {
-  float: left;
-  width: 20%;
-  padding: 10px;
-  background: #2196F3;
-  color: white;
-  font-size: 17px;
-  border: 1px solid grey;
-  border-left: none; /* Prevent double borders */
-  cursor: pointer;
-}
-
-form.example button:hover {
-  background: #0b7dda;
-}
-
-
-.float-container {
-    border: 3px solid #fff;
-    padding: 20px;
-}
 
 .float-child {
-    width: 50%;
+    width: 25%;
     float: left;
-    padding: 10px;
 }
 
 
 .float-child-left {
     width: 15%;
     float: left;
-    padding: 10px;
 }
 
 .float-child-right {
     width: 15%;
     float: right;
-    padding: 10px;
 }
 
