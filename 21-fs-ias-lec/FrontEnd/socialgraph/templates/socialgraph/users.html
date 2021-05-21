@@ -2,12 +2,16 @@
 
 {% block searchBar %}
 
+<!--
+
     <div class="input-group input-group-sm">
         <input type="text" class="form-control" id="searchInput" placeholder="" aria-label="Search Input" aria-describedby="basic-addon2">
         <div class="input-group-append">
             <button class="btn" id="searchBtn" type="button">Search</button>
         </div>
     </div>
+
+-->
 
 {% endblock %}
 
@@ -19,16 +23,21 @@
             <h4 class="content-section-title">Users</h4>
             <div class="content-section" id="usersContentSection">
 
+                <div class="searchInputDiv">
+                    <input type="text" class="searchInput" id="searchInputField" name="searchInput" placeholder="Search">
+                    <button type="button" class="btn profileButton" id="searchButton">Search</button>
+                </div>
+
                 <ul class="list-group">
 
-                    <li class="list-group-item" id="rootListItem">{{ root.name }} <a href="{% url 'profile-detail' root.id %}"><button type="button" class="btn btn-light" id="profileButton">Profile</button></a></li>
+                    <li class="list-group-item" id="rootListItem">{{ root.name }} <a href="{% url 'profile-detail' root.id %}"><button type="button" class="btn profileButton">Profile</button></a></li>
 
 
                     {% for node in nodes %}
 
                         {% if node.name != root.name %}
 
-                            <li class="list-group-item">{{ node.name }} <a href="{% url 'profile-detail' node.id %}"><button type="button" class="btn btn-light" id="profileButton1">Profile</button></a></li>
+                            <li class="list-group-item">{{ node.name }} <a href="{% url 'profile-detail' node.id %}"><button type="button" class="btn profileButton">Profile</button></a></li>
 
                         {% endif %}
 
@@ -91,12 +100,13 @@
             .attr("markerHeight", markerSize)
             .attr("orient", "auto")
           .append("svg:path")
-            .attr("d", "M0,-5L10,0L0,5");
+            .attr("d", "M0,-5L10,0L0,5")
+                .style("fill", "#aaa");
 
           var linkForce = d3.forceLink()
             .id(function(d) { return d.id })
-            .strength(1)
-            .distance(50)
+            .strength(.3)
+            .distance(100)
 
           var simulation = d3.forceSimulation()
             .force("link", linkForce)
@@ -152,6 +162,7 @@
               .attr("dx", nodeRadius + 5)
               .attr("dy", ".35em")
               .attr("font-size", 12)
+                .style("fill", getGraphAttrColor())
 
 
           simulation
@@ -316,7 +327,9 @@
         // HANDLE EVENT WHEN SEARCH BUTTON IS CLICKED OR ENTER KEY IS PRESSED ON INPUT
         $('#searchBtn').on('click', handleSearchInput)
 
-        $('#searchInput').on('keypress', function(e) {
+        $('#searchButton').on('click', handleSearchInput)
+
+        $('#searchInputField').on('keypress', function(e) {
             if (e.which == 13) {
                 handleSearchInput();
             }
@@ -324,9 +337,10 @@
 
         function handleSearchInput() {
 
-            var myInput = $("#searchInput").val();
+            // var myInput = $("#searchInput").val();
+            var myInput = $("#searchInputField").val();
             console.log(myInput);
-            $("#searchInput").val('');
+            $("#searchInputField").val('');
 
             var listItems = $(".list-group-item");
 
@@ -433,6 +447,16 @@
             document.getElementById('slider').value = 1;
         }
 
+
+        function getGraphAttrColor() {
+
+            if (localStorage.getItem('theme') === 'theme-dark') {
+               return "#aaa";
+           } else {
+               return "#000";
+           }
+
+        }
 
 
 

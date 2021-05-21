@@ -16,20 +16,20 @@
 }
 
 .theme-dark {
-  --color-bodyBG: #444444;
+  --color-bodyBG: #313335;
   --color-body: #ffffff;
-  --color-navbar: #4CC2B8;
-  --color-navLink: #ffffff;
-  --color-formControl: #4CC2B8;
-  --color-searchButton: #4CC2B8;
+  --color-navbar: #2B2B2B;
+  --color-navLink: #ffffff80;
+  --color-formControl: #3B3F41;
+  --color-searchButton: #2B2B2B;
   --color-searchButtonBorder: #ffffff;
   --color-h: #ffffff;
-  --color-contentSection: #585858;
-  --color-listGroupItemActive: #4CC2B820;
+  --color-contentSection: #3B3F41;
+  --color-listGroupItemActive: #00AEED30;
   --color-profileButton: #7F7F7F;
   --color-hopsValue: #ffffff;
   --color-sliderTrack: #585858;
-  --color-sliderThumb: #4CC2B8;
+  --color-sliderThumb: #00AEED;
 }
 
 body {
@@ -70,11 +70,12 @@ ul {
 .form-control {
   margin-top: 8px;
   background-color: var(--color-formControl);
+  border-color: transparent;
 }
 
 .form-control:focus {
   background-color: var(--color-formControl);
-  border-color: #ffffff;
+  border-color: #ffffff60;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(95, 120, 138, 0.6);
 }
 
@@ -83,19 +84,18 @@ ul {
   margin-right: 20px;
   background-color: var(--color-searchButton);
   color: #ffffff;
-  border: 1px solid #ffffff;
+  border: 1px solid #ffffff20;
 }
 
 #searchBtn:hover {
   background-color: var(--color-searchButton);
   color: #ffffff;
-  border: 1px solid #ffffff;
+  border: 1px solid #ffffff70;
 }
 
 .lookAndFeelToggle {
-  margin-top: 7px;
+  margin-top: 8px;
 }
-
 .content-section {
   background: var(--color-contentSection);
   padding: 10px 20px;
@@ -171,10 +171,48 @@ ul {
   color: var(--color-hopsValue);
 }
 
+.searchInputDiv {
+  position: relative;
+  height: 70px;
+}
+
+.searchInput {
+  position: absolute;
+  top: 18%;
+  height: 40px;
+  width: 60%;
+  color: var(--color-h);
+  background-color: transparent;
+  border-top: 0px solid red;
+  border-left: 0px solid red;
+  border-right: 0px solid red;
+  border-bottom: 1px solid #0085BA;
+}
+
+.searchInput:hover {
+  border-bottom: 1px solid #00AEED;
+}
+
+.searchInput:focus {
+  background-color: var(--color-contentSection);
+  outline: none;
+}
+
+.searchButton {
+  position: absolute;
+  right: 8%;
+  top: 18%;
+}
+
+#searchButton {
+  margin-top: 15px;
+  margin-right: 22px;
+}
+
 .list-group{
   margin-top: 10px;
   height: calc(100vh - 190px);
-  margin-bottom: 10px;
+  margin-bottom: 40px;
   overflow-y:scroll;
 }
 
@@ -184,12 +222,13 @@ ul {
 
 .list-group-item.active {
   background-color: var(--color-listGroupItemActive);
-  color: black;
+  color: var(--color-h);
   border: white;
 }
 
 #rootListItem {
   font-weight: bold;
+  color: var(--color-h);
 }
 
 #my_dataviz {
@@ -216,18 +255,15 @@ ul {
   background:rgb(54, 56, 58);
 }
 
-#profileButton {
+.profileButton {
   background-color: var(--color-profileButton);
   border: 1px solid grey;
   position: relative;
   float: right;
 }
 
-#profileButton1 {
-  background-color: var(--color-profileButton);
-  border: 1px solid grey;
-  position: relative;
-  float: right;
+.profileButton:hover {
+  opacity: .7;
 }
 
 .account-img {
