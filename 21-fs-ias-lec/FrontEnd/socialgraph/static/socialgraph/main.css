@@ -13,6 +13,7 @@
   --color-hopsValue: #444444;
   --color-sliderTrack: #DEE2E6;
   --color-sliderThumb: grey;
+  --color-buttonText: #000000;
 }
 
 .theme-dark {
@@ -30,6 +31,7 @@
   --color-hopsValue: #ffffff;
   --color-sliderTrack: #585858;
   --color-sliderThumb: #00AEED;
+  --color-buttonText: #ffffff;
 }
 
 body {
@@ -211,7 +213,7 @@ ul {
 
 .list-group{
   margin-top: 10px;
-  height: calc(100vh - 190px);
+  height: calc(100vh - 270px);
   margin-bottom: 40px;
   overflow-y:scroll;
 }
@@ -260,6 +262,7 @@ ul {
   border: 1px solid grey;
   position: relative;
   float: right;
+  color: var(--color-buttonText)
 }
 
 .profileButton:hover {
