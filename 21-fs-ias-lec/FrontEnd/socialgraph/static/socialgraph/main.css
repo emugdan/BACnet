@@ -1,3 +1,5 @@
+
+/* SET COLORS FOR LIGHT AND DARK THEMES */
 .theme-light {
   --color-bodyBG: #fafafa;
   --color-body: #333333;
@@ -34,20 +36,22 @@
   --color-buttonText: #ffffff;
 }
 
+
+/* BODY */
 body {
   background: var(--color-bodyBG);
   color: var(--color-body);
   margin-top: 5rem;
 }
 
+
+/* HEADERS */
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-h);
 }
 
-ul {
-  margin: 0;
-}
 
+/* NAVBAR */
 .bg-steel {
   background-color: var(--color-navbar);
 }
@@ -69,6 +73,8 @@ ul {
   font-weight: 500;
 }
 
+
+/* SEARCH FIELD AND BUTTON IN NAVBAR */
 .form-control {
   margin-top: 8px;
   background-color: var(--color-formControl);
@@ -95,9 +101,14 @@ ul {
   border: 1px solid #ffffff70;
 }
 
+
+/* LOOK AND FEEL SWITCH BUTTON */
 .lookAndFeelToggle {
   margin-top: 8px;
 }
+
+
+/* CONTENT SECTION */
 .content-section {
   background: var(--color-contentSection);
   padding: 10px 20px;
@@ -130,6 +141,8 @@ ul {
   margin-bottom: 20px;
 }
 
+
+/* HOPS VALUE SLIDER AND LABEL */
 .custom-range {
   width: 200px;
   margin-top: 20px;
@@ -173,6 +186,8 @@ ul {
   color: var(--color-hopsValue);
 }
 
+
+/* SEARCH INPUT AND BUTTON IN USERS LIST */
 .searchInputDiv {
   position: relative;
   height: 70px;
@@ -211,6 +226,12 @@ ul {
   margin-right: 22px;
 }
 
+
+/* USERS LIST */
+ul {
+  margin: 0;
+}
+
 .list-group{
   margin-top: 10px;
   height: calc(100vh - 270px);
@@ -231,14 +252,19 @@ ul {
 #rootListItem {
   font-weight: bold;
   color: var(--color-h);
+
 }
 
+
+/* DIV THAT HOLDS GRAPH */
 #my_dataviz {
   margin-top: 10px;
   height: calc(100vh - 193px);
   overflow: scroll;
 }
 
+
+/* SCROLLBAR STYLING */
 ::-webkit-scrollbar {
   height: 5px;
   width: 5px;
@@ -257,6 +283,8 @@ ul {
   background:rgb(54, 56, 58);
 }
 
+
+/* PROFILE BUTTON AND SITES */
 .profileButton {
   background-color: var(--color-profileButton);
   border: 1px solid grey;
