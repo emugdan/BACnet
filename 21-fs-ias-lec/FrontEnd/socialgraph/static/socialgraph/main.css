@@ -187,7 +187,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-/* SEARCH INPUT AND BUTTON IN USERS LIST */
+/* SEARCH INPUT IN USERS LIST */
 .searchInputDiv {
   position: relative;
   height: 70px;
@@ -197,7 +197,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   top: 18%;
   height: 40px;
-  width: 60%;
+  width: 100%;
   color: var(--color-h);
   background-color: transparent;
   border-top: 0px solid red;
@@ -207,23 +207,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .searchInput:hover {
-  border-bottom: 1px solid #00AEED;
+  border-bottom: 2px solid #00AEED;
 }
 
 .searchInput:focus {
   background-color: var(--color-contentSection);
   outline: none;
-}
-
-.searchButton {
-  position: absolute;
-  right: 8%;
-  top: 18%;
-}
-
-#searchButton {
-  margin-top: 15px;
-  margin-right: 22px;
 }
 
 
