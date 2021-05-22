@@ -17,8 +17,15 @@ import time
 
 def main():
     # dummy Feeds erstellen -> später feeds die schon geladen sind
-    # generateDirectories.generateDirectories()
-    directoriesGenerator.createDirectories(100, 20)
+
+    # To use the directories generator swap out comments:
+    # - The two just below (this file - l. 27 - 28)
+    # - Determination of mainPerson (this file - l. 58 - 61)
+    # - Path in generateJson.py to save in different json file (l. 50 - 51)
+    # - Path in views.py to choose desired json file (l. 18 - 19)
+
+    generateDirectories.generateDirectories()
+    # directoriesGenerator.createDirectories(100, 20)
 
     # die schon bestehenden Feeds auslesen und Feed und Personenobjekte erstellen
     digestmod = "sha256"
@@ -50,10 +57,10 @@ def main():
 
             # TODO: Wie wird Hauptperson bestimmt?
             # Hauptperson ist vera
-            # if (name == "vera"):
-                # mainPerson = person
+            if (name == "vera"):
+                mainPerson = person
 
-            mainPerson = dirs[0]
+            # mainPerson = dirs[0]
 
     for pers in list_of_persons:
         follow_list = pers.feed.readFollowFromFeed()
