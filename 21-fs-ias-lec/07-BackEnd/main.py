@@ -58,8 +58,8 @@ def main():
             for p in list_of_persons:
                 if follow_entry["Feed ID"] == p.id:
                     pers.follow(follow_entry["Feed ID"], p.name)
-                    pers.printFollowList()
                     break
+        pers.printFollowList()
 
 
     # Json file for FrontEnd
