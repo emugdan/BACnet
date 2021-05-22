@@ -1,20 +1,20 @@
 <ul class="list" id = 'test'>
 {% for person in recommendations %}
 
-    <li class="list-item">
+
+    <li class="list-item" id = listEl data-link="{% url 'profile-detail' person.bacnet_id %}">
       <div>
         <img src="{{person.profile_pic.url}}", class="list-item-image" >
       </div>
       <div class="list-item-content" >
 
-<a href="{% url 'profile-detail'  person.bacnet_id %}">
+
 
         <h4>{{person.name}}</h4>
         <p>{{person.gender}}</p>
         <p>{{person.town}}</p>
           <p></p>
 
-</a>
 
           <button class = "button" id = "button" onclick=follow("{{person.bacnet_id}}")>
               Follow!
@@ -30,13 +30,19 @@
 <script>
 
     function follow(x){
-       alert("No such Backend functionality as of now")
+       $('.list-item').off('click');
+       alert("Not yet implemented in Backend!")
     }
 
-    $(".list-item").click(function() {
 
-            alert("Clicked")
-        });
+
+    $(".list-item").click(function() {
+        location.href = $(this).data('link');
+    })
+
+
+
+
 
 
 
