@@ -7,15 +7,13 @@
 }
 
 
-.list-wrapper {
-	 max-width: 200px;
-	 margin: 50px auto;
-}
  .list {
 	 background: #fff;
 	 border-radius: 2px;
 	 list-style: none;
 	 padding: 10px 20px;
+	 overflow-y:scroll;
+	 height: calc(100vh - 270px);
 }
  .list-item {
 	 display: flex;
@@ -24,6 +22,8 @@
      transition:background-color 0.01s;
     -webkit-transition:background-color 0.01s;
 	 border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	 overflow-y:scroll;
+
 }
 
  .list-item:hover {
