@@ -35,6 +35,10 @@
                     <input type="text" class="searchInput" id="searchInputFieldTown" name="searchInput" placeholder="Search Town">
                 </div>
 
+            HopLayer
+            <input type="range" class="custom-range" value="2" min="2" max="5" step="1" id="slider" oninput=QueryForHopLayer(this.value)>
+                    <p id="hopsVal">2</p>
+
 
             <p id="a"></p>
              <li class="list-group-item list-group-item-action mb-2 rounded" id = "ResetButton" value = "reset" onclick = genderBasedFilter("")> <span class="fa fa-circle pr-1" id="reset"></span>Reset </li>
@@ -117,6 +121,27 @@ function myFunction() {
             });
 
         }
+
+        function QueryForHopLayer(layer) {
+            document.getElementById('hopsVal').innerHTML = layer;
+            lay = "lq" + layer
+
+            $.ajax({
+
+                type: "POST",
+                url: '{{ '' }}',
+                async: false,
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: lay},
+                success: function (response){
+                    $('#test').html('').replaceWith(response)
+
+                }
+
+            });
+
+
+        }
+
 
 
 
