@@ -44,59 +44,61 @@ def generate(name):
     myFeed = feed.FEED(fname="data/" + name + "/" + name + "-feed.pcap", fid=h.get_feed_id(),
                        signer=signer, create_if_notexisting=True, digestmod=digestmod)
 
-    return myFeed
+    return myFeed, key["feed_id"]
 
 
 def generateDirectories():
-    yasmin = generate("yasmin")
-    esther = generate("esther")
-    vera = generate("vera")
-    pascal = generate("pascal")
-    phillip = generate("phillip")
-    sebastian = generate("sebastian")
-    aline = generate("aline")
-    ben = generate("ben")
-    caroline = generate("caronline")
-    david = generate("david")
-    eveline = generate("eveline")
-    fitzgerald = generate("fitzgerald")
-    georgia = generate("georgia")
-    henry = generate("henry")
-    isabelle = generate("isabelle")
-    julius = generate("julius")
-    veri = generate("veri")
+    yasmin, yasmins_id = generate("yasmin")
+    esther, esthers_id = generate("esther")
+    vera, veras_id = generate("vera")
+    pascal, pascals_id = generate("pascal")
+    phillip, phillips_id = generate("phillip")
+    sebastian, sebastians_id = generate("sebastian")
+    aline, alines_id = generate("aline")
+    ben, bens_id = generate("ben")
+    caroline, carolines_id = generate("caroline")
+    david, davids_id = generate("david")
+    eveline, evelines_id = generate("eveline")
+    fitzgerald, fitzgeralds_id = generate("fitzgerald")
+    georgia, georgias_id = generate("georgia")
+    henry, henrys_id = generate("henry")
+    isabelle, isabelles_id = generate("isabelle")
+    julius, julius_id = generate("julius")
+    veri, veris_id = generate("veri")
 
-    yasmin.write(["bacnet/following", time.time(), 'f72f625b778fb17a']) # folgt Vera
-    yasmin.write(["bacnet/following", time.time(), 'ab44472d7d630eeb']) # folgt Esther
-    yasmin.write(["bacnet/following", time.time(), '7a87c429f64bc698']) # folgt Julius
 
-    vera.write(["bacnet/following", time.time(), 'ab44472d7d630eeb'])  # folgt Esther
-    vera.write(["bacnet/following", time.time(), '538c0e7c437376a8'])  # folgt Yasmin
-    vera.write(["bacnet/following", time.time(), '8142d31c996c2c12'])  # folgt Sebastian
-    vera.write(["bacnet/following", time.time(), 'cffc82fc8d272164'])  # folgt Pascal
-    vera.write(["bacnet/following", time.time(), '45bdfbfede5d0973'])  # folgt Phillip
 
-    esther.write(["bacnet/following", time.time(), '538c0e7c437376a8'])  # folgt Yasmin
-    esther.write(["bacnet/following", time.time(), 'f72f625b778fb17a']) # folgt Vera
-    esther.write(["bacnet/following", time.time(), '2d06f5f5cab6ae2a'])  # folgt David
+    yasmin.write(["bacnet/following", time.time(), veras_id]) # folgt Vera
+    yasmin.write(["bacnet/following", time.time(), esthers_id]) # folgt Esther
+    yasmin.write(["bacnet/following", time.time(), julius_id]) # folgt Julius
 
-    pascal.write(["bacnet/following", time.time(), '8142d31c996c2c12'])  # folgt Sebastian
-    pascal.write(["bacnet/following", time.time(), '45bdfbfede5d0973'])  # folgt Phillip
+    vera.write(["bacnet/following", time.time(), esthers_id])  # folgt Esther
+    vera.write(["bacnet/following", time.time(), yasmins_id])  # folgt Yasmin
+    vera.write(["bacnet/following", time.time(), sebastians_id])  # folgt Sebastian
+    vera.write(["bacnet/following", time.time(), pascals_id])  # folgt Pascal
+    vera.write(["bacnet/following", time.time(), phillips_id])  # folgt Phillip
 
-    phillip.write(["bacnet/following", time.time(), '8142d31c996c2c12'])  # folgt Sebastian
-    phillip.write(["bacnet/following", time.time(), 'cffc82fc8d272164'])  # folgt Pascal
+    esther.write(["bacnet/following", time.time(), yasmins_id])  # folgt Yasmin
+    esther.write(["bacnet/following", time.time(), veras_id]) # folgt Vera
+    esther.write(["bacnet/following", time.time(), davids_id])  # folgt David
 
-    sebastian.write(["bacnet/following", time.time(), '45bdfbfede5d0973'])  # folgt Phillip
-    sebastian.write(["bacnet/following", time.time(), 'cffc82fc8d272164'])  # folgt Pascal
+    pascal.write(["bacnet/following", time.time(), sebastians_id])  # folgt Sebastian
+    pascal.write(["bacnet/following", time.time(), phillips_id])  # folgt Phillip
 
-    aline.write(["bacnet/following", time.time(), '538c0e7c437376a8'])  # folgt Yasmin
-    aline.write(["bacnet/following", time.time(), '9c7fee9731d01193'])  # folgt Georgia
-    aline.write(["bacnet/following", time.time(), '917a951a80a2d601'])  # folgt Henry
+    phillip.write(["bacnet/following", time.time(), sebastians_id])  # folgt Sebastian
+    phillip.write(["bacnet/following", time.time(), pascals_id])  # folgt Pascal
 
-    julius.write(["bacnet/following", time.time(), 'd35f7b7f8e94abc2'])  # folgt Aline
-    julius.write(["bacnet/following", time.time(), '9ec9eef4394169a0'])  # folgt Ben
+    sebastian.write(["bacnet/following", time.time(), phillips_id])  # folgt Phillip
+    sebastian.write(["bacnet/following", time.time(), pascals_id])  # folgt Pascal
 
-    ben.write(["bacnet/following", time.time(), 'd35f7b7f8e94abc2'])  # folgt Aline
-    ben.write(["bacnet/following", time.time(), 'f72f625b778fb17a'])  # folgt Vera
-    ben.write(["bacnet/following", time.time(), 'ab44472d7d630eeb'])  # folgt Esther
-    ben.write(["bacnet/following", time.time(), '538c0e7c437376a8'])  # folgt Yasmin
+    aline.write(["bacnet/following", time.time(), yasmins_id])  # folgt Yasmin
+    aline.write(["bacnet/following", time.time(), georgias_id])  # folgt Georgia
+    aline.write(["bacnet/following", time.time(), henrys_id])  # folgt Henry
+
+    julius.write(["bacnet/following", time.time(), alines_id])  # folgt Aline
+    julius.write(["bacnet/following", time.time(), bens_id])  # folgt Ben
+
+    ben.write(["bacnet/following", time.time(), alines_id])  # folgt Aline
+    ben.write(["bacnet/following", time.time(), veras_id])  # folgt Vera
+    ben.write(["bacnet/following", time.time(), esthers_id])  # folgt Esther
+    ben.write(["bacnet/following", time.time(), yasmins_id])  # folgt Yasmin
