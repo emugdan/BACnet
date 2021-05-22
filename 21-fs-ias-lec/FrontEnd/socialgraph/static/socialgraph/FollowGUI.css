@@ -21,8 +21,15 @@
 	 display: flex;
 	 margin: 10px;
 	 padding-bottom: 5px;
+     transition:background-color 0.01s;
+    -webkit-transition:background-color 0.01s;
 	 border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
+
+ .list-item:hover {
+  background: #cecaca;
+}
+
  .list-item:last-child {
 	 border-bottom: none;
 }
@@ -64,26 +71,5 @@ input[type="text"]#searchbox {
     width: 200px;
 	border-style: solid;
 }
-.flex-item {
-    background-color:#7887AB;
-    flex-grow: 1;
-}
 
-
-
-.float-child {
-    width: 25%;
-    float: left;
-}
-
-
-.float-child-left {
-    width: 15%;
-    float: left;
-}
-
-.float-child-right {
-    width: 15%;
-    float: right;
-}
 

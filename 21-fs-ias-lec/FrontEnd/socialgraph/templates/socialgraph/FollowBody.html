@@ -30,19 +30,14 @@
 <script>
 
     function follow(x){
-        $.ajax({
-
-                type: "POST",
-                url: '{{ '' }}',
-                async: false,
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: "fo"+x},
-                success: function (response){
-                    $('#test').html('').replaceWith(response)
-
-                }
-
-            });
+       alert("No such Backend functionality as of now")
     }
+
+    $(".list-item").click(function() {
+
+            alert("Clicked")
+        });
+
 
 
 
