@@ -1,4 +1,5 @@
 import generateDirectories
+import directoriesGenerator
 from Person import Person
 from generateJson import generateJson
 from Feed import Feed
@@ -16,7 +17,8 @@ import time
 
 def main():
     # dummy Feeds erstellen -> später feeds die schon geladen sind
-    generateDirectories.generateDirectories()
+    # generateDirectories.generateDirectories()
+    directoriesGenerator.createDirectories(100, 20)
 
     # die schon bestehenden Feeds auslesen und Feed und Personenobjekte erstellen
     digestmod = "sha256"
@@ -48,8 +50,10 @@ def main():
 
             # TODO: Wie wird Hauptperson bestimmt?
             # Hauptperson ist vera
-            if (name == "vera"):
-                mainPerson = person
+            # if (name == "vera"):
+                # mainPerson = person
+
+            mainPerson = dirs[0]
 
     for pers in list_of_persons:
         follow_list = pers.feed.readFollowFromFeed()

@@ -15,17 +15,18 @@ from .utils.jsonUtils import extract_connections, getRoot
 
 path = Path('socialgraph/static/socialgraph/')
 path2 = path / 'testData.json'
-path = path / 'loadedData.json'
+path = path / 'loadedData1.json'
 data_file = open(path)
 data = json.load(data_file)
 data_file.close()
-root = getRoot(data['nodes'])
 
 
 
 def home(request):
     data_file = open(path)
     data = json.load(data_file)
+    data_file.close()
+    root = getRoot(data['nodes'])
 
     context = {
         'connections': extract_connections(data, "1 1"),
@@ -35,6 +36,11 @@ def home(request):
     return render(request, 'socialgraph/home.html', context)
 
 def users(request):
+
+    data_file = open(path)
+    data = json.load(data_file)
+    data_file.close()
+    root = getRoot(data['nodes'])
 
     if request.method == "POST":
         response = request.POST['text']
