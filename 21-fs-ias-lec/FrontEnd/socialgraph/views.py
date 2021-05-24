@@ -1,7 +1,9 @@
 import json
+import os
 from pathlib import Path
 import pdb;
 
+from django.http import HttpResponseRedirect
 from django.shortcuts import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
@@ -142,6 +144,45 @@ def followBody(request):
 class PostDetailView(DetailView):
     model = Profile
 
+def update_profile(request):
+
+    context = None
+    for node in data['nodes']:
+        if node.get('hopLayer') == 0:
+            context = {
+                'node': node,
+                'profile': Profile.objects.filter(myself=True).first()
+            }
+            break
+
+    if request.method == "POST":
+        update = {'BACnetID': node.get('BACnetID')}
+        fieldnames = ['gender', 'birthday', 'country', 'town', 'language', 'status']
+        for fn in fieldnames:
+            if fn in request.POST and (node.get(fn) is not None and node.get(fn) != request.POST[fn] or node.get(fn) is None and request.POST[fn] != ''):
+                update[fn] = request.POST[fn]
+
+        if len(request.FILES)>0:
+            for f in request.FILES.keys():
+                handle_uploaded_file(request.FILES[f], node.get('BACnetID'))
+
+        #TODO trigger function call to backend with update-info.
+
+        return HttpResponseRedirect("/profile/" + str(node.get('id')))
+
+
+    return render(request, 'socialgraph/profile_update.html', context)
+
+def handle_uploaded_file(f, id):
+    path = os.path.join('media', 'profile_pics', id + '.' + f.content_type[f.content_type.index('/')+1:])
+    if os.path.exists(path):
+        os.remove(path)
+    with open(path, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+        destination.flush()
+        os.fsync(destination.fileno())
+        destination.close()
 
 if __name__ == "__main__":
 
