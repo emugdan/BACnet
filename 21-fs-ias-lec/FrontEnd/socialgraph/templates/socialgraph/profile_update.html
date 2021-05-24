@@ -1,0 +1,88 @@
+{% extends "socialgraph/base.html" %}
+{% block content %}
+
+    <div class="container">
+        <h4 class="content-section-title">Profile Editor</h4>
+
+        <div class="content-section" id="profileUpdateContentSection">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm">
+
+                        <p class="mb-2">Status</p>
+                        <input type="text" id='status' name="status"
+                               value="{% if node.status is not None %} {{ node.status }} {% endif %}"/>
+                        <p id="d"></p>
+
+                        <p class="mb-2">Birthday</p>
+                        <input type="date" id='birthday' name="birthday"
+                               value="{% if node.birthday is not None %} {{ node.birthday }} {% endif %}"/>
+                        <p id="d"></p>
+
+                        <p class="mb-2">Gender</p>
+                        <input type="radio" id="female" name="gender" value="female" {% if node.gender == "female" %}
+                               checked="checked" {% endif %}>
+                        <label for="female">female</label>
+                        <div></div>
+                        <input type="radio" id="male" name="gender" value="male" {% if node.gender == "male" %}
+                               checked="checked" {% endif %}>
+                        <label for="male">male</label>
+                        <div></div>
+                        <input type="radio" id="other" name="gender" value="other" {% if node.gender == "other" %}
+                               checked="checked" {% endif %}>
+                        <label for="other">other</label>
+                        <div></div>
+                        <input type="radio" id="none" name="gender" value="private" {% if node.gender == "private" %}
+                               checked="checked" {% endif %}>
+                        <label for="none">private</label>
+                        <p id="d"></p>
+
+                        <p class="mb-2">Country</p>
+                        <input type="text" id='country' name="country"
+                               value="{% if node.country is not None %} {{ node.country }} {% endif %}"/>
+                        <p id="d"></p>
+
+                        <p class="mb-2">Town</p>
+                        <input type="text" id='town' name="town"
+                               value="{% if node.town is not None %} {{ node.town }} {% endif %}"/>
+                        <p id="d"></p>
+
+                        <p class="mb-2">Languages</p>
+                        <input type="text" id='languages' name="language" data-role="tagsinput"
+                               value="{% if node.language is not None %} {{ node.language }} {% endif %}"/>
+                        <p id="d"></p>
+
+                        <button type="submit"
+                                class="btn btn-primary" {% comment %}onclick="saveChanges()"{% endcomment %}>Save
+                        </button>
+                    </div>
+
+                    <div class="col-sm">
+
+                        <p class="mb-2">Profile Picture</p>
+                        <div class="media">
+                            <img class="rounded-circle account-img" id="id_old_image" src="{{ profile.profile_pic.url }}">
+                            <img class="rounded-circle account-img" id="id_new_image" src="#" style="display: none"/>
+                        </div>
+                        <input type="file" name="profile_pic" accept="image/*" id="id_profile_pic" onchange="preview_img(this);">
+
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+      function preview_img(input) {
+        if (input.files && input.files[0]) {
+          var src = URL.createObjectURL(input.files[0])
+          $('#id_new_image').attr('src', src)
+          document.getElementById('id_new_image').style.display = 'inline';
+          document.getElementById('id_old_image').style.display = 'none';
+        }
+      }
+    </script>
+{% endblock content %}

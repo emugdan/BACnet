@@ -1,5 +1,6 @@
 import sys
 
+
 sys.path.append("../Feed")
 
 
@@ -28,7 +29,7 @@ class Person:
         self.followlist[id] = friend
         if friend.feed != None:
             self.feed.writeFollowToFeed(friend.feed)
-            # TODO: generate JSON for changes
+
         else:
             print("couldn't find feed for person")
 

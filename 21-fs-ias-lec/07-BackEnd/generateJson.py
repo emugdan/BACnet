@@ -1,5 +1,5 @@
 import json
-
+import sys
 
 
 import os
@@ -23,7 +23,10 @@ def generateJson(personList, weAre):
             ourID = i
         node = {}
         followList = person.getFollowList()
-        node['BACnetID'] = person.id  # .decode("utf-8")
+        if sys.platform.startswith("linux"):
+            node['BACnetID'] = person.id
+        else:
+            node['BACnetID'] = person.id.decode("utf-8")
         node['id'] = nodeIDs[person.id] # .decode("utf-8")]
         node['name'] = person.name
         node['gender'] = 'female'
@@ -45,6 +48,7 @@ def generateJson(personList, weAre):
 
     path = Path('socialgraph/static/socialgraph/')
     path = path / 'loadedData.json'
+    # path = path / 'loadedData1.json'
 
     #Change workingdirectory to Frontend
     backEnd = os.getcwd()

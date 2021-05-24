@@ -1,7 +1,9 @@
 import json
+import os
 from pathlib import Path
 import pdb;
 
+from django.http import HttpResponseRedirect
 from django.shortcuts import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
@@ -16,16 +18,18 @@ from .utils.jsonUtils import extract_connections, getRoot
 path = Path('socialgraph/static/socialgraph/')
 path2 = path / 'testData.json'
 path = path / 'loadedData.json'
+# path = path / 'loadedData1.json'
 data_file = open(path)
 data = json.load(data_file)
 data_file.close()
-root = getRoot(data['nodes'])
 
 
 
 def home(request):
     data_file = open(path)
     data = json.load(data_file)
+    data_file.close()
+    root = getRoot(data['nodes'])
 
     context = {
         'connections': extract_connections(data, "1 1"),
@@ -35,6 +39,11 @@ def home(request):
     return render(request, 'socialgraph/home.html', context)
 
 def users(request):
+
+    data_file = open(path)
+    data = json.load(data_file)
+    data_file.close()
+    root = getRoot(data['nodes'])
 
     if request.method == "POST":
         response = request.POST['text']
@@ -66,11 +75,11 @@ to rerender the FollowRecommendation HTML files.
 def follow(request):
     data_file = open(path)
     data = json.load(data_file)
-    hoplayer = FollowRecommendations.returnmaxHoplayer(data)
+
 
 
     #Create Initial follow recommendation
-    recommendationList = FollowRecommendations.createRecommendationList(jsonData= data, maxLayer=hoplayer)
+    recommendationList = FollowRecommendations.createRecommendationList(jsonData= data)
 
     #Add the recommendationList to the context which will be passed to the render function
     context = {
@@ -87,17 +96,21 @@ def follow(request):
 
         #Gender Query
         if (response == 'male' or response =='female'):
-            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data,attribute = response, criteria='gender', maxlayer=hoplayer)
+            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data,attribute = response, criteria='gender')
         #User has searched for name
         elif (response.startswith("nq")):
             name = response[2:len(response)]
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=name,
-                                                                            criteria='name', maxlayer=hoplayer)
+                                                                            criteria='name')
         # User has searched for name
         elif (response.startswith("tq")):
             town = response[2:len(response)]
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=town,
-                                                                             criteria='town', maxlayer=hoplayer)
+                                                                             criteria='town')
+        elif (response.startswith("lq")):
+            layer = int(response[2])
+            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=layer,
+                                                                             criteria='hopLayer')
         #User wants to follow another user
         elif (response.startswith("fo")):
             # #Get the id
@@ -142,6 +155,45 @@ def followBody(request):
 class PostDetailView(DetailView):
     model = Profile
 
+def update_profile(request):
+
+    context = None
+    for node in data['nodes']:
+        if node.get('hopLayer') == 0:
+            context = {
+                'node': node,
+                'profile': Profile.objects.filter(myself=True).first()
+            }
+            break
+
+    if request.method == "POST":
+        update = {'BACnetID': node.get('BACnetID')}
+        fieldnames = ['gender', 'birthday', 'country', 'town', 'language', 'status']
+        for fn in fieldnames:
+            if fn in request.POST and (node.get(fn) is not None and node.get(fn) != request.POST[fn] or node.get(fn) is None and request.POST[fn] != ''):
+                update[fn] = request.POST[fn]
+
+        if len(request.FILES)>0:
+            for f in request.FILES.keys():
+                handle_uploaded_file(request.FILES[f], node.get('BACnetID'))
+
+        #TODO trigger function call to backend with update-info.
+
+        return HttpResponseRedirect("/profile/" + str(node.get('id')))
+
+
+    return render(request, 'socialgraph/profile_update.html', context)
+
+def handle_uploaded_file(f, id):
+    path = os.path.join('media', 'profile_pics', id + '.' + f.content_type[f.content_type.index('/')+1:])
+    if os.path.exists(path):
+        os.remove(path)
+    with open(path, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+        destination.flush()
+        os.fsync(destination.fileno())
+        destination.close()
 
 if __name__ == "__main__":
 

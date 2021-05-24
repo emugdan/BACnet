@@ -1,12 +1,13 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 
 # Create your models here.
 
 
 class Profile(models.Model):
-    bacnet_id = models.CharField(max_length=64, primary_key=True)
+    bacnet_id = models.CharField(max_length=64)
     name = models.CharField(max_length=64)
     gender = models.CharField(max_length=6, blank=True, null=True, default=None)
     birthday = models.DateField(blank=True, null=True, default=None)
@@ -14,6 +15,8 @@ class Profile(models.Model):
     town = models.CharField(max_length=64, blank=True, null=True, default=None)
     language = models.CharField(max_length=256, blank=True, null=True, default=None) #https://stackoverflow.com/questions/22340258/django-list-field-in-model
     profile_pic = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    myself = models.BooleanField(default=False)
+    node_id = models.IntegerField(primary_key=True)
 
     def __str__(self):
         return f'{self.name} Profile / {self.bacnet_id}'
@@ -74,11 +77,11 @@ class FollowRecommendations(models.Model):
         return details
 
     @classmethod
-    def createRecommendationList(self, jsonData, maxLayer):
+    def createRecommendationList(self, jsonData):
         recommendationList = []
         for node in jsonData['nodes']:
             hoplayer = node.get('hopLayer')
-            if (hoplayer == maxLayer):
+            if (hoplayer >1):
                 recommendationList.append(
                     FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('id'),
                                                  nameNode=node.get('name'), genderNode=node.get('gender'),
@@ -90,10 +93,10 @@ class FollowRecommendations(models.Model):
         return recommendationList
 
     @classmethod
-    def createRecommendationsFromQuery(self, jsonData, attribute, criteria, maxlayer):
+    def createRecommendationsFromQuery(self, jsonData, attribute, criteria):
         recommendationList = []
         for node in jsonData['nodes']:
-            if (node.get(criteria) == attribute and node.get('hopLayer') == maxlayer):
+            if (node.get(criteria) == attribute and node.get('hopLayer') > 1):
                 recommendationList.append(
                     FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('id'),
                                                  nameNode=node.get('name'), genderNode=node.get('gender'),
@@ -105,10 +108,19 @@ class FollowRecommendations(models.Model):
         return recommendationList
 
     @classmethod
-    def returnmaxHoplayer(self, json):
-        maxhoplayer = []
-        for x in json['nodes']:
-            if not (x.get('hopLayer')  == 10000):
-                maxhoplayer.append(x.get('hopLayer'))
-        return max(maxhoplayer)
+    def createRecommendationsHopLayer(self, jsonData, criteria):
+        recommendationList = []
+        for node in jsonData['nodes']:
+            if (node.get('hopLayer') == criteria):
+                recommendationList.append(
+                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('id'),
+                                                 nameNode=node.get('name'), genderNode=node.get('gender'),
+                                                 birthdayNode=node.get('birthday'), countryNode=node.get('country'),
+                                                 townNode=node.get('town'),
+                                                 languageNode=node.get('language'),
+                                                 profile_picNode=node.get('profile_pic') if node.get(
+                                                     'profile_pic') is not None else 'default.jpg'))
+        return recommendationList
+
+
 
