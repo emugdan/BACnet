@@ -18,16 +18,18 @@ from .utils.jsonUtils import extract_connections, getRoot
 path = Path('socialgraph/static/socialgraph/')
 path2 = path / 'testData.json'
 path = path / 'loadedData.json'
+# path = path / 'loadedData1.json'
 data_file = open(path)
 data = json.load(data_file)
 data_file.close()
-root = getRoot(data['nodes'])
 
 
 
 def home(request):
     data_file = open(path)
     data = json.load(data_file)
+    data_file.close()
+    root = getRoot(data['nodes'])
 
     context = {
         'connections': extract_connections(data, "1 1"),
@@ -37,6 +39,11 @@ def home(request):
     return render(request, 'socialgraph/home.html', context)
 
 def users(request):
+
+    data_file = open(path)
+    data = json.load(data_file)
+    data_file.close()
+    root = getRoot(data['nodes'])
 
     if request.method == "POST":
         response = request.POST['text']
@@ -68,11 +75,11 @@ to rerender the FollowRecommendation HTML files.
 def follow(request):
     data_file = open(path)
     data = json.load(data_file)
-    hoplayer = FollowRecommendations.returnmaxHoplayer(data)
+
 
 
     #Create Initial follow recommendation
-    recommendationList = FollowRecommendations.createRecommendationList(jsonData= data, maxLayer=hoplayer)
+    recommendationList = FollowRecommendations.createRecommendationList(jsonData= data)
 
     #Add the recommendationList to the context which will be passed to the render function
     context = {
@@ -89,17 +96,21 @@ def follow(request):
 
         #Gender Query
         if (response == 'male' or response =='female'):
-            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data,attribute = response, criteria='gender', maxlayer=hoplayer)
+            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data,attribute = response, criteria='gender')
         #User has searched for name
         elif (response.startswith("nq")):
             name = response[2:len(response)]
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=name,
-                                                                            criteria='name', maxlayer=hoplayer)
+                                                                            criteria='name')
         # User has searched for name
         elif (response.startswith("tq")):
             town = response[2:len(response)]
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=town,
-                                                                             criteria='town', maxlayer=hoplayer)
+                                                                             criteria='town')
+        elif (response.startswith("lq")):
+            layer = int(response[2])
+            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=layer,
+                                                                             criteria='hopLayer')
         #User wants to follow another user
         elif (response.startswith("fo")):
             # #Get the id

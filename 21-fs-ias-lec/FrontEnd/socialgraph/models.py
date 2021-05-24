@@ -77,11 +77,11 @@ class FollowRecommendations(models.Model):
         return details
 
     @classmethod
-    def createRecommendationList(self, jsonData, maxLayer):
+    def createRecommendationList(self, jsonData):
         recommendationList = []
         for node in jsonData['nodes']:
             hoplayer = node.get('hopLayer')
-            if (hoplayer == maxLayer):
+            if (hoplayer >1):
                 recommendationList.append(
                     FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('id'),
                                                  nameNode=node.get('name'), genderNode=node.get('gender'),
@@ -93,10 +93,10 @@ class FollowRecommendations(models.Model):
         return recommendationList
 
     @classmethod
-    def createRecommendationsFromQuery(self, jsonData, attribute, criteria, maxlayer):
+    def createRecommendationsFromQuery(self, jsonData, attribute, criteria):
         recommendationList = []
         for node in jsonData['nodes']:
-            if (node.get(criteria) == attribute and node.get('hopLayer') == maxlayer):
+            if (node.get(criteria) == attribute and node.get('hopLayer') > 1):
                 recommendationList.append(
                     FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('id'),
                                                  nameNode=node.get('name'), genderNode=node.get('gender'),
@@ -108,10 +108,19 @@ class FollowRecommendations(models.Model):
         return recommendationList
 
     @classmethod
-    def returnmaxHoplayer(self, json):
-        maxhoplayer = []
-        for x in json['nodes']:
-            if not (x.get('hopLayer')  == 10000):
-                maxhoplayer.append(x.get('hopLayer'))
-        return max(maxhoplayer)
+    def createRecommendationsHopLayer(self, jsonData, criteria):
+        recommendationList = []
+        for node in jsonData['nodes']:
+            if (node.get('hopLayer') == criteria):
+                recommendationList.append(
+                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('id'),
+                                                 nameNode=node.get('name'), genderNode=node.get('gender'),
+                                                 birthdayNode=node.get('birthday'), countryNode=node.get('country'),
+                                                 townNode=node.get('town'),
+                                                 languageNode=node.get('language'),
+                                                 profile_picNode=node.get('profile_pic') if node.get(
+                                                     'profile_pic') is not None else 'default.jpg'))
+        return recommendationList
+
+
 

@@ -25,16 +25,20 @@
             <li class="list-group-item list-group-item-action mb-2 rounded"  id = "GenderFemale" value = "female" onclick = genderBasedFilter("female")> <span class="fa fa-circle pr-1" ></span>Female </li>
             <li class="list-group-item list-group-item-action mb-2 rounded" id = "GenderMale" value = "male" onclick = genderBasedFilter("male")> <span class="fa fa-circle pr-1" id="male"></span>Male </li>
 
-            <p class="mb-2">Name</p>
+            Name
+            <div class="searchInputDiv">
+                    <input type="text" class="searchInput" id="searchInputFieldName" name="searchInput" placeholder="Search Name">
+            </div>
 
-            <input type="text" value= "" id='searchName' placeholder="search Name" />
-                <button onclick="nameQuery()">Search Name</button>
-            <p id="d"></p>
+            Town
+            <div class="searchInputDiv">
+                    <input type="text" class="searchInput" id="searchInputFieldTown" name="searchInput" placeholder="Search Town">
+                </div>
 
-            <p class="mb-2">Town</p>
+            HopLayer
+            <input type="range" class="custom-range" value="2" min="2" max="5" step="1" id="slider" oninput=QueryForHopLayer(this.value)>
+                    <p id="hopsVal">2</p>
 
-            <input type="text" value= "" id='srchTown' placeholder="search Town"  />
-                <button onclick="townQuery()">Search Town</button>
 
             <p id="a"></p>
              <li class="list-group-item list-group-item-action mb-2 rounded" id = "ResetButton" value = "reset" onclick = genderBasedFilter("")> <span class="fa fa-circle pr-1" id="reset"></span>Reset </li>
@@ -76,9 +80,9 @@ function myFunction() {
 }
 
 // MAKE AN AJAX CALL TO VIEWS.PY
-        function nameQuery() {
+        function nameQuery(name) {
 
-            var text = "nq" +document.getElementById("searchName").value;
+            var text = "nq" +name
 
 
 
@@ -97,9 +101,9 @@ function myFunction() {
 
         }
 
-        function townQuery() {
+        function townQuery(town) {
 
-            var town = "tq" +document.getElementById("srchTown").value;
+            var town = "tq" +town
 
 
 
@@ -117,6 +121,27 @@ function myFunction() {
             });
 
         }
+
+        function QueryForHopLayer(layer) {
+            document.getElementById('hopsVal').innerHTML = layer;
+            lay = "lq" + layer
+
+            $.ajax({
+
+                type: "POST",
+                url: '{{ '' }}',
+                async: false,
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: lay},
+                success: function (response){
+                    $('#test').html('').replaceWith(response)
+
+                }
+
+            });
+
+
+        }
+
 
 
 
@@ -139,6 +164,21 @@ function myFunction() {
             });
 
         }
+
+        $('#searchInputFieldName').on('keypress', function(e) {
+            if (e.which == 13) {
+                nameQuery($("#searchInputFieldName").val())
+            }
+        })
+
+        $('#searchInputFieldTown').on('keypress', function(e) {
+            if (e.which == 13) {
+                nameQuery($("#searchInputFieldTown").val())
+            }
+        })
+
+
+
 
 
 </script>
