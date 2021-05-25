@@ -175,7 +175,8 @@ def update_profile(request):
 
         if len(request.FILES)>0:
             for f in request.FILES.keys():
-                handle_uploaded_file(request.FILES[f], node.get('BACnetID'))
+                profile_pic_path = handle_uploaded_file(request.FILES[f], node.get('BACnetID'))
+                update['profile_pic']= profile_pic_path
 
         #TODO trigger function call to backend with update-info.
 
@@ -194,6 +195,7 @@ def handle_uploaded_file(f, id):
         destination.flush()
         os.fsync(destination.fileno())
         destination.close()
+        return path
 
 if __name__ == "__main__":
 
