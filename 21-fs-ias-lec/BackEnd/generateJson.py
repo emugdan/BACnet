@@ -46,14 +46,20 @@ def generateJson(personList, weAre):
 
     data = {'nodes':nodes, 'links': links}
 
-    path = Path('socialgraph/static/socialgraph/')
+    path = Path('socialgraph/static/socialgraph')
     path = path / 'loadedData.json'
     # path = path / 'loadedData1.json'
 
     #Change workingdirectory to Frontend
     backEnd = os.getcwd()
-    frontEnd = backEnd.replace("07-BackEnd", "FrontEnd")
-    os.chdir(frontEnd)
+    if (not backEnd.__contains__("FrontEnd")):
+        frontEnd = backEnd.replace("BackEnd", "FrontEnd")
+        os.chdir(frontEnd)
+
+    else:
+
+        x = os.getcwd().split("FrontEnd")[0]+"FrontEnd"
+        os.chdir(x)
 
     #Write file
     if os.path.exists(path):

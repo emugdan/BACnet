@@ -1,8 +1,8 @@
-import generateDirectories
-import directoriesGenerator
-from Person import Person
-from generateJson import generateJson
-from Feed import Feed
+import BackEnd.generateDirectories as generateDirectories
+import BackEnd.directoriesGenerator
+from BackEnd.Person import Person
+from BackEnd.generateJson import generateJson
+from BackEnd.Feed import Feed
 
 import sys
 
@@ -10,8 +10,9 @@ import sys
 sys.path.append("lib")
 
 import os
-import crypto
-import feed
+
+import BackEnd.lib.crypto as crypto
+import BackEnd.lib.feed as feed
 import time
 
 

@@ -1,11 +1,11 @@
 import sys
 
 # add the lib to the module folder
-sys.path.append("lib")
+
 
 import os
-import crypto
-import feed
+import BackEnd.lib.crypto as crypto
+import BackEnd.lib.feed as feed
 import time
 
 
@@ -102,3 +102,5 @@ def generateDirectories():
     ben.write(["bacnet/following", time.time(), veras_id])  # folgt Vera
     ben.write(["bacnet/following", time.time(), esthers_id])  # folgt Esther
     ben.write(["bacnet/following", time.time(), yasmins_id])  # folgt Yasmin
+
+

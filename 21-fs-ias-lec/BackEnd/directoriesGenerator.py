@@ -1,7 +1,7 @@
 import sys
 import os
 import crypto
-import feed
+import BackEnd.lib.feed as feed
 import random
 import time
 
