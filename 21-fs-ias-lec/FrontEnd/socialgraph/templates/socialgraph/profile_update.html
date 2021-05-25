@@ -53,19 +53,20 @@
                                value="{% if node.language is not None %} {{ node.language }} {% endif %}"/>
                         <p id="d"></p>
 
-                        <button type="submit"
-                                class="btn btn-primary" {% comment %}onclick="saveChanges()"{% endcomment %}>Save
-                        </button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-default" onclick="location.href='/profile/{{ node.id }}';">Cancel</button>
                     </div>
 
                     <div class="col-sm">
 
                         <p class="mb-2">Profile Picture</p>
                         <div class="media">
-                            <img class="rounded-circle account-img" id="id_old_image" src="{{ profile.profile_pic.url }}">
+                            <img class="rounded-circle account-img" id="id_old_image"
+                                 src="{{ profile.profile_pic.url }}">
                             <img class="rounded-circle account-img" id="id_new_image" src="#" style="display: none"/>
                         </div>
-                        <input type="file" name="profile_pic" accept="image/*" id="id_profile_pic" onchange="preview_img(this);">
+                        <input type="file" name="profile_pic" accept="image/*" id="id_profile_pic"
+                               onchange="preview_img(this);">
 
 
                     </div>
@@ -79,7 +80,8 @@
       function preview_img(input) {
         if (input.files && input.files[0]) {
           var src = URL.createObjectURL(input.files[0])
-          $('#id_new_image').attr('src', src)
+          $('#id_new_image')
+              .attr('src', src)
           document.getElementById('id_new_image').style.display = 'inline';
           document.getElementById('id_old_image').style.display = 'none';
         }
