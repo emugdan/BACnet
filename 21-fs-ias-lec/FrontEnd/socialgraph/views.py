@@ -1,7 +1,12 @@
+import pathlib
+import sys
 import json
 import os
 from pathlib import Path
-import pdb;
+a = pathlib.Path(__file__).absolute().parent.parent.parent
+sys.path.insert(0, str(a))
+from .utils.callToBackEnd import followCall
+
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import HttpResponse
@@ -113,24 +118,15 @@ def follow(request):
                                                                              criteria='hopLayer')
         #User wants to follow another user
         elif (response.startswith("fo")):
-            # #Get the id
-            # id = int(response[2:len(response)])
-            #
-            # #Open the jsonFile
-            # with open(path, "r") as jsonFile:
-            #     temp = json.load(jsonFile)
-            #
-            # #Overwrite the hoplayer
-            # for x in temp['nodes']:
-            #     if x.get('id') == id:
-            #         x['hopLayer'] = 1
-            # #Save new json file
-            # with open(path, "w") as jsonFile:
-            #     json.dump(temp, jsonFile)
-            # data_file = open(path)
-            # data = json.load(data_file)
-            # #Create new recommendations
-            queryList = FollowRecommendations.createRecommendationList(jsonData=data, maxLayer=hoplayer)
+            feedID = response[2:len(response)]
+            followCall("vera", feedID)
+            data_file = open(path)
+            data = json.load(data_file)
+
+            # Create Initial follow recommendation
+            queryList = FollowRecommendations.createRecommendationList(jsonData=data)
+
+
 
         else:
             queryList = recommendationList

@@ -2,7 +2,7 @@
 {% for person in recommendations %}
 
 
-    <li class="list-item" id = listEl data-link="{% url 'profile-detail' person.bacnet_id %}">
+    <li class="list-item" id = listEl data-link="{% url 'profile-detail' person.id %}">
       <div>
         <img src="{{person.profile_pic.url}}", class="list-item-image" >
       </div>
@@ -31,7 +31,21 @@
 
     function follow(x){
        $('.list-item').off('click');
-       alert("Not yet implemented in Backend!")
+
+        foRequ = "fo"+x;
+
+        $.ajax({
+
+                type: "POST",
+                url: '{{ '' }}',
+                async: false,
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: foRequ},
+                success: function (response){
+                    $('#test').html('').replaceWith(response)
+
+                }
+
+            });
     }
 
 
@@ -39,6 +53,17 @@
     $(".list-item").click(function() {
         location.href = $(this).data('link');
     })
+
+
+    function nameQuery(name) {
+
+            var text = "nq" +name
+
+
+
+
+
+        }
 
 
 

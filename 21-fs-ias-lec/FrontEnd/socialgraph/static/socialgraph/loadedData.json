@@ -1,0 +1,346 @@
+{
+  "nodes": [
+    {
+      "BACnetID": "13cbfa1b62db23de",
+      "id": 0,
+      "name": "veri",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 1
+    },
+    {
+      "BACnetID": "0b32bdcc627e7e35",
+      "id": 1,
+      "name": "isabelle",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 1
+    },
+    {
+      "BACnetID": "397f67a28913d079",
+      "id": 2,
+      "name": "henry",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 2
+    },
+    {
+      "BACnetID": "b2386a191c675c76",
+      "id": 3,
+      "name": "vera",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 0
+    },
+    {
+      "BACnetID": "e2a719cc9cb91e5d",
+      "id": 4,
+      "name": "david",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 2
+    },
+    {
+      "BACnetID": "7f8c3c33690e8213",
+      "id": 5,
+      "name": "phillip",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 1
+    },
+    {
+      "BACnetID": "b681594c687e8a43",
+      "id": 6,
+      "name": "caroline",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 10000
+    },
+    {
+      "BACnetID": "96752ebfdfb9afba",
+      "id": 7,
+      "name": "eveline",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 1
+    },
+    {
+      "BACnetID": "ee7bb80b0750abad",
+      "id": 8,
+      "name": "yasmin",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 1
+    },
+    {
+      "BACnetID": "d0d06397a1d443ac",
+      "id": 9,
+      "name": "julius",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 1
+    },
+    {
+      "BACnetID": "427ad473063d6500",
+      "id": 10,
+      "name": "sebastian",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 1
+    },
+    {
+      "BACnetID": "53503cf0c7aa8518",
+      "id": 11,
+      "name": "fitzgerald",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 1
+    },
+    {
+      "BACnetID": "f9806e72897b02b3",
+      "id": 12,
+      "name": "pascal",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 1
+    },
+    {
+      "BACnetID": "be2d6e220b6241e9",
+      "id": 13,
+      "name": "esther",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 1
+    },
+    {
+      "BACnetID": "9e277a215cf480bc",
+      "id": 14,
+      "name": "ben",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 1
+    },
+    {
+      "BACnetID": "684c35ccbf5e17ad",
+      "id": 15,
+      "name": "aline",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 1
+    },
+    {
+      "BACnetID": "1c341179edddfa37",
+      "id": 16,
+      "name": "georgia",
+      "gender": "female",
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "hopLayer": 1
+    }
+  ],
+  "links": [
+    {
+      "source": 3,
+      "target": 13
+    },
+    {
+      "source": 3,
+      "target": 8
+    },
+    {
+      "source": 3,
+      "target": 10
+    },
+    {
+      "source": 3,
+      "target": 12
+    },
+    {
+      "source": 3,
+      "target": 5
+    },
+    {
+      "source": 3,
+      "target": 1
+    },
+    {
+      "source": 3,
+      "target": 16
+    },
+    {
+      "source": 3,
+      "target": 15
+    },
+    {
+      "source": 3,
+      "target": 11
+    },
+    {
+      "source": 3,
+      "target": 14
+    },
+    {
+      "source": 3,
+      "target": 9
+    },
+    {
+      "source": 3,
+      "target": 0
+    },
+    {
+      "source": 3,
+      "target": 7
+    },
+    {
+      "source": 5,
+      "target": 10
+    },
+    {
+      "source": 5,
+      "target": 12
+    },
+    {
+      "source": 8,
+      "target": 3
+    },
+    {
+      "source": 8,
+      "target": 13
+    },
+    {
+      "source": 8,
+      "target": 9
+    },
+    {
+      "source": 9,
+      "target": 15
+    },
+    {
+      "source": 9,
+      "target": 14
+    },
+    {
+      "source": 10,
+      "target": 5
+    },
+    {
+      "source": 10,
+      "target": 12
+    },
+    {
+      "source": 12,
+      "target": 10
+    },
+    {
+      "source": 12,
+      "target": 5
+    },
+    {
+      "source": 13,
+      "target": 8
+    },
+    {
+      "source": 13,
+      "target": 3
+    },
+    {
+      "source": 13,
+      "target": 4
+    },
+    {
+      "source": 14,
+      "target": 15
+    },
+    {
+      "source": 14,
+      "target": 3
+    },
+    {
+      "source": 14,
+      "target": 13
+    },
+    {
+      "source": 14,
+      "target": 8
+    },
+    {
+      "source": 15,
+      "target": 8
+    },
+    {
+      "source": 15,
+      "target": 16
+    },
+    {
+      "source": 15,
+      "target": 2
+    }
+  ]
+}
