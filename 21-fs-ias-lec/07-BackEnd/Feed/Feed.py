@@ -12,6 +12,9 @@ class Feed:
         self.myFeed = myFeed
         self.id = id
 
+    # TODO: methode zum geburtstag und so au in feed ine schriibe implementiere
+
+
     # adds new Follow to the Feed
     def writeFollowToFeed(self, newFriendsFeed):
         self.myFeed.write(["bacnet/following", time.time(), newFriendsFeed.id])
