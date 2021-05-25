@@ -176,7 +176,7 @@ def update_profile(request):
         if len(request.FILES)>0:
             for f in request.FILES.keys():
                 profile_pic_path = handle_uploaded_file(request.FILES[f], node.get('BACnetID'))
-                update['profile_pic': profile_pic_path]
+                update['profile_pic']= profile_pic_path
 
         #TODO trigger function call to backend with update-info.
 
