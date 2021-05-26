@@ -47,8 +47,8 @@ def generateJson(personList, weAre):
     data = {'nodes':nodes, 'links': links}
 
     path = Path('socialgraph/static/socialgraph/')
-    path = path / 'loadedData.json'
-    # path = path / 'loadedData1.json'
+    # path = path / 'loadedData.json'
+    path = path / 'loadedData1.json'
 
     #Change workingdirectory to Frontend
     backEnd = os.getcwd()
