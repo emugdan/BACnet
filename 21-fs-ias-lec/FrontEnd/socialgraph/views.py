@@ -172,11 +172,15 @@ def update_profile(request):
         for fn in fieldnames:
             if fn in request.POST and (node.get(fn) is not None and node.get(fn) != request.POST[fn] or node.get(fn) is None and request.POST[fn] != ''):
                 update[fn] = request.POST[fn]
+        if 'gender' in update.keys() and update['gender'] == 'other' and request.POST['other'] != '':
+            update['gender'] = request.POST['other']
+
 
         if len(request.FILES)>0:
             for f in request.FILES.keys():
                 profile_pic_path = handle_uploaded_file(request.FILES[f], node.get('BACnetID'))
                 update['profile_pic']= profile_pic_path
+        #print(update)
 
         #TODO trigger function call to backend with update-info.
 

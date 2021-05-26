@@ -17,6 +17,7 @@ class Profile(models.Model):
     profile_pic = models.ImageField(default='default.jpg', upload_to='profile_pics')
     myself = models.BooleanField(default=False)
     node_id = models.IntegerField(primary_key=True)
+    status = models.CharField(max_length=256, blank=True, null=True, default=None)
 
     def __str__(self):
         return f'{self.name} Profile / {self.bacnet_id}'
