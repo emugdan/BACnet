@@ -59,11 +59,11 @@ def users(request):
     create_profiles(data)
     return render(request, 'socialgraph/users.html', context)
 
-def feed(request):
-    return render(request, 'socialgraph/Feed.html', {'title': 'Feed'})
+# def feed(request):
+#     return render(request, 'socialgraph/Feed.html', {'title': 'Feed'})
 
-def about(request):
-    return render(request, 'socialgraph/about.html', {'title': 'About'})
+# def about(request):
+#     return render(request, 'socialgraph/about.html', {'title': 'About'})
 
 
 """
