@@ -8,58 +8,103 @@
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
-                    <div class="col-sm">
+                    <div class="col">
 
-                        <p class="mb-2">Status</p>
-                        <input type="text" id='status' name="status"
-                               value="{% if node.status is not None %} {{ node.status }} {% endif %}"/>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 100px">Status</span>
+                            </div>
+                            <input type="text" class="form-control" id='status' name="status" placeholder="type..."
+                                   style="margin-top: 0px"
+                                   value="{% if node.status is not None %}{{ node.status }}{% endif %}">
+                        </div>
+
+
                         <p id="d"></p>
 
-                        <p class="mb-2">Birthday</p>
-                        <input type="date" id='birthday' name="birthday"
-                               value="{% if node.birthday is not None %} {{ node.birthday }} {% endif %}"/>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 100px">Birthday</span>
+                            </div>
+                            <input type="date" id='birthday' name="birthday" class="form-control"
+                                   style="margin-top: 0px"
+                                   value="{% if node.birthday is not None %} {{ node.birthday }} {% endif %}"/>
+                        </div>
+
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <span class="input-group-text" style="width: 100px">Gender</span>
+                            <label class="btn btn-secondary {% if node.gender == "female" %}active{% endif %}"
+                                   onclick="hideOther()">
+                                <input type="radio" name="gender" id="female" autocomplete="off"
+                                        {% if node.gender == "female" %}
+                                       checked="checked" {% endif %} value="female">Female</label>
+
+                            <label class="btn btn-secondary {% if node.gender == "male" %}active{% endif %}"
+                                   onclick="hideOther()">
+                                <input type="radio" name="gender" id="male" autocomplete="off"
+                                        {% if node.gender == "male" %}
+                                       checked="checked" {% endif %} value="male">Male</label>
+
+                            <label class="btn btn-secondary {% if node.gender != 'male' and node.gender != 'female' and node.gender is not None %}active{% endif %}"
+                                   onclick="showOther()">
+                                <input type="radio" name="gender" id="other" autocomplete="off"
+                                       {% if node.gender != 'male' and node.gender != 'female' and node.gender is not None %}checked="checked"{% endif %}
+                                       value="other">Other</label>
+
+                            <input type="text" id='otherGender' name="other" class="form-control"
+                                   style="margin-top: 0px; display: none"
+                                   placeholder="type..."
+                                    {% if node.gender is not None and node.gender != 'male' and node.gender != 'female' %}
+                                   value="{{ node.gender }}"
+                                    {% endif %}/>
+                            <label class="btn btn-secondary {% if node.gender is None %}active{% endif %}"
+                                   onclick="hideOther();del()" style="background: #d09b9b; border-color: #6b5050">
+                                <input type="radio" name="gender" id="none" autocomplete="off"
+                                        {% if node.gender  is None %}
+                                       checked="checked" {% endif %} value="">del</label>
+                        </div>
                         <p id="d"></p>
 
-                        <p class="mb-2">Gender</p>
-                        <input type="radio" id="female" name="gender" value="female" {% if node.gender == "female" %}
-                               checked="checked" {% endif %}>
-                        <label for="female">female</label>
-                        <div></div>
-                        <input type="radio" id="male" name="gender" value="male" {% if node.gender == "male" %}
-                               checked="checked" {% endif %}>
-                        <label for="male">male</label>
-                        <div></div>
-                        <input type="radio" id="other" name="gender" value="other" {% if node.gender == "other" %}
-                               checked="checked" {% endif %}>
-                        <label for="other">other</label>
-                        <div></div>
-                        <input type="radio" id="none" name="gender" value="private" {% if node.gender == "private" %}
-                               checked="checked" {% endif %}>
-                        <label for="none">private</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 100px">Country</span>
+                            </div>
+                            <input type="text" id='country' name="country" class="form-control" placeholder="type..."
+                                   style="margin-top: 0px"
+                                   value="{% if node.country is not None %} {{ node.country }} {% endif %}"/>
+                        </div>
                         <p id="d"></p>
 
-                        <p class="mb-2">Country</p>
-                        <input type="text" id='country' name="country"
-                               value="{% if node.country is not None %} {{ node.country }} {% endif %}"/>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend" >
+                                <span class="input-group-text" style="width: 100px">Town</span>
+                            </div>
+                            <input type="text" id='town' name="town" class="form-control" placeholder="type..."
+                                   style="margin-top: 0px"
+                                   value="{% if node.town is not None %} {{ node.town }} {% endif %}"/>
+                        </div>
                         <p id="d"></p>
 
-                        <p class="mb-2">Town</p>
-                        <input type="text" id='town' name="town"
-                               value="{% if node.town is not None %} {{ node.town }} {% endif %}"/>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 100px">Languages</span>
+                            </div>
+                            <input type="text" id='languages' name="language" class="form-control" placeholder="type..."
+                                   style="margin-top: 0px"
+                                   value="{% if node.language is not None %} {{ node.language }} {% endif %}"/>
+                        </div>
                         <p id="d"></p>
 
-                        <p class="mb-2">Languages</p>
-                        <input type="text" id='languages' name="language" data-role="tagsinput"
-                               value="{% if node.language is not None %} {{ node.language }} {% endif %}"/>
-                        <p id="d"></p>
 
-                        <button type="submit" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-default" onclick="location.href='/profile/{{ node.id }}';">Cancel</button>
                     </div>
 
-                    <div class="col-sm">
+                    <div class="col">
 
-                        <p class="mb-2">Profile Picture</p>
+
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Profile Picture</span>
+                        </div>
+                        <p id="d"></p>
                         <div class="media">
                             <img class="rounded-circle account-img" id="id_old_image"
                                  src="{{ profile.profile_pic.url }}">
@@ -67,8 +112,19 @@
                         </div>
                         <input type="file" name="profile_pic" accept="image/*" id="id_profile_pic"
                                onchange="preview_img(this);">
+                        <p id="d"></p>
 
 
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-default" onclick="location.href='/profile/{{ node.id }}';">
+                            Cancel
+                        </button>
                     </div>
 
                 </div>
@@ -86,5 +142,20 @@
           document.getElementById('id_old_image').style.display = 'none';
         }
       }
+
+      function showOther() {
+        document.getElementById('otherGender').style.display = 'inline';
+        console.log("show");
+      }
+
+      function hideOther() {
+        document.getElementById('otherGender').style.display = 'none';
+        console.log("hide");
+      }
+
+      function del() {
+        document.getElementById('otherGender').value = '';
+      }
+
     </script>
 {% endblock content %}
