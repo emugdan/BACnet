@@ -2,6 +2,14 @@ import sys
 
 
 sys.path.append("../Feed")
+sys.path.append("../lib")
+
+import os
+import crypto
+import feed as fe
+
+from generateJson import generateJson
+from Feed import Feed
 
 
 class Person:
@@ -23,8 +31,19 @@ class Person:
         self.influencer = False
 
         if feed == None:
-            self.feed = None
-            self.followList = None
+            digestmod = "sha256"
+            with open("./data/" + name + "/" + name + "-secret.key", 'r') as f:
+                key = eval(f.read())
+                h = crypto.HMAC(digestmod, key["private"], key["feed_id"])
+                if sys.platform.startswith("linux"):
+                    signer = crypto.HMAC(digestmod, bytes.fromhex(h.get_private_key()))
+                else:
+                    signer = crypto.HMAC(digestmod, h.get_private_key())
+
+            feedObj = fe.FEED(fname="./data/" + name + "/" + name + "-feed.pcap", fid=h.get_feed_id(),
+                      signer=signer, create_if_notexisting=True, digestmod=digestmod)
+            self.feed = Feed.Feed(self.id, feedObj)
+
 
         else:
             self.feed = feed
@@ -36,6 +55,7 @@ class Person:
         self.followlist[id] = friend
         if friend.feed != None:
             self.feed.write_follow_to_feed(friend.feed)
+            generateJson(list(self.followlist.values()), self)
 
         else:
             print("couldn't find feed for person")
@@ -46,6 +66,8 @@ class Person:
         if exfriend.feed != None:
             self.feed.write_unfollow_to_feed(exfriend.feed)
             # TODO: generate JSON for changes
+            generateJson(list(self.followlist.values()), self)
+
         else:
             print("couldn't find feed for person")
 
