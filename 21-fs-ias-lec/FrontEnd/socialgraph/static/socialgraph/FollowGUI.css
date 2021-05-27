@@ -1,3 +1,40 @@
+
+/* SET COLORS FOR LIGHT AND DARK THEMES */
+.theme-light {
+    --color-followOptionLabel: #222;
+}
+
+.theme-dark {
+    --color-followOptionLabel: #ddd;
+}
+
+/* STYLING FOR Follow.html */
+.followOptionLabel {
+    color: var(--color-followOptionLabel);
+}
+
+.followFilters {
+    height: calc(100vh - 230px);
+    overflow: scroll;
+}
+
+.filterTitle {
+    margin-bottom: 0;
+}
+
+.custom-range-follow {
+  position: relative;
+  float: left;
+}
+
+.hopsValFollow {
+  position: relative;
+  float: left;
+}
+
+
+/* STYLING FOR FollowBody.html */
+
 .follow-heading{
   font-size: 2.5rem;
 }
@@ -6,14 +43,13 @@
   font-size: 1rem;
 }
 
-
  .list {
-	 background: #fff;
+	 background: var(--color-contentSection);
 	 border-radius: 2px;
 	 list-style: none;
 	 padding: 10px 20px;
 	 overflow-y:scroll;
-	 height: calc(100vh - 270px);
+	 height: calc(100vh - 153px);
 }
  .list-item {
 	 display: flex;
@@ -23,11 +59,10 @@
     -webkit-transition:background-color 0.01s;
 	 border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	 overflow-y:scroll;
-
 }
 
  .list-item:hover {
-  background: #cecaca;
+  background: var(--color-listGroupItemHover);
 }
 
  .list-item:last-child {
@@ -60,16 +95,22 @@
   margin-top: 5px;
 }
 
-
 input[type="text"]#searchbox {
     width: 900px;
 }
-
-
 
 .fixed {
     width: 200px;
 	border-style: solid;
 }
 
+.followButton {
+  background-color: var(--color-profileButton);
+  border: 1px solid grey;
+  color: var(--color-buttonText);
+  margin-bottom: 20px;
+}
 
+.followButton:hover {
+  opacity: .7;
+}

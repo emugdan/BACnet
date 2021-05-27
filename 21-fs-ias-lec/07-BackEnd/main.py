@@ -25,7 +25,7 @@ def main():
     # - Path in views.py to choose desired json file (l. 18 - 19)
 
     generateDirectories.generateDirectories()
-    # directoriesGenerator.createDirectories(100, 20)
+    # directoriesGenerator.createDirectories(300, 5)
 
     # die schon bestehenden Feeds auslesen und Feed und Personenobjekte erstellen
     digestmod = "sha256"

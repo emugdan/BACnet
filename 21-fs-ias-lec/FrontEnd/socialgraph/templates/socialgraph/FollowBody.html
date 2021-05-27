@@ -1,30 +1,28 @@
 <ul class="list" id = 'test'>
 {% for person in recommendations %}
 
-
     <li class="list-item" id = listEl data-link="{% url 'profile-detail' person.bacnet_id %}">
-      <div>
-        <img src="{{person.profile_pic.url}}", class="list-item-image" >
-      </div>
-      <div class="list-item-content" >
+        <div>
+            <img src="{{person.profile_pic.url}}" class="list-item-image" >
+        </div>
 
+        <div class="list-item-content" >
 
+            <h4>{{person.name}}</h4>
+            <p>{{person.gender}}</p>
+            <p>{{person.town}}</p>
 
-        <h4>{{person.name}}</h4>
-        <p>{{person.gender}}</p>
-        <p>{{person.town}}</p>
-          <p></p>
+            <button class="followButton" id = "button" onclick=follow("{{person.bacnet_id}}")>
+                Follow!
+            </button>
 
-
-          <button class = "button" id = "button" onclick=follow("{{person.bacnet_id}}")>
-              Follow!
-          </button>
-
- </div>
+        </div>
 
     </li>
+
       {% endfor %}
-    </ul>
+
+</ul>
 
 
 <script>

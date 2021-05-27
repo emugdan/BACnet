@@ -27,7 +27,7 @@
                     <input type="text" class="searchInput" id="searchInputField" name="searchInput" placeholder="Search">
                 </div>
 
-                <ul class="list-group">
+                <ul class="list-group list-group-users">
 
                     <li class="list-group-item" id="rootListItem">{{ root.name }} <a href="{% url 'profile-detail' root.id %}"><button type="button" class="btn profileButton">Profile</button></a></li>
 
@@ -51,8 +51,8 @@
                     <h4 class="content-section-title">Graph</h4>
                 </div>
                 <div class="col-md-6">
-                    <input type="range" class="custom-range" value="1" min="1" max="5" step="1" id="slider" oninput="setSliderValue(this.value)">
-                    <p id="hopsVal">1</p>
+                    <input type="range" class="custom-range custom-range-users" value="1" min="1" max="5" step="1" id="slider" oninput="setSliderValue(this.value)">
+                    <p class="hopsValUsers" id="hopsVal">1</p>
                 </div>
             </div>
 
@@ -75,7 +75,7 @@
 
         var margin = {top: 30, right: 30, bottom: 30, left: 30},
           width = 700,
-          height = 700;
+          height = window.innerHeight - 220;
 
         var svg = d3.select("#my_dataviz")
         .append("svg")
@@ -88,19 +88,6 @@
         .append("g")
           .attr("transform",
                 "translate(" + -50 + "," + -50 + ")");
-
-        svg.append("svg:defs").selectAll("marker")
-            .data(["end"])
-          .enter().append("svg:marker")
-            .attr("id", String)
-            .attr("viewBox", "0 -5 10 10")
-            .attr("refX", markerX)
-            .attr("markerWidth", markerSize)
-            .attr("markerHeight", markerSize)
-            .attr("orient", "auto")
-          .append("svg:path")
-            .attr("d", "M0,-5L10,0L0,5")
-                .style("fill", "#aaa");
 
           var linkForce = d3.forceLink()
             .id(function(d) { return d.id })
@@ -123,12 +110,25 @@
 
         function createGraph(data) {
 
+            svg.append("svg:defs").selectAll("marker")
+                .data(["end"])
+              .enter().append("svg:marker")
+                .attr("id", String)
+                .attr("viewBox", "0 -5 10 10")
+                .attr("refX", markerX)
+                .attr("markerWidth", markerSize)
+                .attr("markerHeight", markerSize)
+                .attr("orient", "auto")
+              .append("svg:path")
+                .attr("d", "M0,-5L10,0L0,5")
+                    .style("fill", getGraphAttrColor('link'));
+
           var link = svg
             .selectAll("line")
             .data(data.links)
             .enter()
             .append("line")
-              .style("stroke", "#aaa")
+              .style("stroke", getGraphAttrColor('link'))
             .attr("marker-end", "url(#end)")
 
           var node = svg
@@ -154,7 +154,7 @@
               .attr("dx", nodeRadius + 5)
               .attr("dy", ".35em")
               .attr("font-size", 12)
-                .style("fill", getGraphAttrColor())
+                .style("fill", getGraphAttrColor('text'))
 
           simulation
               .nodes(data.nodes)
@@ -279,8 +279,8 @@
                     callPythonFunction({{ node.id }}, hops)
 
                     var circle = d3.select("#id" + {{ node.id }});
-                    circle.style("stroke-width", 3);
-                    circle.style("stroke", "black");
+                    circle.style("stroke-width", 4);
+                    circle.style("stroke", getGraphAttrColor('border'));
 
                 }
 
@@ -288,14 +288,37 @@
 
         }
 
-        function getGraphAttrColor() {
+        function getGraphAttrColor(attr) {
             if (localStorage.getItem('theme') === 'theme-dark') {
-               return "#aaa";
-           } else {
-               return "#000";
-           }
-        }
 
+                if (attr === 'text') {
+                    return "#fff";
+                }
+
+                if (attr === 'link') {
+                    return "#aaa";
+                }
+
+                if (attr === 'border') {
+                    return "#eee";
+                }
+
+            } else {
+
+                if (attr === 'text') {
+                    return "#000";
+                }
+
+                if (attr === 'link') {
+                    return "#999";
+                }
+
+                if (attr === 'border') {
+                    return "#222";
+                }
+
+            }
+        }
 
         /* *** ADD FUNCTIONALITY TO LIST ITEMS *** */
 
