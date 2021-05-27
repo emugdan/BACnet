@@ -17,8 +17,8 @@ from .utils.jsonUtils import extract_connections, getRoot
 
 path = Path('socialgraph/static/socialgraph/')
 path2 = path / 'testData.json'
-# path = path / 'loadedData.json'
-path = path / 'loadedData1.json'
+path = path / 'loadedData.json'
+# path = path / 'loadedData1.json'
 data_file = open(path)
 data = json.load(data_file)
 data_file.close()
