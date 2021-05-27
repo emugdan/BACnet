@@ -12,19 +12,16 @@ class Feed:
         self.myFeed = myFeed
         self.id = id
 
-    # TODO: methode zum geburtstag und so au in feed ine schriibe implementiere
-
-
     # adds new Follow to the Feed
-    def writeFollowToFeed(self, newFriendsFeed):
+    def write_follow_to_feed(self, newFriendsFeed):
         self.myFeed.write(["bacnet/following", time.time(), newFriendsFeed.id])
 
     # adds new Unfollow to the Feed
-    def writeUnfollowToFeed(self, exFriendsFeed):
+    def write_unfollow_to_feed(self, exFriendsFeed):
         self.myFeed.write(["bacnet/unfollowing", time.time(), exFriendsFeed.id])
 
     # reads the followList from the Feed
-    def readFollowFromFeed(self):
+    def read_follow_from_feed(self):
         followList = []
         IDlist = []
 
@@ -37,3 +34,24 @@ class Feed:
 
         followList.sort(key=lambda msg: msg["time"])
         return followList
+
+    def write_gender_to_feed(self, gender):
+        self.myFeed.write(["bacnet/gender", time.time(), gender])
+
+    def write_birthday_to_feed(self, birthday):
+        self.myFeed.write(["bacnet/birthday", time.time(), birthday])
+
+    def write_country_to_feed(self, country):
+        self.myFeed.write(["bacnet/country", time.time(), country])
+
+    def write_town_to_feed(self, town):
+        self.myFeed.write(["bacnet/town", time.time(), town])
+
+    def write_language_to_feed(self, language):
+        self.myFeed.write(["bacnet/language", time.time(), language])
+
+    def write_status_to_feed(self, status):
+        self.myFeed.write(["bacnet/status", time.time(), status])
+
+    def write_influencer_to_feed(self, influencer):
+        self.myFeed.write(["bacnet/influencer", time.time(), influencer])

@@ -22,7 +22,7 @@ def generateJson(personList, weAre):
         if person == weAre:
             ourID = i
         node = {}
-        followList = person.getFollowList()
+        followList = person.get_follow_list()
         if sys.platform.startswith("linux"):
             node['BACnetID'] = person.id
         else:

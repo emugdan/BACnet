@@ -63,14 +63,14 @@ def main():
             # mainPerson = dirs[0]
 
     for pers in list_of_persons:
-        follow_list = pers.feed.readFollowFromFeed()
+        follow_list = pers.feed.read_follow_from_feed()
         # Followliste vervollständigen
         for follow_entry in follow_list:
             for p in list_of_persons:
                 if follow_entry["Feed ID"] == p.id:
                     pers.follow(follow_entry["Feed ID"], p.name)
                     break
-        pers.printFollowList()
+        pers.print_follow_list()
 
 
     # Json file for FrontEnd
