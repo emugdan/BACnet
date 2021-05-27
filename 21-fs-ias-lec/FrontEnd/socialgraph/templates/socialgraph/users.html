@@ -27,7 +27,7 @@
                     <input type="text" class="searchInput" id="searchInputField" name="searchInput" placeholder="Search">
                 </div>
 
-                <ul class="list-group">
+                <ul class="list-group list-group-users">
 
                     <li class="list-group-item" id="rootListItem">{{ root.name }} <a href="{% url 'profile-detail' root.id %}"><button type="button" class="btn profileButton">Profile</button></a></li>
 
@@ -51,8 +51,8 @@
                     <h4 class="content-section-title">Graph</h4>
                 </div>
                 <div class="col-md-6">
-                    <input type="range" class="custom-range" value="1" min="1" max="5" step="1" id="slider" oninput="setSliderValue(this.value)">
-                    <p id="hopsVal">1</p>
+                    <input type="range" class="custom-range custom-range-users" value="1" min="1" max="5" step="1" id="slider" oninput="setSliderValue(this.value)">
+                    <p class="hopsValUsers" id="hopsVal">1</p>
                 </div>
             </div>
 

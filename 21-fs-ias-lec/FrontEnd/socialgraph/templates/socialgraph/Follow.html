@@ -2,52 +2,60 @@
 
 {% block searchBar %}
 
+    <!--
     <div class="input-group input-group-sm">
         <input type="text" class="form-control" id="searchInput" placeholder="" aria-label="Search Input" aria-describedby="basic-addon2">
         <div class="input-group-append">
             <button class="btn" id="searchBtn" type="button">Search</button>
         </div>
     </div>
+    -->
 
 {% endblock %}
 
 {% block content %}
 
     <div class="container">
+
       <div class="row">
+
         <div class="col-md-4">
+
             <h4 class="content-section-title">Filter</h4>
             <div class="content-section" id="usersContentSection">
-                 <div>
-        <h6 class="p-1 border-bottom">Filter By</h6>
-        <p class="mb-2">Gender</p>
-        <ul class="list-group">
-            <li class="list-group-item list-group-item-action mb-2 rounded"  id = "GenderFemale" value = "female" onclick = genderBasedFilter("female")> <span class="fa fa-circle pr-1" ></span>Female </li>
-            <li class="list-group-item list-group-item-action mb-2 rounded" id = "GenderMale" value = "male" onclick = genderBasedFilter("male")> <span class="fa fa-circle pr-1" id="male"></span>Male </li>
 
-            Name
-            <div class="searchInputDiv">
-                    <input type="text" class="searchInput" id="searchInputFieldName" name="searchInput" placeholder="Search Name">
-            </div>
+                <h6 class="p-1 border-bottom" style="margin-bottom: 20px;">Filter By</h6>
 
-            Town
-            <div class="searchInputDiv">
-                    <input type="text" class="searchInput" id="searchInputFieldTown" name="searchInput" placeholder="Search Town">
+                <div class="followFilters">
+
+                    <p class="mb-2">Gender</p>
+
+                    <ul class="list-group">
+                        <li class="list-group-item mb-2 rounded" id = "GenderFemale" value = "female" onclick = genderBasedFilter("female")> <span class="fa fa-circle pr-1 f" ></span>Female </li>
+                        <li class="list-group-item mb-2 rounded" id = "GenderMale" value = "male" onclick = genderBasedFilter("male")> <span class="fa fa-circle pr-1" id="male"></span>Male </li>
+                    </ul>
+
+                    <p class="filterTitle">Name</p>
+                    <div class="searchInputDiv">
+                        <input type="text" class="searchInput" id="searchInputFieldName" name="searchInput" placeholder="Search Name">
+                    </div>
+
+                    <p class="filterTitle">Town</p>
+                    <div class="searchInputDiv">
+                        <input type="text" class="searchInput" id="searchInputFieldTown" name="searchInput" placeholder="Search Town">
+                    </div>
+
+                    <p class="filterTitle">HopLayer</p>
+                    <div>
+                        <input type="range" class="custom-range" value="2" min="2" max="5" step="1" id="slider" oninput=QueryForHopLayer(this.value)>
+                        <p id="hopsVal">2</p>
+                    </div>
+
+                    <ul class="list-group">
+                        <li class="list-group-item mb-2 rounded" id = "ResetButton" value = "reset" onclick = genderBasedFilter("")> <span class="fa fa-circle pr-1" id="reset"></span>Reset </li>
+                    </ul>
+
                 </div>
-
-            HopLayer
-            <input type="range" class="custom-range" value="2" min="2" max="5" step="1" id="slider" oninput=QueryForHopLayer(this.value)>
-                    <p id="hopsVal">2</p>
-
-
-            <p id="a"></p>
-             <li class="list-group-item list-group-item-action mb-2 rounded" id = "ResetButton" value = "reset" onclick = genderBasedFilter("")> <span class="fa fa-circle pr-1" id="reset"></span>Reset </li>
-
-
-
-        </ul>
-    </div>
-
 
             </div>
         </div>
