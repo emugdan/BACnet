@@ -33,10 +33,9 @@ class Feed:
                     IDlist.append(friends_id)
             if event.content()[0] == "bacnet/unfollowing":
                 friends_id = event.content()[2]
-                if friends_id in followList:
-                    # TODO: De itrag no aluege
-                    followList.remove({"Root": self.id, "time": event.content()[1],"Feed ID": friends_id})
-                    if friends_id in IDlist:
+                for entry in followList:
+                    if(entry["Feed ID"] == friends_id):
+                        followList.remove(entry)
                         IDlist.remove(friends_id)
 
         followList.sort(key=lambda msg: msg["time"])
