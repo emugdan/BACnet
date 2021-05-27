@@ -83,37 +83,37 @@ class Person:
         print("\n")
 
     # writes all the attributes into the feed except influencer
-    def put_attributes(self):
-        self.put_gender()
-        self.put_birthday()
-        self.put_town()
-        self.put_country()
-        self.put_language()
-        self.put_status()
+    def put_attributes(self, gender, birthday, town, country, language, status):
+        self.put_gender(gender)
+        self.put_birthday(birthday)
+        self.put_town(town)
+        self.put_country(country)
+        self.put_language(language)
+        self.put_status(status)
 
     def put_gender(self, gender):
         self.gender = gender
-        self.feed.write_gender_to_feed(self, self.gender)
+        self.feed.write_gender_to_feed(self.gender)
 
     def put_birthday(self, birthday):
         self.birthday = birthday
-        self.feed.write_birthday_to_feed(self, self.birthday)
+        self.feed.write_birthday_to_feed(self.birthday)
 
     def put_country(self, country):
         self.country = country
-        self.feed.write_country_to_feed(self, self.country)
+        self.feed.write_country_to_feed(self.country)
 
     def put_town(self, town):
         self.town = town
-        self.feed.write_town_to_feed(self, self.town)
+        self.feed.write_town_to_feed(self.town)
 
     def put_language(self, language):
         self.language
-        self.feed.write_language_to_feed(self, self.language)
+        self.feed.write_language_to_feed(self.language)
 
     def put_status(self, status):
         self.status
-        self.feed.write_status_to_feed(self, self.status)
+        self.feed.write_status_to_feed(self.status)
 
     def put_influencer(self):
-        self.feed.write_influencer_to_feed(self, self.influencer)
+        self.feed.write_influencer_to_feed(self.influencer)
