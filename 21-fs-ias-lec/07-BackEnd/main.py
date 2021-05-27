@@ -64,14 +64,27 @@ def main():
 
     for pers in list_of_persons:
         follow_list = pers.feed.read_follow_from_feed()
+        birthday = pers.feed.readBirthdayFromFeed()
+        gender = pers.feed.readGenderFromFeed()
+        country = pers.feed.readCountryFromFeed()
+        town = pers.feed.readTownFromFeed()
+        language = pers.feed.readLanguageFromFeed()
+        status = pers.feed.readStatusFromFeed()
+
         # Followliste vervollständigen
         for follow_entry in follow_list:
             for p in list_of_persons:
                 if follow_entry["Feed ID"] == p.id:
                     pers.follow(follow_entry["Feed ID"], p.name)
                     break
-        pers.print_follow_list()
 
+        pers.print_follow_list()
+        pers.birthday = birthday
+        pers.gender = gender
+        pers.country = country
+        pers.town = town
+        pers.language = language
+        pers.status = status
 
     # Json file for FrontEnd
     generateJson(list_of_persons, mainPerson)

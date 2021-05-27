@@ -31,9 +31,64 @@ class Feed:
                 if friends_id not in IDlist:
                     followList.append({"Root": self.id, "time": event.content()[1], "Feed ID": event.content()[2]})
                     IDlist.append(friends_id)
+            if event.content()[0] == "bacnet/unfollowing":
+                friends_id = event.content()[2]
+                if friends_id in followList:
+                    # TODO: De itrag no aluege
+                    followList.remove({"Root": self.id, "time": event.content()[1],"Feed ID": friends_id})
+                    if friends_id in IDlist:
+                        IDlist.remove(friends_id)
 
         followList.sort(key=lambda msg: msg["time"])
         return followList
+
+    def readBirthdayFromFeed(self):
+        myBirthday = None
+        for event in self.myFeed:
+            if event.content()[0] == "bacnet/birthday":
+                myBirthday = event.content()[2]
+
+        return myBirthday
+
+    def readGenderFromFeed(self):
+        gender = None
+        for event in self.myFeed:
+            if event.content()[0] == "bacnet/gender":
+                gender = event.content()[2]
+
+        return gender
+
+    def readCountryFromFeed(self):
+        country = None
+        for event in self.myFeed:
+            if event.content()[0] == "bacnet/country":
+                country = event.content()[2]
+
+        return country
+
+    def readTownFromFeed(self):
+        town = None
+        for event in self.myFeed:
+            if event.content()[0] == "bacnet/town":
+                town = event.content()[2]
+
+        return town
+
+    def readLanguageFromFeed(self):
+        language = None
+        for event in self.myFeed:
+            if event.content()[0] == "bacnet/language":
+                language = event.content()[2]
+
+        return language
+
+    def readStatusFromFeed(self):
+        status = None
+        for event in self.myFeed:
+            if event.content()[0] == "bacnet/status":
+                status = event.content()[2]
+
+        return status
 
     def write_gender_to_feed(self, gender):
         self.myFeed.write(["bacnet/gender", time.time(), gender])

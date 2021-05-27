@@ -22,7 +22,7 @@ class Person:
         self.id = id
         self.name = name
         self.followlist = dict()
-        self.gender = None
+        self.gender = " "
         self.birthday = None
         self.country = None
         self.town = None
