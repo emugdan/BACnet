@@ -102,3 +102,5 @@ def generateDirectories():
     ben.write(["bacnet/following", time.time(), veras_id])  # folgt Vera
     ben.write(["bacnet/following", time.time(), esthers_id])  # folgt Esther
     ben.write(["bacnet/following", time.time(), yasmins_id])  # folgt Yasmin
+
+    vera.write(["bacnet/birthday", time.time(), "1999-02-13"])

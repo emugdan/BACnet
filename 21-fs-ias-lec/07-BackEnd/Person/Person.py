@@ -91,22 +91,28 @@ class Person:
         self.put_language()
         self.put_status()
 
-    def put_gender(self):
+    def put_gender(self, gender):
+        self.gender = gender
         self.feed.write_gender_to_feed(self, self.gender)
 
-    def put_birthday(self):
+    def put_birthday(self, birthday):
+        self.birthday = birthday
         self.feed.write_birthday_to_feed(self, self.birthday)
 
-    def put_country(self):
+    def put_country(self, country):
+        self.country = country
         self.feed.write_country_to_feed(self, self.country)
 
-    def put_town(self):
+    def put_town(self, town):
+        self.town = town
         self.feed.write_town_to_feed(self, self.town)
 
-    def put_language(self):
+    def put_language(self, language):
+        self.language
         self.feed.write_language_to_feed(self, self.language)
 
-    def put_status(self):
+    def put_status(self, status):
+        self.status
         self.feed.write_status_to_feed(self, self.status)
 
     def put_influencer(self):
