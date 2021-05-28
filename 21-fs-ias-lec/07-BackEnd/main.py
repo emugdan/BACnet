@@ -15,7 +15,13 @@ import feed
 import time
 
 
-def main():
+def mainGenerator(data):
+    # If called from the Frontend we have to change the directory
+    oldDir = os.getcwd()
+    if data is not None:
+        backEnd = oldDir.replace("FrontEnd", "07-BackEnd")
+        os.chdir(backEnd)
+
     # dummy Feeds erstellen -> später feeds die schon geladen sind
 
     # To use the directories generator swap out comments:
@@ -47,12 +53,15 @@ def main():
 
             # Feed laden
             my_feed = feed.FEED(fname="data/" + name + "/" + name + "-feed.pcap", fid=h.get_feed_id(),
-                               signer=signer, create_if_notexisting=True, digestmod=digestmod)
+                                signer=signer, create_if_notexisting=True, digestmod=digestmod)
 
             # Feed objekt erstellen
             feed_obj = Feed.Feed(key["feed_id"], my_feed)
 
             person = Person.Person(key["feed_id"], name, feed_obj)
+            # Update or add the Attributes if there any in the updatedata.
+            if data is not None and 'BACnetID' in data.keys() and key["feed_id"] == data['BACnetID'].encode('utf-8'):
+                person.put_attributes(data)
             list_of_persons.append(person)
 
             # TODO: Wie wird Hauptperson bestimmt?
@@ -87,8 +96,14 @@ def main():
         pers.status = status
 
     # Json file for FrontEnd
-    mainPerson.put_attributes("female", "1999-02-13", "Basel", "Schweiz", "Deutsch", "ich bi s verii")
+    # mainPerson.put_attributes({'gender': "female", 'birthday': "1999-02-13", 'town': "Basel", 'country': "Schweiz", 'language': "Deutsch", 'status': "ich bi s verii"})
     generateJson(list_of_persons, mainPerson)
+    os.chdir(oldDir)
+
+
+def main():
+    mainGenerator(None)
+
 
 if __name__ == "__main__":
     main()

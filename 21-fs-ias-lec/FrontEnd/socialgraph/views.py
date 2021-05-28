@@ -1,5 +1,7 @@
 import json
 import os
+import pathlib
+import sys
 from pathlib import Path
 import pdb;
 
@@ -13,6 +15,15 @@ from .importer import create_profiles
 from .models import Profile, FollowRecommendations
 from .utils.jsonUtils import extract_connections, getRoot
 
+frontEnd = os.getcwd()
+backEnd = frontEnd.replace("FrontEnd", "07-BackEnd")
+os.chdir(backEnd)
+
+#Put imports from frontEnd here.
+from main import mainGenerator
+
+os.chdir(frontEnd)
+
 # Create your views here.
 
 path = Path('socialgraph/static/socialgraph/')
@@ -22,7 +33,6 @@ path = path / 'loadedData.json'
 data_file = open(path)
 data = json.load(data_file)
 data_file.close()
-
 
 
 def home(request):
@@ -39,7 +49,6 @@ def home(request):
     return render(request, 'socialgraph/home.html', context)
 
 def users(request):
-
     data_file = open(path)
     data = json.load(data_file)
     data_file.close()
@@ -156,9 +165,11 @@ class PostDetailView(DetailView):
     model = Profile
 
 def update_profile(request):
-
     context = None
-    for node in data['nodes']:
+    fresh_data_file = open(path)
+    fresh_data = json.load(fresh_data_file)
+    fresh_data_file.close()
+    for node in fresh_data['nodes']:
         if node.get('hopLayer') == 0:
             context = {
                 'node': node,
@@ -170,22 +181,32 @@ def update_profile(request):
         update = {'BACnetID': node.get('BACnetID')}
         fieldnames = ['gender', 'birthday', 'country', 'town', 'language', 'status']
         for fn in fieldnames:
-            if fn in request.POST and (node.get(fn) is not None and node.get(fn) != request.POST[fn] or node.get(fn) is None and request.POST[fn] != ''):
-                update[fn] = request.POST[fn]
+            if fn in request.POST:
+
+
+                if node.get(fn) is not None and node.get(fn) != request.POST[fn] or node.get(fn) is None and request.POST[fn] != '':
+                    if isinstance(request.POST[fn], str):
+                        value = request.POST[fn].strip()
+                        update[fn] = value if value != '' else None
+                    else:
+                        update[fn] = request.POST[fn]
         if 'gender' in update.keys() and update['gender'] == 'other' and request.POST['other'] != '':
             update['gender'] = request.POST['other']
 
-
-        if len(request.FILES)>0:
+        if len(request.FILES) > 0:
             for f in request.FILES.keys():
                 profile_pic_path = handle_uploaded_file(request.FILES[f], node.get('BACnetID'))
-                update['profile_pic']= profile_pic_path
-        #print(update)
+                update['profile_pic'] = profile_pic_path
+        # print(update)
 
-        #TODO trigger function call to backend with update-info.
+        # TODO trigger function call to backend with update-info.
+        mainGenerator(update)
+        fresh_data_file = open(path)
+        fresh_data = json.load(fresh_data_file)
+        create_profiles(fresh_data)
+        fresh_data_file.close()
 
         return HttpResponseRedirect("/profile/" + str(node.get('id')))
-
 
     return render(request, 'socialgraph/profile_update.html', context)
 
