@@ -72,11 +72,14 @@ def generateDirectories():
     yasmin.write(["bacnet/following", time.time(), esthers_id]) # folgt Esther
     yasmin.write(["bacnet/following", time.time(), julius_id]) # folgt Julius
 
+
     vera.write(["bacnet/following", time.time(), esthers_id])  # folgt Esther
     vera.write(["bacnet/following", time.time(), yasmins_id])  # folgt Yasmin
     vera.write(["bacnet/following", time.time(), sebastians_id])  # folgt Sebastian
     vera.write(["bacnet/following", time.time(), pascals_id])  # folgt Pascal
     vera.write(["bacnet/following", time.time(), phillips_id])  # folgt Phillip
+
+    vera.write(["bacnet/following", time.time(), julius_id])  # follow julius
 
     esther.write(["bacnet/following", time.time(), yasmins_id])  # folgt Yasmin
     esther.write(["bacnet/following", time.time(), veras_id]) # folgt Vera

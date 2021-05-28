@@ -22,19 +22,19 @@ def generateJson(personList, weAre):
         if person == weAre:
             ourID = i
         node = {}
-        followList = person.getFollowList()
+        followList = person.get_follow_list()
         if sys.platform.startswith("linux"):
             node['BACnetID'] = person.id
         else:
             node['BACnetID'] = person.id.decode("utf-8")
         node['id'] = nodeIDs[person.id] # .decode("utf-8")]
         node['name'] = person.name
-        node['gender'] = 'female'
-        node['birthday'] = None
-        node['country'] = None
-        node['town'] = None
-        node['language'] = None
-        node['status'] = None
+        node['gender'] = person.gender
+        node['birthday'] = person.birthday
+        node['country'] = person.country
+        node['town'] = person.town
+        node['language'] = person.language
+        node['status'] = person.status
         node['hopLayer'] = 10000
         nodes.append(node)
         for friend in followList:

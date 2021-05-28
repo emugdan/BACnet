@@ -10,6 +10,9 @@
   --color-h: #444444;
   --color-contentSection: #ffffff;
   --color-contentSectionBorder: #dddddd;
+  --color-listItem: #333;
+  --color-listItemHover: #000;
+  --color-listGroupItemHover: #3b3e4310;
   --color-listGroupItemActive: #3b3e4320;
   --color-profileButton: #F8F9FA;
   --color-hopsValue: #444444;
@@ -36,6 +39,9 @@
   --color-searchButtonBorder: #ffffff;
   --color-h: #ffffff;
   --color-contentSection: #3B3F41;
+  --color-listItem: #ccc;
+  --color-listItemHover: #fff;
+  --color-listGroupItemHover: #00AEED10;
   --color-listGroupItemActive: #00AEED30;
   --color-profileButton: #7F7F7F;
   --color-hopsValue: #ffffff;
@@ -166,6 +172,9 @@ h1, h2, h3, h4, h5, h6 {
 .custom-range {
   width: 200px;
   margin-top: 20px;
+}
+
+.custom-range-users {
   position: relative;
   float: right;
 }
@@ -199,11 +208,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #hopsVal {
-  position: relative;
-  float: right;
   margin-top: 11px;
   margin-right: 7px;
   color: var(--color-hopsValue);
+}
+
+.hopsValUsers {
+  position: relative;
+  float: right;
 }
 
 
@@ -224,6 +236,7 @@ h1, h2, h3, h4, h5, h6 {
   border-left: 0px solid red;
   border-right: 0px solid red;
   border-bottom: 1px solid #0085BA;
+  margin-bottom: 10px;
 }
 
 .searchInput:hover {
@@ -243,13 +256,22 @@ ul {
 
 .list-group{
   margin-top: 10px;
+  overflow-y:scroll;
+}
+
+.list-group-users {
   height: calc(100vh - 270px);
   margin-bottom: 40px;
-  overflow-y:scroll;
 }
 
 .list-group-item {
   background-color: var(--color-contentSection);
+  color: var(--color-listItem);
+}
+
+.list-group-item:hover {
+  background-color: var(--color-listGroupItemHover);
+  color: var(--color-listItemHover);
 }
 
 .list-group-item.active {
@@ -290,6 +312,10 @@ ul {
 
 ::-webkit-scrollbar-thumb:hover {
   background:rgb(54, 56, 58);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--color-contentSection);
 }
 
 
