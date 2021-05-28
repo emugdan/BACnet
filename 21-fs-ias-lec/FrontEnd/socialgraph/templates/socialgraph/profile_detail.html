@@ -23,16 +23,13 @@
                         <div class="media-body">
                             <h2 class="profile-heading">{{ object.name }}</h2>
                             <div class="text-secondary">ID:{{ object.bacnet_id }}</div>
-                            {% if object.status is not None %}
-                                <div class="profile-status">Status: {{ object.status }}</div>
-                            {% endif %}
+                            <div class="profile-status">Status: Lorem ipsum dolor sit amet.</div>
                         </div>
                     </div>
                 </div>
                 <div class="p-2">
                     {% if object.myself %}
-                        <button type="button" class="btn btn-primary"
-                                onclick="location.href='{% url 'profile-update' %}';">
+                        <button type="button" class="btn btn-primary" onclick="location.href='{% url 'profile-update' %}';">
                             <img src="/media/ProfileUpdateIconWhite30.png" style="height: 30px; width: 30px">
                             <span>Update</span>
                         </button>

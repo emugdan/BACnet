@@ -25,7 +25,7 @@
                                 </div>
                                 <input type="date" id='birthday' name="birthday" class="form-control"
                                        style="margin-top: 0px"
-                                       value="{% if node.birthday is not None %}{{ node.birthday }}{% endif %}"/>
+                                       value="{% if node.birthday is not None %} {{ node.birthday }} {% endif %}"/>
                             </div>
 
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -73,7 +73,7 @@
                                 <input type="text" id='country' name="country" class="form-control"
                                        placeholder="type..."
                                        style="margin-top: 0px"
-                                       value="{% if node.country is not None %}{{ node.country }}{% endif %}"/>
+                                       value="{% if node.country is not None %} {{ node.country }} {% endif %}"/>
                             </div>
                             <p id="d"></p>
 
@@ -83,7 +83,7 @@
                                 </div>
                                 <input type="text" id='town' name="town" class="form-control" placeholder="type..."
                                        style="margin-top: 0px"
-                                       value="{% if node.town is not None %}{{ node.town }}{% endif %}"/>
+                                       value="{% if node.town is not None %} {{ node.town }} {% endif %}"/>
                             </div>
                             <p id="d"></p>
 
@@ -94,7 +94,7 @@
                                 <input type="text" id='languages' name="language" class="form-control"
                                        placeholder="type..."
                                        style="margin-top: 0px"
-                                       value="{% if node.language is not None %}{{ node.language }}{% endif %}"/>
+                                       value="{% if node.language is not None %} {{ node.language }} {% endif %}"/>
                             </div>
                             <p id="d"></p>
 
