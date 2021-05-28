@@ -33,6 +33,9 @@ data_file.close()
 
 
 def home(request):
+    x = pathlib.Path(__file__)
+    print(x.parent.parent)
+    os.chdir(x.parent.parent)
     data_file = open(path)
     data = json.load(data_file)
     data_file.close()
