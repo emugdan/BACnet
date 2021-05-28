@@ -22,7 +22,7 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 2
+      "hopLayer": 1
     },
     {
       "BACnetID": "f787c2085d2735b8",
@@ -34,7 +34,7 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 10000
+      "hopLayer": 1
     },
     {
       "BACnetID": "1e0a9c5684d5265b",
@@ -46,7 +46,7 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 2
+      "hopLayer": 1
     },
     {
       "BACnetID": "a757b9dd7ee0128f",
@@ -70,7 +70,7 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 10000
+      "hopLayer": 1
     },
     {
       "BACnetID": "34ec7047e5be1d99",
@@ -280,7 +280,7 @@
     },
     {
       "source": 14,
-      "target": 0
+      "target": 5
     },
     {
       "source": 14,
@@ -305,6 +305,22 @@
     {
       "source": 14,
       "target": 10
+    },
+    {
+      "source": 14,
+      "target": 0
+    },
+    {
+      "source": 14,
+      "target": 1
+    },
+    {
+      "source": 14,
+      "target": 2
+    },
+    {
+      "source": 14,
+      "target": 3
     },
     {
       "source": 16,
