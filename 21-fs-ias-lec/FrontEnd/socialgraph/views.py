@@ -1,7 +1,8 @@
 import json
 import os
-from pathlib import Path
-import pdb;
+import pathlib
+import pdb
+import sys
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import HttpResponse
@@ -12,10 +13,16 @@ from django.views.generic import DetailView
 from .importer import create_profiles
 from .models import Profile, FollowRecommendations
 from .utils.jsonUtils import extract_connections, getRoot
+x = os.getcwd()
+print(x)
+from .utils.callToBackend import followCall
+os.chdir(x)
+
+
 
 # Create your views here.
 
-path = Path('socialgraph/static/socialgraph/')
+path = pathlib.Path('socialgraph/static/socialgraph/')
 path2 = path / 'testData.json'
 path = path / 'loadedData.json'
 # path = path / 'loadedData1.json'
@@ -73,8 +80,13 @@ Also, the function follow is able to handle ajax calls from the UI Layer in orde
 to rerender the FollowRecommendation HTML files.
 """
 def follow(request):
+    x = pathlib.Path(__file__)
+    print(x.parent.parent)
+    os.chdir(x.parent.parent)
     data_file = open(path)
     data = json.load(data_file)
+    data_file.close()
+
 
 
 
@@ -113,29 +125,25 @@ def follow(request):
                                                                              criteria='hopLayer')
         #User wants to follow another user
         elif (response.startswith("fo")):
-            # #Get the id
-            # id = int(response[2:len(response)])
-            #
-            # #Open the jsonFile
-            # with open(path, "r") as jsonFile:
-            #     temp = json.load(jsonFile)
-            #
-            # #Overwrite the hoplayer
-            # for x in temp['nodes']:
-            #     if x.get('id') == id:
-            #         x['hopLayer'] = 1
-            # #Save new json file
-            # with open(path, "w") as jsonFile:
-            #     json.dump(temp, jsonFile)
-            # data_file = open(path)
-            # data = json.load(data_file)
-            # #Create new recommendations
-            queryList = FollowRecommendations.createRecommendationList(jsonData=data, maxLayer=hoplayer)
+            root = getRoot(data['nodes'])
+            rootUser = root.get("name")
+            rootUserID = root.get("BACnetID")
+            followID = str(response[2:18])
+            followName = str(response[18:len(response)])
 
+
+            followCall(mainPersonName=rootUser, mainPersonID=rootUserID, followPersonName=followName, followPersonID=followID)
+            x = pathlib.Path(__file__)
+            print(x.parent.parent)
+            os.chdir(x.parent.parent)
+            data_file = open(path)
+            data = json.load(data_file)
+            data_file.close()
+            queryList = FollowRecommendations.createRecommendationList(jsonData=data)
         else:
             queryList = recommendationList
 
-        #Create a new context variable
+            #Create a new context variable
         text = {
             'data': json.dumps(data),
             'nodes': data['nodes'],
@@ -196,5 +204,5 @@ def handle_uploaded_file(f, id):
         destination.close()
 
 if __name__ == "__main__":
-
-    print(data)
+    followCall(mainPersonName="vera", mainPersonID="9ff78df97744c0d5", followPersonName="esther",
+               followPersonID="4076cc22fa40fa84")

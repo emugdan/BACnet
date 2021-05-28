@@ -1,7 +1,7 @@
 {
   "nodes": [
     {
-      "BACnetID": "0500963b10cd282f",
+      "BACnetID": "fec4b99a4c14fe9e",
       "id": 0,
       "name": "aline",
       "gender": null,
@@ -10,10 +10,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 2
+      "hopLayer": 1
     },
     {
-      "BACnetID": "f5ab175cfa4597cb",
+      "BACnetID": "2c122da9ae24384e",
       "id": 1,
       "name": "ben",
       "gender": null,
@@ -25,7 +25,7 @@
       "hopLayer": 2
     },
     {
-      "BACnetID": "cd18046cce3c6d6c",
+      "BACnetID": "f787c2085d2735b8",
       "id": 2,
       "name": "caroline",
       "gender": null,
@@ -37,7 +37,7 @@
       "hopLayer": 10000
     },
     {
-      "BACnetID": "06e3b79d24ec3233",
+      "BACnetID": "1e0a9c5684d5265b",
       "id": 3,
       "name": "david",
       "gender": null,
@@ -49,7 +49,7 @@
       "hopLayer": 2
     },
     {
-      "BACnetID": "ee1931de2a249a4f",
+      "BACnetID": "a757b9dd7ee0128f",
       "id": 4,
       "name": "esther",
       "gender": null,
@@ -61,7 +61,7 @@
       "hopLayer": 1
     },
     {
-      "BACnetID": "00b0acbf17b7de59",
+      "BACnetID": "80893d01ef665da2",
       "id": 5,
       "name": "eveline",
       "gender": null,
@@ -73,7 +73,7 @@
       "hopLayer": 10000
     },
     {
-      "BACnetID": "ddc10665ce8479fe",
+      "BACnetID": "34ec7047e5be1d99",
       "id": 6,
       "name": "fitzgerald",
       "gender": null,
@@ -85,7 +85,7 @@
       "hopLayer": 10000
     },
     {
-      "BACnetID": "a438d11e68bdf8d1",
+      "BACnetID": "20adecdcb21ed227",
       "id": 7,
       "name": "georgia",
       "gender": null,
@@ -94,10 +94,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 3
+      "hopLayer": 2
     },
     {
-      "BACnetID": "b8f372202f814064",
+      "BACnetID": "eda2677760f72c80",
       "id": 8,
       "name": "henry",
       "gender": null,
@@ -106,10 +106,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 3
+      "hopLayer": 2
     },
     {
-      "BACnetID": "249e119a0dfca5f9",
+      "BACnetID": "d8b133e03f4af6b4",
       "id": 9,
       "name": "isabelle",
       "gender": null,
@@ -121,7 +121,7 @@
       "hopLayer": 10000
     },
     {
-      "BACnetID": "55bb90281eb85cdf",
+      "BACnetID": "1f18fb9b34f806d5",
       "id": 10,
       "name": "julius",
       "gender": null,
@@ -133,7 +133,7 @@
       "hopLayer": 1
     },
     {
-      "BACnetID": "64e297388f449e32",
+      "BACnetID": "fc3c873e3f6d13e6",
       "id": 11,
       "name": "pascal",
       "gender": null,
@@ -145,7 +145,7 @@
       "hopLayer": 1
     },
     {
-      "BACnetID": "18fa9f0a3e67892d",
+      "BACnetID": "8316ae46abf0163f",
       "id": 12,
       "name": "phillip",
       "gender": null,
@@ -157,7 +157,7 @@
       "hopLayer": 1
     },
     {
-      "BACnetID": "55a1783f2a6ef91f",
+      "BACnetID": "d4476921b1f3b2f4",
       "id": 13,
       "name": "sebastian",
       "gender": null,
@@ -169,7 +169,7 @@
       "hopLayer": 1
     },
     {
-      "BACnetID": "97e6cd3f37a503cf",
+      "BACnetID": "7d68f3168c5b0a16",
       "id": 14,
       "name": "vera",
       "gender": "female",
@@ -181,7 +181,7 @@
       "hopLayer": 0
     },
     {
-      "BACnetID": "e5f1802a1d5481a2",
+      "BACnetID": "d0c225e769301ece",
       "id": 15,
       "name": "veri",
       "gender": null,
@@ -193,7 +193,7 @@
       "hopLayer": 10000
     },
     {
-      "BACnetID": "9e7385f5794fce04",
+      "BACnetID": "64dea8009d4d272c",
       "id": 16,
       "name": "yasmin",
       "gender": null,
@@ -280,6 +280,10 @@
     },
     {
       "source": 14,
+      "target": 0
+    },
+    {
+      "source": 14,
       "target": 4
     },
     {
@@ -309,6 +313,10 @@
     {
       "source": 16,
       "target": 4
+    },
+    {
+      "source": 16,
+      "target": 10
     }
   ]
 }
