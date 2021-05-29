@@ -52,6 +52,10 @@ def generateJson(personList, weAre):
 
     #Change workingdirectory to Frontend
     backEnd = os.getcwd()
+    #If we called the callToBackEnd function from the Frontend:
+    if (backEnd.endswith("21-fs-ias-lec")):
+        os.chdir("07-BackEnd")
+        backEnd = os.getcwd()
     frontEnd = backEnd.replace("07-BackEnd", "FrontEnd")
     os.chdir(frontEnd)
 
