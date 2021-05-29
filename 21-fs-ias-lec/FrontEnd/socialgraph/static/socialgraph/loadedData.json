@@ -46,7 +46,7 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 2
+      "hopLayer": 1
     },
     {
       "BACnetID": "3f45fc2eedef4537",
@@ -305,6 +305,10 @@
     {
       "source": 14,
       "target": 0
+    },
+    {
+      "source": 14,
+      "target": 3
     },
     {
       "source": 16,
