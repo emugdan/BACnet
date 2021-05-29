@@ -116,6 +116,17 @@ def followCall(mainPersonName, mainPersonID,followPersonName, followPersonID):
     followList(list_of_persons)
     generateJson(list_of_persons, mainPerson)
 
+"""
+make update call to BackEnd. The function creates an updated JSON file.
+"""
+def profileUpdateCall(mainPersonName, mainPersonID, data):
+    print(q)
+    os.chdir(q.parent.parent.parent)
+    (mainPerson, list_of_persons) = iterateThroughDirs(mainPersonName, mainPersonID)
+    followList(list_of_persons)
+    mainPerson.put_attributes(data)
+    generateJson(list_of_persons, mainPerson)
+
 
 
 #For testing purposes
