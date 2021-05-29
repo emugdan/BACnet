@@ -87,7 +87,7 @@ def main():
         pers.status = status
 
     # Json file for FrontEnd
-    mainPerson.put_attributes("female", "1999-02-13", "Basel", "Schweiz", "Deutsch", "ich bi s verii")
+    # mainPerson.put_attributes({'gender': "female", 'birthday': "1999-02-13", 'town': "Basel", 'country': "Schweiz", 'language': "Deutsch", 'status': "ich bi s verii"})
     generateJson(list_of_persons, mainPerson)
 
 if __name__ == "__main__":
