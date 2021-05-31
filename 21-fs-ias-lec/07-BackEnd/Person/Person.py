@@ -55,7 +55,7 @@ class Person:
         self.followlist[id] = friend
         if friend.feed != None:
             self.feed.write_follow_to_feed(friend.feed)
-            generateJson(list(self.followlist.values()), self)
+            #generateJson(list(self.followlist.values()), self)
 
         else:
             print("couldn't find feed for person")
@@ -66,7 +66,7 @@ class Person:
         if exfriend.feed != None:
             self.feed.write_unfollow_to_feed(exfriend.feed)
             # TODO: generate JSON for changes
-            generateJson(list(self.followlist.values()), self)
+            #generateJson(list(self.followlist.values()), self)
 
         else:
             print("couldn't find feed for person")
