@@ -33,6 +33,7 @@
                     <ul class="list-group">
                         <li class="list-group-item mb-2 rounded" id = "GenderFemale" value = "female" onclick = genderBasedFilter("female")> <span class="fa fa-circle pr-1 f" ></span>Female </li>
                         <li class="list-group-item mb-2 rounded" id = "GenderMale" value = "male" onclick = genderBasedFilter("male")> <span class="fa fa-circle pr-1" id="male"></span>Male </li>
+                        <li class="list-group-item mb-2 rounded" id = "GenderOther" value = "other" onclick = genderBasedFilter("other")> <span class="fa fa-circle pr-1" id="other"></span>Other </li>
                     </ul>
 
                     <p class="filterTitle">Name</p>
@@ -47,8 +48,8 @@
 
                     <p class="filterTitle">HopLayer</p>
                     <div>
-                        <input type="range" class="custom-range" value="2" min="2" max="5" step="1" id="slider" oninput=QueryForHopLayer(this.value)>
-                        <p id="hopsVal">2</p>
+                        <input type="range" class="custom-range" value="1" min="1" max="5" step="1" id="slider" oninput=QueryForHopLayer(this.value)>
+                        <p id="hopsVal">All</p>
                     </div>
 
                     <ul class="list-group">
@@ -131,7 +132,10 @@ function myFunction() {
         }
 
         function QueryForHopLayer(layer) {
-            document.getElementById('hopsVal').innerHTML = layer;
+            if(layer === "1"){
+                document.getElementById('hopsVal').innerHTML = "All";
+                layer = "All"
+            } else{document.getElementById('hopsVal').innerHTML = layer; }
             lay = "lq" + layer
 
             $.ajax({

@@ -127,8 +127,11 @@ def follow(request):
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=town,
                                                                              criteria='town')
         elif (response.startswith("lq")):
-            layer = int(response[2])
-            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=layer,
+            if(len(response) > 3):
+                queryList = FollowRecommendations.createRecommendationList(jsonData=data)
+            else:
+                layer = int(response[2])
+                queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=layer,
                                                                              criteria='hopLayer')
         # User wants to follow another user
         elif (response.startswith("fo")):
