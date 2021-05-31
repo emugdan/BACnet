@@ -69,9 +69,14 @@ def iterateThroughDirs(mainPersonName, mainPersonID):
 
             # TODO: Wie wird Hauptperson bestimmt?
             # Hauptperson ist vera
+            if (sys.platform == "linux"):
+                if (name == mainPersonName and key["feed_id"] == mainPersonID):
+                    mainPerson = person
+            else:
+                if (name == mainPersonName and key["feed_id"] == mainPersonID.encode("utf-8")):
+                    mainPerson = person
 
-            if (name == mainPersonName and key["feed_id"] == mainPersonID.encode("utf-8")):
-                mainPerson = person
+
 
     return (mainPerson, list_of_persons)
 
@@ -113,7 +118,10 @@ def followCall(mainPersonName, mainPersonID,followPersonName, followPersonID):
     print(q)
     os.chdir(q.parent.parent.parent)
     (mainPerson, list_of_persons) = iterateThroughDirs(mainPersonName, mainPersonID)
-    mainPerson.follow(followPersonID.encode("utf-8"), followPersonName)
+    if (sys.platform == "linux"):
+        mainPerson.follow(followPersonID, followPersonName)
+    else:
+        mainPerson.follow(followPersonID.encode("utf-8"), followPersonName)
     followList(list_of_persons)
     generateJson(list_of_persons, mainPerson)
 
