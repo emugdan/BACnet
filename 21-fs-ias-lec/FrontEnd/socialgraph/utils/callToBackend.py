@@ -12,10 +12,10 @@ os.chdir(q.parent.parent.parent)
 
 
 #Append the path to get access to the modules
-sys.path.append("07-Backend")
-sys.path.append("07-Backend/Feed")
-sys.path.append("07-Backend/lib")
-sys.path.append("07-Backend/Person")
+sys.path.append("07-BackEnd")
+sys.path.append("07-BackEnd/Feed")
+sys.path.append("07-BackEnd/lib")
+sys.path.append("07-BackEnd/Person")
 
 
 import main
@@ -51,9 +51,10 @@ def iterateThroughDirs(mainPersonName, mainPersonID):
             with open("data/" + name + "/" + name + "-secret.key", 'r') as f:
                 key = eval(f.read())
                 h = crypto.HMAC(digestmod, key["private"], key["feed_id"])
-                if sys.platform.startswith("linux"):
+                signer = None
+                try:
                     signer = crypto.HMAC(digestmod, bytes.fromhex(h.get_private_key()))
-                else:
+                except (UnicodeDecodeError, AttributeError, TypeError):
                     signer = crypto.HMAC(digestmod, h.get_private_key())
 
             # Feed laden
