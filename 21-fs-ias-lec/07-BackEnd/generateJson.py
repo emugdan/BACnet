@@ -23,10 +23,10 @@ def generateJson(personList, weAre):
             ourID = i
         node = {}
         followList = person.get_follow_list()
-        try:
-            node['BACnetID'] = person.id.decode("utf-8")
-        except (UnicodeDecodeError, AttributeError, TypeError):
+        if sys.platform.startswith("linux"):
             node['BACnetID'] = person.id
+        else:
+            node['BACnetID'] = person.id.decode("utf-8")
         node['id'] = nodeIDs[person.id] # .decode("utf-8")]
         node['name'] = person.name
         node['gender'] = person.gender

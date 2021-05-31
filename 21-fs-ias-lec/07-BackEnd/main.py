@@ -40,10 +40,9 @@ def main():
             with open("data/" + name + "/" + name + "-secret.key", 'r') as f:
                 key = eval(f.read())
                 h = crypto.HMAC(digestmod, key["private"], key["feed_id"])
-                signer = None
-                try:
+                if sys.platform.startswith("linux"):
                     signer = crypto.HMAC(digestmod, bytes.fromhex(h.get_private_key()))
-                except (UnicodeDecodeError, AttributeError, TypeError):
+                else:
                     signer = crypto.HMAC(digestmod, h.get_private_key())
 
             # Feed laden
