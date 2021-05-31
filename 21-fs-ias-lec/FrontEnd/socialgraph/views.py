@@ -177,6 +177,10 @@ class PostDetailView(DetailView):
 
 def update_profile(request):
     context = None
+
+    x = pathlib.Path(__file__)
+    print(x.parent.parent)
+    os.chdir(x.parent.parent)
     fresh_data_file = open(path)
     fresh_data = json.load(fresh_data_file)
     fresh_data_file.close()
