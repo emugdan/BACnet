@@ -1,5 +1,4 @@
 import generateDirectories
-import directoriesGenerator
 from Person import Person
 from generateJson import generateJson
 from Feed import Feed
@@ -12,8 +11,6 @@ sys.path.append("lib")
 import os
 import crypto
 import feed
-import time
-
 
 def main():
     # dummy Feeds erstellen -> später feeds die schon geladen sind
@@ -60,8 +57,6 @@ def main():
             if (name == "vera"):
                 mainPerson = person
 
-            # mainPerson = dirs[0]
-
     for pers in list_of_persons:
         follow_list = pers.feed.read_follow_from_feed()
         birthday = pers.feed.read_birthday_from_feed()
@@ -85,10 +80,14 @@ def main():
         pers.town = town
         pers.language = language
         pers.status = status
+        pers.main = mainPerson
+        pers.list_of_persons = list_of_persons
 
     # Json file for FrontEnd
     mainPerson.put_attributes("female", "1999-02-13", "Basel", "Schweiz", "Deutsch", "ich bi s verii")
     generateJson(list_of_persons, mainPerson)
+    mainPerson.put_town("Zurich")
+    mainPerson.put_status("lol")
 
 if __name__ == "__main__":
     main()

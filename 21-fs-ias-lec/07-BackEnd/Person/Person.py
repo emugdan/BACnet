@@ -1,6 +1,5 @@
 import sys
 
-
 sys.path.append("../Feed")
 sys.path.append("../lib")
 
@@ -30,7 +29,9 @@ class Person:
         self.language = None
         self.status = None
         self.influencer = False
-        self.profile_pic = None #TODO default pic - Y
+        self.profile_pic = None  # TODO default pic - Y
+        self.main = None
+        self.list_of_persons = None
 
         if feed == None:
             digestmod = "sha256"
@@ -43,20 +44,20 @@ class Person:
                     signer = crypto.HMAC(digestmod, h.get_private_key())
 
             feedObj = fe.FEED(fname="./data/" + name + "/" + name + "-feed.pcap", fid=h.get_feed_id(),
-                      signer=signer, create_if_notexisting=True, digestmod=digestmod)
+                              signer=signer, create_if_notexisting=True, digestmod=digestmod)
             self.feed = Feed.Feed(self.id, feedObj)
 
 
         else:
             self.feed = feed
 
-
     def follow(self, id, name):
         friend = Person(id, name, None)
         self.followlist[id] = friend
-        if friend.feed != None:
+        if friend.feed is not None:
             self.feed.write_follow_to_feed(friend.feed)
-            generateJson(list(self.followlist.values()), self)
+            if self.list_of_persons is not None:
+                generateJson(self.list_of_persons, self.main)
 
         else:
             print("couldn't find feed for person")
@@ -64,9 +65,9 @@ class Person:
     def unfollow(self, id, name):
         exfriend = Person(id, name, None)
         self.followlist.pop(id)
-        if exfriend.feed != None:
+        if exfriend.feed is not None:
             self.feed.write_unfollow_to_feed(exfriend.feed)
-            generateJson(list(self.followlist.values()), self)
+            generateJson(self.list_of_persons, self.main)
 
         else:
             print("couldn't find feed for person")
@@ -92,32 +93,32 @@ class Person:
     def put_gender(self, gender):
         self.gender = gender
         self.feed.write_gender_to_feed(self.gender)
-        generateJson(list(self.followlist.values()), self)
+        generateJson(self.list_of_persons, self.main)
 
     def put_birthday(self, birthday):
         self.birthday = birthday
         self.feed.write_birthday_to_feed(self.birthday)
-        generateJson(list(self.followlist.values()), self)
+        generateJson(self.list_of_persons, self.main)
 
     def put_country(self, country):
         self.country = country
         self.feed.write_country_to_feed(self.country)
-        generateJson(list(self.followlist.values()), self)
+        generateJson(self.list_of_persons, self.main)
 
     def put_town(self, town):
         self.town = town
         self.feed.write_town_to_feed(self.town)
-        generateJson(list(self.followlist.values()), self)
+        generateJson(self.list_of_persons, self.main)
 
     def put_language(self, language):
         self.language = language
         self.feed.write_language_to_feed(self.language)
-        generateJson(list(self.followlist.values()), self)
+        generateJson(self.list_of_persons, self.main)
 
     def put_status(self, status):
         self.status = status
         self.feed.write_status_to_feed(self.status)
-        generateJson(list(self.followlist.values()), self)
+        generateJson(self.list_of_persons, self.main)
 
     def put_influencer(self):
         self.feed.write_influencer_to_feed(self.influencer)
