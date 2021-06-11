@@ -17,6 +17,7 @@ class Person:
     id = 0
     feed = None
     followlist = None
+    activity = 0
 
     def __init__(self, id, name, feed):
         self.id = id
@@ -50,7 +51,6 @@ class Person:
 
 
     def follow(self, id, name):
-        #TODO: follow wird nie i Feed gschriebe, will immer e person mit emene feed wo none isch erstellt wird, me müesst also im konstruktor de feed go sueche? oder so? oder bim follow scho e perso oder feed biigeh?
         friend = Person(id, name, None)
         self.followlist[id] = friend
         if friend.feed != None:
@@ -65,13 +65,10 @@ class Person:
         self.followlist.pop(id)
         if exfriend.feed != None:
             self.feed.write_unfollow_to_feed(exfriend.feed)
-            # TODO: generate JSON for changes
             generateJson(list(self.followlist.values()), self)
 
         else:
             print("couldn't find feed for person")
-
-        # TODO: unfollow auch in Feed schreiben
 
     def get_follow_list(self):
         return self.followlist
@@ -94,26 +91,32 @@ class Person:
     def put_gender(self, gender):
         self.gender = gender
         self.feed.write_gender_to_feed(self.gender)
+        generateJson(list(self.followlist.values()), self)
 
     def put_birthday(self, birthday):
         self.birthday = birthday
         self.feed.write_birthday_to_feed(self.birthday)
+        generateJson(list(self.followlist.values()), self)
 
     def put_country(self, country):
         self.country = country
         self.feed.write_country_to_feed(self.country)
+        generateJson(list(self.followlist.values()), self)
 
     def put_town(self, town):
         self.town = town
         self.feed.write_town_to_feed(self.town)
+        generateJson(list(self.followlist.values()), self)
 
     def put_language(self, language):
-        self.language
+        self.language = language
         self.feed.write_language_to_feed(self.language)
+        generateJson(list(self.followlist.values()), self)
 
     def put_status(self, status):
-        self.status
+        self.status = status
         self.feed.write_status_to_feed(self.status)
+        generateJson(list(self.followlist.values()), self)
 
     def put_influencer(self):
         self.feed.write_influencer_to_feed(self.influencer)

@@ -11,6 +11,7 @@ class Feed:
     def __init__(self, id, myFeed):
         self.myFeed = myFeed
         self.id = id
+        self.timestamp = None
 
     # adds new Follow to the Feed
     def write_follow_to_feed(self, newFriendsFeed):
@@ -34,7 +35,7 @@ class Feed:
             if event.content()[0] == "bacnet/unfollowing":
                 friends_id = event.content()[2]
                 for entry in followList:
-                    if(entry["Feed ID"] == friends_id):
+                    if (entry["Feed ID"] == friends_id):
                         followList.remove(entry)
                         IDlist.remove(friends_id)
 
@@ -105,7 +106,10 @@ class Feed:
         self.myFeed.write(["bacnet/language", time.time(), language])
 
     def write_status_to_feed(self, status):
-        self.myFeed.write(["bacnet/status", time.time(), status])
+        time_var = time.time()
+        self.myFeed.write(["bacnet/status", time_var, status])
+        if self.timestamp is None:
+            self.timestamp = time_var
 
     def write_influencer_to_feed(self, influencer):
         self.myFeed.write(["bacnet/influencer", time.time(), influencer])
