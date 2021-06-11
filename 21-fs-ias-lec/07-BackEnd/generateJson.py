@@ -37,7 +37,7 @@ def generateJson(personList, weAre):
         node['status'] = person.status
         # TODO ESTHER
         node['activity level'] = person.get_activity()
-        #node['influencer_count'] = person.influencer_count
+        # node['influencer_count'] = person.influencer_count
         node['influencer'] = person.influencer
         # TODO ESTHER
         node['hopLayer'] = 10000
