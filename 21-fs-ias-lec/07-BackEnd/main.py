@@ -13,7 +13,7 @@ import crypto
 import feed
 
 def main():
-    # dummy Feeds erstellen -> später feeds die schon geladen sind
+    # generates dummy feeds -> later not used anymore because feeds are generated through feedSyc or feedCtrl ...
 
     # To use the directories generator swap out comments:
     # - The two just below (this file - l. 27 - 28)
@@ -24,16 +24,16 @@ def main():
     generateDirectories.generateDirectories()
     # directoriesGenerator.createDirectories(300, 5)
 
-    # die schon bestehenden Feeds auslesen und Feed und Personenobjekte erstellen
+    # read the feeds that are saved in the directory
     digestmod = "sha256"
     rootdir = "./data"
-    list_of_persons = []
+    list_of_persons = []        # list of all persons of whom a feed exists
     mainPerson = None
 
-    # durch alle Ordner in data iterieren
+    # iterate through all folders in "data"
     for subdir, dirs, files in os.walk(rootdir):
         for name in dirs:
-            # key der jeweiligen Person aulesen
+            # read key of each person
             with open("data/" + name + "/" + name + "-secret.key", 'r') as f:
                 key = eval(f.read())
                 h = crypto.HMAC(digestmod, key["private"], key["feed_id"])
@@ -42,21 +42,23 @@ def main():
                 else:
                     signer = crypto.HMAC(digestmod, h.get_private_key())
 
-            # Feed laden
+            # load feed
             my_feed = feed.FEED(fname="data/" + name + "/" + name + "-feed.pcap", fid=h.get_feed_id(),
                                signer=signer, create_if_notexisting=True, digestmod=digestmod)
 
-            # Feed objekt erstellen
+            # initialize feed object
             feed_obj = Feed.Feed(key["feed_id"], my_feed)
 
+            # initialize person object and add it to the list
             person = Person.Person(key["feed_id"], name, feed_obj)
             list_of_persons.append(person)
 
             # TODO: Wie wird Hauptperson bestimmt?
-            # Hauptperson ist vera
+            # main person is "vera" in our case
             if (name == "vera"):
                 mainPerson = person
 
+    # for each person read the attributes from the entries in the feed
     for pers in list_of_persons:
         follow_list = pers.feed.read_follow_from_feed()
         birthday = pers.feed.read_birthday_from_feed()
@@ -66,7 +68,7 @@ def main():
         language = pers.feed.read_language_from_feed()
         status = pers.feed.read_status_from_feed()
 
-        # Followliste vervollständigen
+        # follow list
         for follow_entry in follow_list:
             for p in list_of_persons:
                 if follow_entry["Feed ID"] == p.id:
@@ -80,13 +82,18 @@ def main():
         pers.town = town
         pers.language = language
         pers.status = status
+
+        # tell each person who the mainPerson is and what persons we "know" (= have the feed at the moment)
         pers.main = mainPerson
         pers.list_of_persons = list_of_persons
 
     # Json file for FrontEnd
-    mainPerson.put_attributes("female", "1999-02-13", "Basel", "Schweiz", "Deutsch", "ich bi s verii")
     generateJson(list_of_persons, mainPerson)
-    mainPerson.put_town("Zurich")
+
+    # TODO: das uselösche am schluss lol
+    # test the methods in BackEnd
+    mainPerson.put_attributes("female", "1999-02-13", "Basel", "Schweiz", "Deutsch", "ich bi s verii")
+    mainPerson.put_town("Ehrendingen")
     mainPerson.put_status("lol")
 
 if __name__ == "__main__":
