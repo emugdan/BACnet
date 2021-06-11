@@ -64,12 +64,12 @@ def main():
 
     for pers in list_of_persons:
         follow_list = pers.feed.read_follow_from_feed()
-        birthday = pers.feed.readBirthdayFromFeed()
-        gender = pers.feed.readGenderFromFeed()
-        country = pers.feed.readCountryFromFeed()
-        town = pers.feed.readTownFromFeed()
-        language = pers.feed.readLanguageFromFeed()
-        status = pers.feed.readStatusFromFeed()
+        birthday = pers.feed.read_birthday_from_feed()
+        gender = pers.feed.read_gender_from_feed()
+        country = pers.feed.read_country_from_feed()
+        town = pers.feed.read_town_from_feed()
+        language = pers.feed.read_language_from_feed()
+        status = pers.feed.read_status_from_feed()
 
         # Followliste vervollständigen
         for follow_entry in follow_list:
