@@ -42,7 +42,7 @@ class Feed:
         followList.sort(key=lambda msg: msg["time"])
         return followList
 
-    def readBirthdayFromFeed(self):
+    def read_birthday_from_feed(self):
         myBirthday = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/birthday":
@@ -50,7 +50,7 @@ class Feed:
 
         return myBirthday
 
-    def readGenderFromFeed(self):
+    def read_gender_from_feed(self):
         gender = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/gender":
@@ -58,7 +58,7 @@ class Feed:
 
         return gender
 
-    def readCountryFromFeed(self):
+    def read_country_from_feed(self):
         country = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/country":
@@ -66,7 +66,7 @@ class Feed:
 
         return country
 
-    def readTownFromFeed(self):
+    def read_town_from_feed(self):
         town = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/town":
@@ -74,7 +74,7 @@ class Feed:
 
         return town
 
-    def readLanguageFromFeed(self):
+    def read_language_from_feed(self):
         language = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/language":
@@ -82,13 +82,22 @@ class Feed:
 
         return language
 
-    def readStatusFromFeed(self):
+    def read_status_from_feed(self):
         status = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/status":
                 status = event.content()[2]
 
         return status
+
+    # reads the path of the current profile pic - Y
+    def read_profile_pic_from_feed(self):
+        path = None
+        for event in self.myFeed:
+            if event.content()[0] == "bacnet/profile_pic":
+                path = event.content()[2]
+        # if path not valid return .. path to a default pic..
+        return path
 
     def write_gender_to_feed(self, gender):
         self.myFeed.write(["bacnet/gender", time.time(), gender])
@@ -113,3 +122,6 @@ class Feed:
 
     def write_influencer_to_feed(self, influencer):
         self.myFeed.write(["bacnet/influencer", time.time(), influencer])
+
+    def write_profile_pic_to_feed(self, path):
+        self.myFeed.write(["bacnet/profile_pic", time.time(), path])

@@ -30,6 +30,7 @@ class Person:
         self.language = None
         self.status = None
         self.influencer = False
+        self.profile_pic = None #TODO default pic - Y
 
         if feed == None:
             digestmod = "sha256"
@@ -120,3 +121,6 @@ class Person:
 
     def put_influencer(self):
         self.feed.write_influencer_to_feed(self.influencer)
+
+    def put_profile_pic(self):
+        self.feed.write_profile_pic_to_feed(self.profile_pic)
