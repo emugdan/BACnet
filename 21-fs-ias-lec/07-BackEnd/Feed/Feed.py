@@ -37,7 +37,7 @@ class Feed:
                 # if it is an unollowing, remove the follow from the list
                 friends_id = event.content()[2]
                 for entry in follow_list:
-                    if (entry["Feed ID"] == friends_id):
+                    if entry["Feed ID"] == friends_id:
                         follow_list.remove(entry)
                         id_list.remove(friends_id)
 
