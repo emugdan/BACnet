@@ -12,12 +12,13 @@ import os
 import crypto
 import feed
 
+
 def main():
     # generates dummy feeds -> later not used anymore because feeds are generated through feedSyc or feedCtrl ...
 
     # To use the directories generator swap out comments:
     # - The two just below (this file - l. 27 - 28)
-    # - Determination of mainPerson (this file - l. 58 - 61)
+    # - Determination of main_person (this file - l. 58 - 61)
     # - Path in generateJson.py to save in different json file (l. 50 - 51)
     # - Path in views.py to choose desired json file (l. 18 - 19)
 
@@ -27,8 +28,8 @@ def main():
     # read the feeds that are saved in the directory
     digestmod = "sha256"
     rootdir = "./data"
-    list_of_persons = []        # list of all persons of whom a feed exists
-    mainPerson = None
+    list_of_persons = []  # list of all persons of whom a feed exists
+    main_person = None
 
     # iterate through all folders in "data"
     for subdir, dirs, files in os.walk(rootdir):
@@ -44,7 +45,7 @@ def main():
 
             # load feed
             my_feed = feed.FEED(fname="data/" + name + "/" + name + "-feed.pcap", fid=h.get_feed_id(),
-                               signer=signer, create_if_notexisting=True, digestmod=digestmod)
+                                signer=signer, create_if_notexisting=True, digestmod=digestmod)
 
             # initialize feed object
             feed_obj = Feed.Feed(key["feed_id"], my_feed)
@@ -55,8 +56,8 @@ def main():
 
             # TODO: Wie wird Hauptperson bestimmt?
             # main person is "vera" in our case
-            if (name == "vera"):
-                mainPerson = person
+            if name == "vera":
+                main_person = person
 
     # for each person read the attributes from the entries in the feed
     for pers in list_of_persons:
@@ -84,17 +85,18 @@ def main():
         pers.status = status
 
         # tell each person who the mainPerson is and what persons we "know" (= have the feed at the moment)
-        pers.main = mainPerson
+        pers.main = main_person
         pers.list_of_persons = list_of_persons
 
     # Json file for FrontEnd
-    generateJson(list_of_persons, mainPerson)
+    generateJson(list_of_persons, main_person)
 
     # TODO: das uselösche am schluss lol
     # test the methods in BackEnd
-    mainPerson.put_attributes("female", "1999-02-13", "Basel", "Schweiz", "Deutsch", "ich bi s verii")
-    mainPerson.put_town("Ehrendingen")
-    mainPerson.put_status("lol")
+    main_person.put_attributes("female", "1999-02-13", "Basel", "Schweiz", "Deutsch", "ich bi s verii")
+    main_person.put_town("Ehrendingen")
+    main_person.put_status("lol")
+
 
 if __name__ == "__main__":
     main()
