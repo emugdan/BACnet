@@ -65,6 +65,7 @@ def main():
         town = pers.feed.read_town_from_feed()
         language = pers.feed.read_language_from_feed()
         status = pers.feed.read_status_from_feed()
+        pers.list_of_persons = list_of_persons
 
         # Followliste vervollständigen
         for follow_entry in follow_list:
@@ -81,7 +82,6 @@ def main():
         pers.language = language
         pers.status = status
         pers.main = mainPerson
-        pers.list_of_persons = list_of_persons
 
     # Json file for FrontEnd
     mainPerson.put_attributes("female", "1999-02-13", "Basel", "Schweiz", "Deutsch", "ich bi s verii")

@@ -12,26 +12,29 @@ from Feed import Feed
 
 
 class Person:
+    list_of_persons = None
+    main = None
+
     name = ""
     id = 0
     feed = None
-    followlist = None
+    followlist = dict()
+
+    gender = " "
+    birthday = None
+    country = None
+    town = None
+    language = None
+    status = None
+    profile_pic = None  # TODO default pic - Y
+
     activity = 0
+    influencer_count = 0
+    influencer = False
 
     def __init__(self, id, name, feed):
         self.id = id
         self.name = name
-        self.followlist = dict()
-        self.gender = " "
-        self.birthday = None
-        self.country = None
-        self.town = None
-        self.language = None
-        self.status = None
-        self.influencer = False
-        self.profile_pic = None  # TODO default pic - Y
-        self.main = None
-        self.list_of_persons = None
 
         if feed == None:
             digestmod = "sha256"
@@ -62,6 +65,10 @@ class Person:
             self.feed.write_follow_to_feed(friend.feed)
             self.activity += 1
             if self.list_of_persons is not None:
+                for person in self.list_of_persons:
+                    if person.id == id:
+                        person.influencer_count += 1
+                        person.put_influencer()
                 generateJson(self.list_of_persons, self.main)
 
         else:
@@ -73,7 +80,12 @@ class Person:
         if exfriend.feed is not None:
             self.feed.write_unfollow_to_feed(exfriend.feed)
             self.activity += 1
-            generateJson(self.list_of_persons, self.main)
+            if self.list_of_persons is not None:
+                for person in self.list_of_persons:
+                    if person.id == id:
+                        person.influencer_count -= 1
+                        person.put_influencer()
+                generateJson(self.list_of_persons, self.main)
 
         else:
             print("couldn't find feed for person")
@@ -132,11 +144,21 @@ class Person:
         self.activity += 1
         generateJson(self.list_of_persons, self.main)
 
-    def put_influencer(self, isInfluencer):
-        self.influencer = isInfluencer
-        self.feed.write_influencer_to_feed(self.influencer)
-        self.activity += 1
-        generateJson(self.list_of_persons, self.main)
+    def put_influencer(self):
+
+        if self.influencer_count > 3 and self.influencer is False:
+            self.influencer = True
+            self.feed.write_influencer_to_feed(self.influencer)
+            self.activity += 1
+            if self.list_of_persons is not None:
+                generateJson(self.list_of_persons, self.main)
+
+        if self.influencer_count < 3 and self.influencer is True:
+            self.influencer = False
+            self.feed.write_influencer_to_feed(self.influencer)
+            self.activity += 1
+            if self.list_of_persons is not None:
+                generateJson(self.list_of_persons, self.main)
 
     def put_profile_pic(self, picture):
         self.profile_pic = picture
