@@ -111,20 +111,28 @@ def follow(request):
     if request.method == "POST":
         # This response is the name of the User that was searched
         response = request.POST['text']
+        mode = request.POST['mode']
+        queryList = []
 
         # Gender Query
         if (response == 'male' or response == 'female'):
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=response,
+                                                                             criteria='gender') \
+            if mode == "1follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data, attribute=response,
                                                                              criteria='gender')
         # User has searched for name
         elif (response.startswith("nq")):
             name = response[2:len(response)]
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=name,
+                                                                             criteria='name')\
+            if mode == "1follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data, attribute=name,
                                                                              criteria='name')
         # User has searched for name
         elif (response.startswith("tq")):
             town = response[2:len(response)]
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=town,
+                                                                             criteria='town')\
+            if mode == "follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data, attribute=town,
                                                                              criteria='town')
         elif (response.startswith("lq")):
             if(len(response) > 3):
@@ -150,8 +158,9 @@ def follow(request):
             data = json.load(data_file)
             data_file.close()
             queryList = FollowRecommendations.createRecommendationList(jsonData=data)
-        else:
-            queryList = recommendationList
+        elif(response == ""):
+            queryList = FollowRecommendations.createRecommendationList(jsonData=data) \
+            if mode == "1follow" else FollowRecommendations.createUnfollowRecommendationDefault(jsonData=data)
 
             # Create a new context variable
         text = {
@@ -161,8 +170,13 @@ def follow(request):
             'recommendations': queryList
         }
 
-        # Rerender the HTML file
-        return render(request, 'socialgraph/FollowBody.html', text)
+
+        if(mode == "1unfollow"):
+            return render(request, 'socialgraph/UnfollowBody.html', text)
+        else:
+            return render(request, 'socialgraph/FollowBody.html', text)
+
+
 
     return render(request, 'socialgraph/Follow.html', context)
 

@@ -27,6 +27,7 @@
   --color-profileUpdateTextBoxText: #000000;
   --color-profileUpdatePlaceholder: #6c757d;
   --color-profileUpdateDelGender: #ae4444;
+
 }
 
 .theme-dark {
@@ -127,6 +128,13 @@ h1, h2, h3, h4, h5, h6 {
 /* LOOK AND FEEL SWITCH BUTTON */
 .lookAndFeelToggle {
   margin-top: 8px;
+}
+
+
+/* TOGGLE SWITCH FOR FOLLOW UNFOLLOW  */
+.followUnfollowToggle {
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 

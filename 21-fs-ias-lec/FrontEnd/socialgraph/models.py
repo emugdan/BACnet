@@ -110,6 +110,38 @@ class FollowRecommendations(models.Model):
         return recommendationList
 
     @classmethod
+    def createUnfollowRecommendation(self, jsonData, attribute, criteria):
+        recommendationList = []
+        for node in jsonData['nodes']:
+            if (node.get(criteria) == attribute and node.get('hopLayer') == 1):
+                recommendationList.append(
+                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('BACnetID'),
+                                                 id=node.get("id"),
+                                                 nameNode=node.get('name'), genderNode=node.get('gender'),
+                                                 birthdayNode=node.get('birthday'), countryNode=node.get('country'),
+                                                 townNode=node.get('town'),
+                                                 languageNode=node.get('language'),
+                                                 profile_picNode=node.get('profile_pic') if node.get(
+                                                     'profile_pic') is not None else 'default.jpg'))
+        return recommendationList
+
+    @classmethod
+    def createUnfollowRecommendationDefault(self, jsonData):
+        recommendationList = []
+        for node in jsonData['nodes']:
+            if (node.get('hopLayer') == 1):
+                recommendationList.append(
+                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('BACnetID'),
+                                                 id=node.get("id"),
+                                                 nameNode=node.get('name'), genderNode=node.get('gender'),
+                                                 birthdayNode=node.get('birthday'), countryNode=node.get('country'),
+                                                 townNode=node.get('town'),
+                                                 languageNode=node.get('language'),
+                                                 profile_picNode=node.get('profile_pic') if node.get(
+                                                     'profile_pic') is not None else 'default.jpg'))
+        return recommendationList
+
+    @classmethod
     def createRecommendationsHopLayer(self, jsonData, criteria):
         recommendationList = []
         for node in jsonData['nodes']:
