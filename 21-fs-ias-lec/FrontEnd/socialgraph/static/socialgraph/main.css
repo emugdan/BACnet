@@ -124,7 +124,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #homeContentSection {
-  height: calc(100vh - 153px);
+  margin-top: 100px;
+  height: calc(100vh - 125px);
+  text-align:center;
+  overflow-y:scroll;
 }
 
 #usersContentSection {
@@ -149,6 +152,99 @@ h1, h2, h3, h4, h5, h6 {
 
 .content-section-title {
   margin-bottom: 20px;
+}
+
+
+/* HOME TAB STYLING */
+#homeTitle {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+.homeDivider {
+  border-top: 2px solid var(--color-profileButton);
+  width: 70%;
+  margin-left: 15%; !important;
+  margin-right: 15%; !important;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.progress {
+  width: 130px;
+  height: 130px;
+  background: none;
+  position: relative;
+}
+
+.progress::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 6px solid #eee;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.progress>span {
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+.progress .progress-left {
+  left: 0;
+}
+
+.progress .progress-bar {
+  width: 100%;
+  height: 100%;
+  background: none;
+  border-width: 6px;
+  border-style: solid;
+  position: absolute;
+  top: 0;
+}
+
+.progress .progress-left .progress-bar {
+  left: 100%;
+  border-top-right-radius: 80px;
+  border-bottom-right-radius: 80px;
+  border-left: 0;
+  -webkit-transform-origin: center left;
+  transform-origin: center left;
+}
+
+.progress .progress-right {
+  right: 0;
+}
+
+.progress .progress-right .progress-bar {
+  left: -100%;
+  border-top-left-radius: 80px;
+  border-bottom-left-radius: 80px;
+  border-right: 0;
+  -webkit-transform-origin: center right;
+  transform-origin: center right;
+}
+
+.progress .progress-value {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#followsLabel {
+  margin-top: 20px;
+}
+
+#followersLabel {
+  margin-top: 20px;
 }
 
 

@@ -11,7 +11,7 @@ from django.views.generic import DetailView
 
 from .importer import create_profiles
 from .models import Profile, FollowRecommendations
-from .utils.jsonUtils import extract_connections, getRoot
+from .utils.jsonUtils import extract_connections, getRoot, getRootFollowsSize, getRootFollowersSize
 
 # Create your views here.
 
@@ -30,10 +30,15 @@ def home(request):
     data = json.load(data_file)
     data_file.close()
     root = getRoot(data['nodes'])
+    follows = getRootFollowsSize(data['nodes'])
+    followers = getRootFollowersSize(data['links'])
 
     context = {
         'connections': extract_connections(data, "1 1"),
-        'root': root
+        'root': root,
+        'follows': follows,
+        'followers': followers,
+        'all': len(data['nodes'])
     }
 
     return render(request, 'socialgraph/home.html', context)

@@ -2,15 +2,110 @@
 {% block content %}
 
   <div class="container">
-      <h4 class="content-section-title">Home</h4>
 
       <div class="content-section" id="homeContentSection">
 
           <!-- <p>{{ connections }}</p> -->
-          <h5 id="homeTitle">Hi {{ root.name }}!</h5>
+          <h3 id="homeTitle">Hi {{ root.name }}!</h3>
           <p>Welcome to the BACnet social graph.</p>
+          <p>Check out the Users tab to explore the network of your direct and indirect connections. <br>
+          In case you come across someone you want to connect with, the Follow tab is the place to go.</p>
+
+          <hr class="homeDivider">
+
+          <p style="margin-bottom: 50px;">Your currents stats:</p>
+
+          <div class="row">
+
+              <div class="col-md-3">
+
+              </div>
+
+              <div class="col-md-3">
+
+                  <div class="progress mx-auto" id="followsProgress" data-value='0'>
+                      <span class="progress-left">
+                          <span class="progress-bar border-primary"></span>
+                      </span>
+                      <span class="progress-right">
+                          <span class="progress-bar border-primary"></span>
+                      </span>
+                      <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                          <div class="p font-weight-bold" id="followsProgressSpan">0</div>
+                      </div>
+                  </div>
+
+                  <div class="h6 font-weight-bold" id="followsLabel">Follows</div>
+
+              </div>
+
+              <div class="col-md-3">
+
+                  <div class="progress mx-auto" id="followersProgress" data-value='0'>
+                      <span class="progress-left">
+                          <span class="progress-bar border-primary"></span>
+                      </span>
+                      <span class="progress-right">
+                          <span class="progress-bar border-primary"></span>
+                      </span>
+                      <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                          <div class="p font-weight-bold" id="followersProgressSpan">0</div>
+                      </div>
+                  </div>
+
+                  <div class="h6 font-weight-bold" id="followersLabel">Followers</div>
+
+              </div>
+
+          </div>
+
+          <div class="col-md-3">
+
+          </div>
+
+          <hr class="homeDivider">
+
 
       </div>
+
   </div>
+
+  <script>
+
+      $(function() {
+
+        $("#followsProgress").attr('data-value', 100 / {{ all }} * {{ follows }});
+        $("#followsProgressSpan").html( "{{ follows }}   /   {{ all }}" );
+
+        $("#followersProgress").attr('data-value', 100 / {{ all }} * {{ followers }});
+        $("#followersProgressSpan").html( "{{ followers }}   /   {{ all }}" );
+
+          $(".progress").each(function() {
+
+            var value = $(this).attr('data-value');
+            var left = $(this).find('.progress-left .progress-bar');
+            var right = $(this).find('.progress-right .progress-bar');
+
+            if (value > 0) {
+              if (value <= 50) {
+                right.css('transform', 'rotate(' + percentageToDegrees(value) + 'deg)')
+              } else {
+                right.css('transform', 'rotate(180deg)')
+                left.css('transform', 'rotate(' + percentageToDegrees(value - 50) + 'deg)')
+              }
+            }
+
+          })
+
+          function percentageToDegrees(percentage) {
+
+            return percentage / 100 * 360
+
+          }
+
+      });
+
+
+  </script>
 
 {% endblock content %}
