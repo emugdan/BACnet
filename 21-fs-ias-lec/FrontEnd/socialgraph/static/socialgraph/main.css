@@ -10,6 +10,7 @@
   --color-h: #444444;
   --color-contentSection: #ffffff;
   --color-contentSectionBorder: #dddddd;
+  --color-homeDivider: #5f788a40;
   --color-listItem: #333;
   --color-listItemHover: #000;
   --color-listGroupItemHover: #3b3e4310;
@@ -31,6 +32,7 @@
   --color-searchButtonBorder: #ffffff;
   --color-h: #ffffff;
   --color-contentSection: #3B3F41;
+  --color-homeDivider: #7F7F7F;
   --color-listItem: #ccc;
   --color-listItemHover: #fff;
   --color-listGroupItemHover: #00AEED10;
@@ -162,7 +164,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .homeDivider {
-  border-top: 2px solid var(--color-profileButton);
+  border-top: 2px solid var(--color-homeDivider);
   width: 70%;
   margin-left: 15%; !important;
   margin-right: 15%; !important;
