@@ -35,11 +35,8 @@ def generateJson(personList, weAre):
         node['town'] = person.town
         node['language'] = person.language
         node['status'] = person.status
-        # TODO ESTHER
         node['activity level'] = person.get_activity()
-        # node['influencer_count'] = person.influencer_count
         node['influencer'] = person.influencer
-        # TODO ESTHER
         node['hopLayer'] = 10000
         nodes.append(node)
         for friend in followList:
