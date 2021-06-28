@@ -11,18 +11,22 @@ from django.views.generic import DetailView
 
 from .importer import create_profiles
 from .models import Profile, FollowRecommendations
-from .utils.jsonUtils import extract_connections, getRoot, getRootFollowsSize, getRootFollowersSize
+from .utils.jsonUtils import extract_connections, getRoot, getRootFollowsSize, getRootFollowersSize, saveSettings
 
 # Create your views here.
 
 path = Path('socialgraph/static/socialgraph/')
-path2 = path / 'testData.json'
 path = path / 'loadedData.json'
 # path = path / 'loadedData1.json'
 data_file = open(path)
 data = json.load(data_file)
 data_file.close()
 
+settingsPath = Path('socialgraph/static/socialgraph/')
+settingsPath = settingsPath / 'settings.json'
+settings_data_file = open(settingsPath)
+settings_data = json.load(settings_data_file)
+settings_data_file.close()
 
 
 def home(request):
@@ -33,12 +37,22 @@ def home(request):
     follows = getRootFollowsSize(data['nodes'])
     followers = getRootFollowersSize(data['links'])
 
+    settings_data_file = open(settingsPath)
+    settings_data = json.load(settings_data_file)
+    settings_data_file.close()
+
+    if request.method == "POST":
+        response = request.POST['text']
+        newSettings = saveSettings(settings_data, response, settingsPath)
+        return HttpResponse(newSettings)
+
     context = {
         'connections': extract_connections(data, "1 1"),
         'root': root,
         'follows': follows,
         'followers': followers,
-        'all': len(data['nodes'])
+        'all': len(data['nodes']),
+        'graph': settings_data
     }
 
     return render(request, 'socialgraph/home.html', context)
@@ -50,6 +64,10 @@ def users(request):
     data_file.close()
     root = getRoot(data['nodes'])
 
+    settings_data_file = open(settingsPath)
+    settings_data = json.load(settings_data_file)
+    settings_data_file.close()
+
     if request.method == "POST":
         response = request.POST['text']
         j = extract_connections(data, response)
@@ -59,7 +77,8 @@ def users(request):
         'data': json.dumps(data),
         'root': root,
         'nodes': sorted(data['nodes'], key=lambda item: item["hopLayer"]),
-        'links': data['links']
+        'links': data['links'],
+        'graph': settings_data
     }
     create_profiles(data)
     return render(request, 'socialgraph/users.html', context)

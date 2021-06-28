@@ -54,8 +54,8 @@
 
         /* *** CREATE D3 GRAPH *** */
 
-        var nodeRadius = 15;
-        var markerSize = 10;
+        var nodeRadius = {{ graph.nodeRadius }};
+        var markerSize = {{ graph.markerSize }};
         var markerX = nodeRadius + markerSize;
 
         var margin = {top: 30, right: 30, bottom: 30, left: 30},
@@ -235,12 +235,14 @@
 
           {% for node in nodes %}
 
+          console.log("{{ graph.maleColor }}")
+
             var nodeId = "{{ node.id }}";
             if (id === nodeId) {
               if ("{{ node.gender }}" === "male") {
-                color = "#0095FF";
+                color = "{{ graph.maleColor }}";
               } else {
-                color = "#E97091";
+                color = "{{ graph.femaleColor }}";
               }
             }
 
