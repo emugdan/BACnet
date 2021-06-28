@@ -26,7 +26,7 @@ class Person:
     town = None
     language = None
     status = None
-    profile_pic = None  # TODO default pic - Y
+    profile_pic = "./media/default_pic.jpg"
     activity = 0  # number of events on the feed
     influencer_count = 0
     influencer = False
@@ -98,13 +98,14 @@ class Person:
             print("ID:", key, " Name: ", value.name)
         print("\n")
 
-    def put_attributes(self, gender, birthday, town, country, language, status):    # writes given attributes to feed
+    def put_attributes(self, gender, birthday, town, country, language, status, profile_pic):    # writes given attributes to feed
         self.put_gender(gender)
         self.put_birthday(birthday)
         self.put_town(town)
         self.put_country(country)
         self.put_language(language)
         self.put_status(status)
+        self.put_profile_pic(profile_pic)
 
     def put_gender(self, gender):    # writes new gender to feed and updates Json for FrontEnd
         self.gender = gender

@@ -39,7 +39,7 @@ def main():  # generates dummy feeds, later not used anymore -> feeds should be 
                                 signer=signer, create_if_notexisting=True, digestmod=digestmod)
 
             # initialize feed object
-            feed_obj = Feed.Feed(key["feed_id"], my_feed)
+            feed_obj = Feed.Feed(key["feed_id"], my_feed, name)
 
             # initialize person object and add it to the list
             person = Person.Person(key["feed_id"], name, feed_obj)
@@ -56,6 +56,7 @@ def main():  # generates dummy feeds, later not used anymore -> feeds should be 
         town = pers.feed.read_town_from_feed()
         language = pers.feed.read_language_from_feed()
         status = pers.feed.read_status_from_feed()
+        profile_pic = pers.feed.read_profile_pic_from_feed()
         pers.list_of_persons = list_of_persons
 
         for follow_entry in follow_list:  # creates follow list
@@ -64,13 +65,14 @@ def main():  # generates dummy feeds, later not used anymore -> feeds should be 
                     pers.follow(follow_entry["Feed ID"], p.name)
                     break
 
-        pers.print_follow_list()
+        pers.print_follow_list()  # for testing
         pers.birthday = birthday
         pers.gender = gender
         pers.country = country
         pers.town = town
         pers.language = language
         pers.status = status
+        pers.profile_pic = profile_pic
 
         # tell each person who the mainPerson is and what persons we "know" (= have the feed at the moment)
         pers.main = main_person

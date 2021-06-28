@@ -8,9 +8,10 @@ import time
 
 class Feed:  # read from and write to the feed
 
-    def __init__(self, id, myFeed):
+    def __init__(self, id, myFeed, name):
         self.myFeed = myFeed                # Feed from lib/feed.py
         self.id = id                        # BacNetID
+        self.name = name                    # Name of the feed owner
         self.timestamp = None               # TODO Doc für was wird das gebraucht?
 
     def write_follow_to_feed(self, new_friends_feed):    # writes a new follow to the feed
@@ -87,12 +88,14 @@ class Feed:  # read from and write to the feed
 
         return status
 
-    def read_profile_pic_from_feed(self):    # reads the path of the current profile pic - Y
+    def read_profile_pic_from_feed(self):    # reads the path of the current profile pic
         path = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/profile_pic":
                 path = event.content()[2]
-        # if path not valid return .. path to a default pic..
+        if path is None:  # return if no profile pic found
+            return
+
         return path
 
     def write_gender_to_feed(self, gender):    # writes the new gender to the feed
