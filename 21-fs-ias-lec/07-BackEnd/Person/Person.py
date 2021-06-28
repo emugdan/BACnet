@@ -6,7 +6,7 @@ sys.path.append("../lib")
 import crypto
 import feed as fe
 
-from generateJson import generateJson
+from generateJson import generate_json
 from Feed import Feed
 
 
@@ -48,7 +48,7 @@ class Person:
 
             feed_obj = fe.FEED(fname="./data/" + name + "/" + name + "-feed.pcap", fid=h.get_feed_id(),
                                signer=signer, create_if_notexisting=True, digestmod=digestmod)
-            self.feed = Feed.Feed(self.id, feed_obj)
+            self.feed = Feed.Feed(self.id, feed_obj, name)
 
         else:
             self.feed = feed
@@ -68,7 +68,7 @@ class Person:
                     if person.id == id:
                         person.influencer_count += 1  # to know if friend is influencer now
                         person.put_influencer()
-                generateJson(self.list_of_persons, self.main)  # update Json
+                generate_json(self.list_of_persons, self.main)  # update Json
 
         else:
             print("couldn't find feed for person")
@@ -84,7 +84,7 @@ class Person:
                     if person.id == id:
                         person.influencer_count -= 1  # to know if friend is influencer
                         person.put_influencer()
-                generateJson(self.list_of_persons, self.main)  # update Json
+                generate_json(self.list_of_persons, self.main)  # update Json
 
         else:
             print("couldn't find feed for person")
@@ -111,37 +111,37 @@ class Person:
         self.gender = gender
         self.feed.write_gender_to_feed(self.gender)
         self.activity += 1
-        generateJson(self.list_of_persons, self.main)
+        generate_json(self.list_of_persons, self.main)
 
     def put_birthday(self, birthday):    # writes new birthday to feed and updates Json for FrontEnd
         self.birthday = birthday
         self.feed.write_birthday_to_feed(self.birthday)
         self.activity += 1
-        generateJson(self.list_of_persons, self.main)
+        generate_json(self.list_of_persons, self.main)
 
     def put_country(self, country):    # writes new country to feed and updates Json for FrontEnd
         self.country = country
         self.feed.write_country_to_feed(self.country)
         self.activity += 1
-        generateJson(self.list_of_persons, self.main)
+        generate_json(self.list_of_persons, self.main)
 
     def put_town(self, town):    # writes new town to feed and updates Json for FrontEnd
         self.town = town
         self.feed.write_town_to_feed(self.town)
         self.activity += 1
-        generateJson(self.list_of_persons, self.main)
+        generate_json(self.list_of_persons, self.main)
 
     def put_language(self, language):    # writes new language to feed and updates Json for FrontEnd
         self.language = language
         self.feed.write_language_to_feed(self.language)
         self.activity += 1
-        generateJson(self.list_of_persons, self.main)
+        generate_json(self.list_of_persons, self.main)
 
     def put_status(self, status):    # writes new status to feed and updates Json for FrontEnd
         self.status = status
         self.feed.write_status_to_feed(self.status)
         self.activity += 1
-        generateJson(self.list_of_persons, self.main)
+        generate_json(self.list_of_persons, self.main)
 
     def put_influencer(self):   # calculates if user is influencer or not: more than 3 follows -> influencer
 
@@ -150,20 +150,20 @@ class Person:
             self.feed.write_influencer_to_feed(self.influencer)
             self.activity += 1
             if self.list_of_persons is not None:
-                generateJson(self.list_of_persons, self.main)
+                generate_json(self.list_of_persons, self.main)
 
         if self.influencer_count < 3 and self.influencer is True:
             self.influencer = False
             self.feed.write_influencer_to_feed(self.influencer)
             self.activity += 1
             if self.list_of_persons is not None:
-                generateJson(self.list_of_persons, self.main)
+                generate_json(self.list_of_persons, self.main)
 
     def put_profile_pic(self, picture):  # writes path to the new profile picture to feed and updates Json for FrontEnd
         self.profile_pic = picture
         self.feed.write_profile_pic_to_feed(self.profile_pic)
         self.activity += 1
-        generateJson(self.list_of_persons, self.main)
+        generate_json(self.list_of_persons, self.main)
 
     def get_activity(self):  # calculates how active a user is
         if self.activity < 10:
