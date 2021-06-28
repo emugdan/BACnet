@@ -17,21 +17,21 @@ class Person:
     name = ""  # name of the user
     id = 0  # BacNet id of the user
     feed = None  # feed of the user (refers to Feed.py)
-    followlist = dict()  # list of all users who this user is following (id mapped to person object)
+    follow_list = dict()  # list of all users who this user is following (id mapped to person object)
 
-    gender = " "  # Attributes of this user
+    # Attributes of this user
+    gender = " "
     birthday = None
     country = None
     town = None
     language = None
     status = None
     profile_pic = None  # TODO default pic - Y
-
-    activity = 0  # metrics of this user
+    activity = 0  # number of events on the feed
     influencer_count = 0
     influencer = False
 
-    def __init__(self, id, name, feed):
+    def __init__(self, id, name, feed):  # creates a new person with a feed and an id
         self.id = id
         self.name = name
 
@@ -57,10 +57,9 @@ class Person:
             for _ in feed.myFeed:
                 self.activity += 1  # count the activities that are already on the feed
 
-    # method if new follow appears: follow is written to feed and the json file for FrontEnd is updated
-    def follow(self, id, name):
+    def follow(self, id, name):    # follow appears: follow is written to feed and the json file gets updated
         friend = Person(id, name, None)
-        self.followlist[id] = friend
+        self.follow_list[id] = friend
         if friend.feed is not None:
             self.feed.write_follow_to_feed(friend.feed)  # generates a feed entry for the following
             self.activity += 1  # new activity of this user
@@ -74,10 +73,9 @@ class Person:
         else:
             print("couldn't find feed for person")
 
-    # method if new unfollow appears: unfollow is written to feed and the json file for FrontEnd is updated
-    def unfollow(self, id, name):
+    def unfollow(self, id, name):    # unfollow appears: unfollow is written to feed and the json file gets updated
         exfriend = Person(id, name, None)
-        self.followlist.pop(id)  # remove friend from the follow list
+        self.follow_list.pop(id)  # remove friend from the follow list
         if exfriend.feed is not None:
             self.feed.write_unfollow_to_feed(exfriend.feed)  # generates feed entry for the unfollowing
             self.activity += 1  # new activity of this user
@@ -91,19 +89,16 @@ class Person:
         else:
             print("couldn't find feed for person")
 
-    # method to get the follow list of this user
-    def get_follow_list(self):
-        return self.followlist
+    def get_follow_list(self):    # method to get the follow list of this user
+        return self.follow_list
 
-    # print follow list to the console
-    def print_follow_list(self):
+    def print_follow_list(self):     # print follow list to the console
         print("\n", self.name.upper(), "'S FOLLOW LIST\n")
-        for key, value in self.followlist.items():
+        for key, value in self.follow_list.items():
             print("ID:", key, " Name: ", value.name)
         print("\n")
 
-    # writes all the attributes into the feed except influencer and activity
-    def put_attributes(self, gender, birthday, town, country, language, status):
+    def put_attributes(self, gender, birthday, town, country, language, status):    # writes given attributes to feed
         self.put_gender(gender)
         self.put_birthday(birthday)
         self.put_town(town)
@@ -111,50 +106,43 @@ class Person:
         self.put_language(language)
         self.put_status(status)
 
-    # writes new gender to feed and updates Json for FrontEnd
-    def put_gender(self, gender):
+    def put_gender(self, gender):    # writes new gender to feed and updates Json for FrontEnd
         self.gender = gender
         self.feed.write_gender_to_feed(self.gender)
         self.activity += 1
         generateJson(self.list_of_persons, self.main)
 
-    # writes new birthday to feed and updates Json for FrontEnd
-    def put_birthday(self, birthday):
+    def put_birthday(self, birthday):    # writes new birthday to feed and updates Json for FrontEnd
         self.birthday = birthday
         self.feed.write_birthday_to_feed(self.birthday)
         self.activity += 1
         generateJson(self.list_of_persons, self.main)
 
-    # writes new country to feed and updates Json for FrontEnd
-    def put_country(self, country):
+    def put_country(self, country):    # writes new country to feed and updates Json for FrontEnd
         self.country = country
         self.feed.write_country_to_feed(self.country)
         self.activity += 1
         generateJson(self.list_of_persons, self.main)
 
-    # writes new town to feed and updates Json for FrontEnd
-    def put_town(self, town):
+    def put_town(self, town):    # writes new town to feed and updates Json for FrontEnd
         self.town = town
         self.feed.write_town_to_feed(self.town)
         self.activity += 1
         generateJson(self.list_of_persons, self.main)
 
-    # writes new language to feed and updates Json for FrontEnd
-    def put_language(self, language):
+    def put_language(self, language):    # writes new language to feed and updates Json for FrontEnd
         self.language = language
         self.feed.write_language_to_feed(self.language)
         self.activity += 1
         generateJson(self.list_of_persons, self.main)
 
-    # writes new status to feed and updates Json for FrontEnd
-    def put_status(self, status):
+    def put_status(self, status):    # writes new status to feed and updates Json for FrontEnd
         self.status = status
         self.feed.write_status_to_feed(self.status)
         self.activity += 1
         generateJson(self.list_of_persons, self.main)
 
-    # calculates if user is influencer or not: more than 3 follows -> influencer
-    def put_influencer(self):
+    def put_influencer(self):   # calculates if user is influencer or not: more than 3 follows -> influencer
 
         if self.influencer_count > 3 and self.influencer is False:
             self.influencer = True
@@ -170,15 +158,13 @@ class Person:
             if self.list_of_persons is not None:
                 generateJson(self.list_of_persons, self.main)
 
-    # writes path to the new profile picture to feed and updates Json for FrontEnd
-    def put_profile_pic(self, picture):
+    def put_profile_pic(self, picture):  # writes path to the new profile picture to feed and updates Json for FrontEnd
         self.profile_pic = picture
         self.feed.write_profile_pic_to_feed(self.profile_pic)
         self.activity += 1
         generateJson(self.list_of_persons, self.main)
 
-    # calculates how active a user is
-    def get_activity(self):
+    def get_activity(self):  # calculates how active a user is
         if self.activity < 10:
             return 0
         elif self.activity < 25:

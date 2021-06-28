@@ -6,35 +6,30 @@ sys.path.append("../lib")
 import time
 
 
-class Feed:
+class Feed:  # read from and write to the feed
 
     def __init__(self, id, myFeed):
         self.myFeed = myFeed                # Feed from lib/feed.py
         self.id = id                        # BacNetID
-        self.timestamp = None               # TODO: ??
+        self.timestamp = None               # TODO Doc für was wird das gebraucht?
 
-    # writes a new follow to the feed
-    def write_follow_to_feed(self, newFriendsFeed):
-        self.myFeed.write(["bacnet/following", time.time(), newFriendsFeed.id])
+    def write_follow_to_feed(self, new_friends_feed):    # writes a new follow to the feed
+        self.myFeed.write(["bacnet/following", time.time(), new_friends_feed.id])
 
-    # writes a new unfollow to the feed
-    def write_unfollow_to_feed(self, exFriendsFeed):
-        self.myFeed.write(["bacnet/unfollowing", time.time(), exFriendsFeed.id])
+    def write_unfollow_to_feed(self, ex_friends_feed):    # writes a new unfollow to the feed
+        self.myFeed.write(["bacnet/unfollowing", time.time(), ex_friends_feed.id])
 
-    # reads the followList from the feed
-    def read_follow_from_feed(self):
+    def read_follow_from_feed(self):    # reads the follow list from the feed
         follow_list = []
         id_list = []
 
         for event in self.myFeed:
-            if event.content()[0] == "bacnet/following":
-                # if event is a following, add follow to list
+            if event.content()[0] == "bacnet/following":  # if event is a following, add follow to list
                 friends_id = event.content()[2]
                 if friends_id not in id_list:
                     follow_list.append({"Root": self.id, "time": event.content()[1], "Feed ID": event.content()[2]})
                     id_list.append(friends_id)
-            if event.content()[0] == "bacnet/unfollowing":
-                # if it is an unollowing, remove the follow from the list
+            if event.content()[0] == "bacnet/unfollowing":  # if it is an unfollowing, remove the follow from the list
                 friends_id = event.content()[2]
                 for entry in follow_list:
                     if entry["Feed ID"] == friends_id:
@@ -44,8 +39,7 @@ class Feed:
         follow_list.sort(key=lambda msg: msg["time"])
         return follow_list
 
-    # reads the current birthday from the feed
-    def read_birthday_from_feed(self):
+    def read_birthday_from_feed(self):    # reads the current birthday from the feed
         my_birthday = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/birthday":
@@ -53,8 +47,7 @@ class Feed:
 
         return my_birthday
 
-    # reads the current gender from the feed
-    def read_gender_from_feed(self):
+    def read_gender_from_feed(self):    # reads the current gender from the feed
         gender = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/gender":
@@ -62,8 +55,7 @@ class Feed:
 
         return gender
 
-    # reads the current country from the feed
-    def read_country_from_feed(self):
+    def read_country_from_feed(self):    # reads the current country from the feed
         country = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/country":
@@ -71,8 +63,7 @@ class Feed:
 
         return country
 
-    # reads the current town from the feed
-    def read_town_from_feed(self):
+    def read_town_from_feed(self):    # reads the current town from the feed
         town = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/town":
@@ -80,8 +71,7 @@ class Feed:
 
         return town
 
-    # reads the current language from the feed
-    def read_language_from_feed(self):
+    def read_language_from_feed(self):    # reads the current language from the feed
         language = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/language":
@@ -89,8 +79,7 @@ class Feed:
 
         return language
 
-    # reads the current status from the feed
-    def read_status_from_feed(self):
+    def read_status_from_feed(self):    # reads the current status from the feed
         status = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/status":
@@ -98,8 +87,7 @@ class Feed:
 
         return status
 
-    # reads the path of the current profile pic - Y
-    def read_profile_pic_from_feed(self):
+    def read_profile_pic_from_feed(self):    # reads the path of the current profile pic - Y
         path = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/profile_pic":
@@ -107,37 +95,29 @@ class Feed:
         # if path not valid return .. path to a default pic..
         return path
 
-    # writes the new gender to the feed
-    def write_gender_to_feed(self, gender):
+    def write_gender_to_feed(self, gender):    # writes the new gender to the feed
         self.myFeed.write(["bacnet/gender", time.time(), gender])
 
-    # writes the new birthday to the feed
-    def write_birthday_to_feed(self, birthday):
+    def write_birthday_to_feed(self, birthday):    # writes the new birthday to the feed
         self.myFeed.write(["bacnet/birthday", time.time(), birthday])
 
-    # writes the new country to the feed
-    def write_country_to_feed(self, country):
+    def write_country_to_feed(self, country):    # writes the new country to the feed
         self.myFeed.write(["bacnet/country", time.time(), country])
 
-    # writes the new town to the feed
-    def write_town_to_feed(self, town):
+    def write_town_to_feed(self, town):    # writes the new town to the feed
         self.myFeed.write(["bacnet/town", time.time(), town])
 
-    # writes the new language to the feed
-    def write_language_to_feed(self, language):
+    def write_language_to_feed(self, language):    # writes the new language to the feed
         self.myFeed.write(["bacnet/language", time.time(), language])
 
-    # writes the new status to the feed
-    def write_status_to_feed(self, status):
+    def write_status_to_feed(self, status):    # writes the new status to the feed
         time_var = time.time()
         self.myFeed.write(["bacnet/status", time_var, status])
         if self.timestamp is None:
             self.timestamp = time_var
 
-    # writes the influencer status to feed
-    def write_influencer_to_feed(self, influencer):
+    def write_influencer_to_feed(self, influencer):    # writes the influencer status to feed
         self.myFeed.write(["bacnet/influencer", time.time(), influencer])
 
-    # writes the new profile picture to the feed
-    def write_profile_pic_to_feed(self, path):
+    def write_profile_pic_to_feed(self, path):    # writes the new profile picture to the feed
         self.myFeed.write(["bacnet/profile_pic", time.time(), path])
