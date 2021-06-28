@@ -11,29 +11,31 @@ from Feed import Feed
 
 
 class Person:
-    list_of_persons = None  # list of all known (= feed is in folder system) users
-    main = None  # main Person (=Person who is logged in)
 
     name = ""  # name of the user
     id = 0  # BacNet id of the user
     feed = None  # feed of the user (refers to Feed.py)
-    follow_list = dict()  # list of all users who this user is following (id mapped to person object)
-
-    # Attributes of this user
-    gender = " "
-    birthday = None
-    country = None
-    town = None
-    language = None
-    status = None
-    profile_pic = "./media/default_pic.jpg"
-    activity = 0  # number of events on the feed
-    influencer_count = 0
-    influencer = False
 
     def __init__(self, id, name, feed):  # creates a new person with a feed and an id
         self.id = id
         self.name = name
+        self.feed = feed
+        self.follow_list = dict()  # list of all users who this user is following (id mapped to person object)
+
+        self.list_of_persons = None  # list of all known (= feed is in folder system) users
+        self.main = None  # main Person (=Person who is logged in)
+
+        # Attributes of this user
+        self.gender = " "
+        self.birthday = None
+        self.country = None
+        self.town = None
+        self.language = None
+        self.status = None
+        self.profile_pic = "./media/default_pic.jpg"
+        self.activity = 0  # number of events on the feed
+        self.influencer_count = 0
+        self.influencer = False
 
         # search for feed if feed is not known already
         if feed is None:
