@@ -1,6 +1,7 @@
 import json
 import os
 import pathlib
+from pathlib import Path
 import pdb
 import sys
 
@@ -12,7 +13,7 @@ from django.views.generic import DetailView
 
 from .importer import create_profiles
 from .models import Profile, FollowRecommendations
-from .utils.jsonUtils import extract_connections, getRoot
+from .utils.jsonUtils import extract_connections, getRoot, getRootFollowsSize, getRootFollowersSize, saveSettings
 
 x = os.getcwd()
 print(x)
@@ -27,9 +28,16 @@ path = pathlib.Path('socialgraph/static/socialgraph/')
 path2 = path / 'testData.json'
 path = path / 'loadedData.json'
 # path = path / 'loadedData1.json'
+
 data_file = open(path)
 data = json.load(data_file)
 data_file.close()
+
+settingsPath = Path('socialgraph/static/socialgraph/')
+settingsPath = settingsPath / 'settings.json'
+settings_data_file = open(settingsPath)
+settings_data = json.load(settings_data_file)
+settings_data_file.close()
 
 
 def home(request):
@@ -40,14 +48,28 @@ def home(request):
     data = json.load(data_file)
     data_file.close()
     root = getRoot(data['nodes'])
+    follows = getRootFollowsSize(data['nodes'])
+    followers = getRootFollowersSize(data['links'])
+
+    settings_data_file = open(settingsPath)
+    settings_data = json.load(settings_data_file)
+    settings_data_file.close()
+
+    if request.method == "POST":
+        response = request.POST['text']
+        newSettings = saveSettings(settings_data, response, settingsPath)
+        return HttpResponse(newSettings)
 
     context = {
         'connections': extract_connections(data, "1 1"),
-        'root': root
+        'root': root,
+        'follows': follows,
+        'followers': followers,
+        'all': len(data['nodes']),
+        'graph': settings_data
     }
 
     return render(request, 'socialgraph/home.html', context)
-
 
 def users(request):
     x = pathlib.Path(__file__)
@@ -58,6 +80,10 @@ def users(request):
     data_file.close()
     root = getRoot(data['nodes'])
 
+    settings_data_file = open(settingsPath)
+    settings_data = json.load(settings_data_file)
+    settings_data_file.close()
+
     if request.method == "POST":
         response = request.POST['text']
         j = extract_connections(data, response)
@@ -67,7 +93,8 @@ def users(request):
         'data': json.dumps(data),
         'root': root,
         'nodes': sorted(data['nodes'], key=lambda item: item["hopLayer"]),
-        'links': data['links']
+        'links': data['links'],
+        'graph': settings_data
     }
     create_profiles(data)
     return render(request, 'socialgraph/users.html', context)
@@ -86,8 +113,6 @@ Per default I chose max hoplayer provided from json file.
 Also, the function follow is able to handle ajax calls from the UI Layer in order
 to rerender the FollowRecommendation HTML files.
 """
-
-
 def follow(request):
     x = pathlib.Path(__file__)
     print(x.parent.parent)
@@ -190,6 +215,7 @@ class PostDetailView(DetailView):
 
 
 def update_profile(request):
+
     context = None
 
     x = pathlib.Path(__file__)
@@ -267,3 +293,4 @@ def handle_uploaded_file(f, id):
 if __name__ == "__main__":
     followCall(mainPersonName="vera", mainPersonID="9ff78df97744c0d5", followPersonName="esther",
                followPersonID="4076cc22fa40fa84")
+
