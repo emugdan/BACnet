@@ -102,17 +102,27 @@
 
                             <div class="row modalRow">
                                 <div class="col-md-4">
-                                    <p class="mb-2 settingsLabel">Marker size</p>
+                                    <p class="mb-2 settingsLabel">Link length</p>
                                 </div>
                                 <div class="col-md-8">
-                                    <input class="textDisplay" type="text" id='markerSize' name="markerSize"
-                                       value="{{ graph.markerSize }}"/>
+                                    <input class="textDisplay" type="text" id='linkLength' name="linkLength"
+                                       value="{{ graph.linkLength }}"/>
                                 </div>
                             </div>
 
                             <div class="row modalRow">
                                 <div class="col-md-4">
-                                    <p class="mb-2 settingsLabel">Node color (male)</p>
+                                    <p class="mb-2 settingsLabel">Text font-size</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <input class="textDisplay" type="text" id='textFontSize' name="textFontSize"
+                                       value="{{ graph.textFontSize }}"/>
+                                </div>
+                            </div>
+
+                            <div class="row modalRow">
+                                <div class="col-md-4">
+                                    <p class="mb-2 settingsLabel">Node (male)</p>
                                 </div>
                                 <div class="col-md-8">
                                     <input class="colorDisplay" type="color" id='maleColorDisplay' name="maleColorDisplay"
@@ -122,7 +132,7 @@
 
                             <div class="row modalRow">
                                 <div class="col-md-4">
-                                    <p class="mb-2 settingsLabel">Node color (female)</p>
+                                    <p class="mb-2 settingsLabel">Node (female)</p>
                                 </div>
                                 <div class="col-md-8">
                                     <input class="colorDisplay" type="color" id='femaleColorDisplay' name="femaleColorDisplay"
@@ -184,7 +194,8 @@
       });
 
       var curNodeRadius = 15;
-      var curMarkerSize = 10;
+      var curLinkLength = 100;
+      var curTextFontSize = 12;
       var curMaleColor = "#0095FF";
       var curFemaleColor = "#E97091";
       var maleColorInput = document.getElementById("maleColorDisplay");
@@ -200,22 +211,23 @@
 
       $('#saveModalBtn').click(function() {
          curNodeRadius = nodeRadius.value;
-         curMarkerSize = markerSize.value;
+         curLinkLength = linkLength.value;
+         curTextFontSize = textFontSize.value;
          curMaleColor = maleColorInput.value;
          curFemaleColor = femaleColorInput.value;
 
-         saveSettings();
+         saveSettings(curNodeRadius.toString() + " " + curLinkLength.toString() + " " + curTextFontSize.toString() + " " + curMaleColor + " " + curFemaleColor);
       });
 
       $('#closeModalBtn').click(function() {
+         nodeRadius.value = curNodeRadius;
+         linkLength.value = curLinkLength;
+         textFontSize.value = curTextFontSize;
          maleColorInput.value = curMaleColor;
          femaleColorInput.value = curFemaleColor;
       });
 
-      function saveSettings() {
-            var text = curNodeRadius.toString() + " " + curMarkerSize.toString() + " " + curMaleColor + " " + curFemaleColor;
-
-            console.log("Calling backend")
+      function saveSettings(text) {
 
             $.ajax({
 
