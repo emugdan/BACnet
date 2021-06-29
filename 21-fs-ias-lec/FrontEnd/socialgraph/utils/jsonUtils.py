@@ -134,9 +134,10 @@ def getRootFollowersSize(links):
 def saveSettings(settings_data, settings, path):
     s = settings.split(' ')
     settings_data["nodeRadius"] = s[0]
-    settings_data["markerSize"] = s[1]
-    settings_data["maleColor"] = s[2]
-    settings_data["femaleColor"] = s[3]
+    settings_data["linkLength"] = s[1]
+    settings_data["textFontSize"] = s[2]
+    settings_data["maleColor"] = s[3]
+    settings_data["femaleColor"] = s[4]
 
     if os.path.exists(path):
         os.remove(path)

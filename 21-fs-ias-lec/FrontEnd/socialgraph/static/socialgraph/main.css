@@ -555,6 +555,7 @@ ul {
 .settingsLabel {
   font-size: 11pt;
   text-align: left;
+  padding-left: 15px;
 }
 
 .colorDisplay {
