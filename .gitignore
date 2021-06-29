@@ -29,6 +29,3 @@ db.sqlite3-journal
 # Feed Stuff
 *.pcap
 *.key
-
-# File Stuff
-*.json

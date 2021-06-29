@@ -1,4 +1,5 @@
 import json
+import os
 
 
 def extract_connections(data, text):
@@ -110,3 +111,38 @@ def getRoot(nodes):
     for n in nodes:
         if n.get("hopLayer") == 0:
             return n
+
+
+def getRootFollowsSize(nodes):
+    f = 0
+    for n in nodes:
+        if n.get("hopLayer") == 1:
+            f += 1
+
+    return f
+
+
+def getRootFollowersSize(links):
+    f = 0
+    for l in links:
+        if l.get("target") == 0:
+            f += 1
+
+    return f
+
+
+def saveSettings(settings_data, settings, path):
+    s = settings.split(' ')
+    settings_data["nodeRadius"] = s[0]
+    settings_data["markerSize"] = s[1]
+    settings_data["maleColor"] = s[2]
+    settings_data["femaleColor"] = s[3]
+
+    if os.path.exists(path):
+        os.remove(path)
+    with open(path, 'w') as json_file:
+        json.dump(settings_data, json_file, indent=2)
+
+    return json.dumps(settings_data)
+
+

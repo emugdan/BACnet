@@ -2,15 +2,236 @@
 {% block content %}
 
   <div class="container">
-      <h4 class="content-section-title">Home</h4>
 
       <div class="content-section" id="homeContentSection">
 
           <!-- <p>{{ connections }}</p> -->
-          <h5 id="homeTitle">Hi {{ root.name }}!</h5>
+          <h3 id="homeTitle">Hi {{ root.name }}!</h3>
           <p>Welcome to the BACnet social graph.</p>
+          <p>Check out the Users tab to explore the network of your direct and indirect connections. <br>
+          In case you come across someone you want to connect with, the Follow tab is the place to go.</p>
+
+          <hr class="homeDivider">
+
+          <p style="margin-bottom: 50px;">Your currents stats:</p>
+
+          <div class="row">
+
+              <div class="col-md-3">
+
+              </div>
+
+              <div class="col-md-3">
+
+                  <div class="progress mx-auto" id="followsProgress" data-value='0'>
+                      <span class="progress-left">
+                          <span class="progress-bar border-primary"></span>
+                      </span>
+                      <span class="progress-right">
+                          <span class="progress-bar border-primary"></span>
+                      </span>
+                      <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                          <div class="p font-weight-bold" id="followsProgressSpan">0</div>
+                      </div>
+                  </div>
+
+                  <div class="h6 font-weight-bold" id="followsLabel">Follows</div>
+
+              </div>
+
+              <div class="col-md-3">
+
+                  <div class="progress mx-auto" id="followersProgress" data-value='0'>
+                      <span class="progress-left">
+                          <span class="progress-bar border-primary"></span>
+                      </span>
+                      <span class="progress-right">
+                          <span class="progress-bar border-primary"></span>
+                      </span>
+                      <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                          <div class="p font-weight-bold" id="followersProgressSpan">0</div>
+                      </div>
+                  </div>
+
+                  <div class="h6 font-weight-bold" id="followersLabel">Followers</div>
+
+              </div>
+
+          </div>
+
+          <div class="col-md-3">
+
+          </div>
+
+          <hr class="homeDivider">
+
+          <div class="row">
+              <div class="col-md-3">
+
+              </div>
+              <div class="col-md-3">
+                <p>Customize the graph settings:</p>
+              </div>
+
+              <div class="col-md-3">
+                  <button type="button" class="btn" id="settingsBtn">Settings</button>
+              </div>
+              <div class="col-md-3">
+
+              </div>
+          </div>
+
+
+          <div class="modal fade" data-modal-color="" id="modalColor" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Graph Settings</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row modalRow">
+                                <div class="col-md-4">
+                                    <p class="mb-2 settingsLabel">Node radius</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <input class="textDisplay" type="text" id='nodeRadius' name="nodeRadius"
+                                       value="{{ graph.nodeRadius }}"/>
+                                </div>
+                            </div>
+
+                            <div class="row modalRow">
+                                <div class="col-md-4">
+                                    <p class="mb-2 settingsLabel">Marker size</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <input class="textDisplay" type="text" id='markerSize' name="markerSize"
+                                       value="{{ graph.markerSize }}"/>
+                                </div>
+                            </div>
+
+                            <div class="row modalRow">
+                                <div class="col-md-4">
+                                    <p class="mb-2 settingsLabel">Node color (male)</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <input class="colorDisplay" type="color" id='maleColorDisplay' name="maleColorDisplay"
+                                    value="{{ graph.maleColor }}">
+                                </div>
+                            </div>
+
+                            <div class="row modalRow">
+                                <div class="col-md-4">
+                                    <p class="mb-2 settingsLabel">Node color (female)</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <input class="colorDisplay" type="color" id='femaleColorDisplay' name="femaleColorDisplay"
+                                    value="{{ graph.femaleColor }}">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link" data-dismiss="modal" id="saveModalBtn">Save changes</button>
+                            <button type="button" class="btn btn-link" data-dismiss="modal" id="closeModalBtn">Close</button>
+                        </div>
+                    </div>
+                </div>
+          </div>
+
 
       </div>
+
   </div>
+
+  <script>
+
+      $(function() {
+
+        $("#followsProgress").attr('data-value', 100 / {{ all }} * {{ follows }});
+        $("#followsProgressSpan").html( "{{ follows }}   /   {{ all }}" );
+
+        $("#followersProgress").attr('data-value', 100 / {{ all }} * {{ followers }});
+        $("#followersProgressSpan").html( "{{ followers }}   /   {{ all }}" );
+
+          $(".progress").each(function() {
+
+            var value = $(this).attr('data-value');
+            var left = $(this).find('.progress-left .progress-bar');
+            var right = $(this).find('.progress-right .progress-bar');
+
+            if (value > 0) {
+              if (value <= 50) {
+                right.css('transform', 'rotate(' + percentageToDegrees(value) + 'deg)')
+              } else {
+                right.css('transform', 'rotate(180deg)')
+                left.css('transform', 'rotate(' + percentageToDegrees(value - 50) + 'deg)')
+              }
+            }
+
+          })
+
+          function percentageToDegrees(percentage) {
+
+            return percentage / 100 * 360
+
+          }
+
+      });
+
+      $('#settingsBtn').click(function() {
+         $('#modalColor').modal('show');
+      });
+
+      var curNodeRadius = 15;
+      var curMarkerSize = 10;
+      var curMaleColor = "#0095FF";
+      var curFemaleColor = "#E97091";
+      var maleColorInput = document.getElementById("maleColorDisplay");
+      var femaleColorInput = document.getElementById("femaleColorDisplay");
+
+      maleColorInput.addEventListener("input", function() {
+        var color = maleColorInput.value;
+      }, false);
+
+      femaleColorInput.addEventListener("input", function() {
+        var color = femaleColorInput.value;
+      }, false);
+
+      $('#saveModalBtn').click(function() {
+         curNodeRadius = nodeRadius.value;
+         curMarkerSize = markerSize.value;
+         curMaleColor = maleColorInput.value;
+         curFemaleColor = femaleColorInput.value;
+
+         saveSettings();
+      });
+
+      $('#closeModalBtn').click(function() {
+         maleColorInput.value = curMaleColor;
+         femaleColorInput.value = curFemaleColor;
+      });
+
+      function saveSettings() {
+            var text = curNodeRadius.toString() + " " + curMarkerSize.toString() + " " + curMaleColor + " " + curFemaleColor;
+
+            console.log("Calling backend")
+
+            $.ajax({
+
+                type: "POST",
+                url: '{{ '' }}',
+                async: false,
+                data: { csrfmiddlewaretoken: '{{ csrf_token }}', text: text },
+                success: function (response){
+                    console.log(response);
+                }
+
+            });
+
+        }
+
+
+  </script>
 
 {% endblock content %}
