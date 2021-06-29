@@ -87,7 +87,7 @@
       "status": null,
       "activity level": 0,
       "influencer": false,
-      "hopLayer": 10000,
+      "hopLayer": 1,
       "profile_pic": null
     },
     {
@@ -250,7 +250,7 @@
       "town": null,
       "language": null,
       "status": null,
-      "activity level": 3,
+      "activity level": 4,
       "influencer": true,
       "hopLayer": 1,
       "profile_pic": null
@@ -368,6 +368,10 @@
     {
       "source": 14,
       "target": 3
+    },
+    {
+      "source": 14,
+      "target": 5
     },
     {
       "source": 16,
