@@ -10,7 +10,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 1
+      "activity level": 3,
+      "influencer": false,
+      "hopLayer": 1,
+      "profile_pic": null
     },
     {
       "BACnetID": "68e7b9469549956b",
@@ -22,7 +25,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 1
+      "activity level": 4,
+      "influencer": false,
+      "hopLayer": 1,
+      "profile_pic": null
     },
     {
       "BACnetID": "03581c6f91055c45",
@@ -34,7 +40,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 1
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 1,
+      "profile_pic": null
     },
     {
       "BACnetID": "8f748b82f4c341c2",
@@ -46,7 +55,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 1
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 1,
+      "profile_pic": null
     },
     {
       "BACnetID": "1c0f8944e96c1b48",
@@ -58,7 +70,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 1
+      "activity level": 3,
+      "influencer": false,
+      "hopLayer": 1,
+      "profile_pic": null
     },
     {
       "BACnetID": "9397db56e3a6802d",
@@ -70,7 +85,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 10000
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 10000,
+      "profile_pic": null
     },
     {
       "BACnetID": "1bc4580168fa61c5",
@@ -82,7 +100,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 10000
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 10000,
+      "profile_pic": null
     },
     {
       "BACnetID": "930ff49e8571a94c",
@@ -94,7 +115,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 2
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 2,
+      "profile_pic": null
     },
     {
       "BACnetID": "2355ab9883756ddf",
@@ -106,7 +130,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 2
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 2,
+      "profile_pic": null
     },
     {
       "BACnetID": "36eaab391301902b",
@@ -118,7 +145,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 10000
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 10000,
+      "profile_pic": null
     },
     {
       "BACnetID": "1217f4b41ad140d7",
@@ -130,7 +160,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 1
+      "activity level": 2,
+      "influencer": false,
+      "hopLayer": 1,
+      "profile_pic": null
     },
     {
       "BACnetID": "134dd9b6c1406624",
@@ -142,7 +175,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 1
+      "activity level": 2,
+      "influencer": false,
+      "hopLayer": 1,
+      "profile_pic": null
     },
     {
       "BACnetID": "e08f34c0caab9001",
@@ -154,7 +190,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 1
+      "activity level": 2,
+      "influencer": false,
+      "hopLayer": 1,
+      "profile_pic": null
     },
     {
       "BACnetID": "daff1bf93d3d3dbd",
@@ -166,19 +205,25 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 1
+      "activity level": 2,
+      "influencer": false,
+      "hopLayer": 1,
+      "profile_pic": null
     },
     {
       "BACnetID": "df5b3989aedaabec",
       "id": 14,
       "name": "vera",
-      "gender": null,
-      "birthday": null,
-      "country": null,
-      "town": null,
-      "language": null,
-      "status": null,
-      "hopLayer": 0
+      "gender": "female",
+      "birthday": "1999-02-13",
+      "country": "Schweiz",
+      "town": "Ehrendingen",
+      "language": "Deutsch",
+      "status": "lol",
+      "activity level": 5,
+      "influencer": false,
+      "hopLayer": 0,
+      "profile_pic": null
     },
     {
       "BACnetID": "0a4760b871ae3588",
@@ -190,7 +235,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 10000
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 10000,
+      "profile_pic": null
     },
     {
       "BACnetID": "4d5bf04ad70dc286",
@@ -202,7 +250,10 @@
       "town": null,
       "language": null,
       "status": null,
-      "hopLayer": 1
+      "activity level": 3,
+      "influencer": true,
+      "hopLayer": 1,
+      "profile_pic": null
     }
   ],
   "links": [
@@ -280,10 +331,6 @@
     },
     {
       "source": 14,
-      "target": 3
-    },
-    {
-      "source": 14,
       "target": 4
     },
     {
@@ -317,6 +364,10 @@
     {
       "source": 14,
       "target": 2
+    },
+    {
+      "source": 14,
+      "target": 3
     },
     {
       "source": 16,

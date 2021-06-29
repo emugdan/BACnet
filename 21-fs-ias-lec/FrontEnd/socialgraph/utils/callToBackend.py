@@ -25,9 +25,8 @@ from Feed import Feed
 import feed
 
 import generateDirectories
-import directoriesGenerator
 from Person import Person
-from generateJson import generateJson
+from generateJson import generate_json
 from Feed import Feed
 
 import crypto
