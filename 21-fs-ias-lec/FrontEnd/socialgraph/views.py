@@ -135,8 +135,8 @@ def follow(request):
     # In case we have received an Ajax call from the UI-Layer:
     if request.method == "POST":
         # This response is the name of the User that was searched
-        response = request.POST['text']
-        mode = request.POST['mode']
+        response = request.POST.get('text', False)
+        mode = request.POST.get('mode', False)
         queryList = []
 
         # Gender Query
