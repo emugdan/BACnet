@@ -574,3 +574,11 @@ ul {
 .colorDisplay::-webkit-color-swatch {
     border: none;
 }
+
+#settingsBtn {
+  margin-bottom: 30px;
+}
+
+#customizeSettingsLabel {
+  margin-top: 5px;
+}
