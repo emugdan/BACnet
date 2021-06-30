@@ -34,6 +34,7 @@ def generate_json(person_list, we_are):  # Assumption that we have a follow list
         node['town'] = person.town
         node['language'] = person.language
         node['status'] = person.status
+        node['status_list'] = person.status_list
         node['activity level'] = person.get_activity()
         node['influencer'] = person.influencer
         node['hopLayer'] = 10000
