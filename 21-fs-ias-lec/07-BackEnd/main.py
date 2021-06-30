@@ -13,8 +13,7 @@ import crypto
 import feed
 
 
-def main():  # generates dummy feeds, later not used anymore -> feeds should be generated through feedSyc/ feedCtrl
-
+def main(argv):  # generates dummy feeds, later not used anymore -> feeds should be generated through feedSyc/ feedCtrl
     generateDirectories.generate_directories()
     # for testing large node number use: directoriesGenerator.create_directories_for_random_names(300, 5)
 
@@ -23,6 +22,14 @@ def main():  # generates dummy feeds, later not used anymore -> feeds should be 
     rootdir = "./data"
     list_of_persons = []  # list of all persons of whom a feed exists
     main_person = None
+    # TODO: Vera: wenns ned klappet nur s else verwende
+    if(argv[0] == "FrontEnd"):
+        name_main_person = argv[1]
+    else:
+        if len(argv) != 1: # more than one parameter --> print error
+            print("ERROR: wrong number of parameters, please insert one parameter with the name of the main person")
+            return
+        name_main_person = argv[0]
 
     for subdir, dirs, files in os.walk(rootdir):  # iterate through all folders in 'data'
         for name in dirs:
@@ -45,9 +52,11 @@ def main():  # generates dummy feeds, later not used anymore -> feeds should be 
             person = Person.Person(key["feed_id"], name, feed_obj)
             list_of_persons.append(person)
 
-            if name == "vera":  # main person is 'vera' in our case, should be determine from a login or similar
+            if name == name_main_person:  # main person is 'vera' in our case, should be determine from a login or similar
                 main_person = person
-
+    if main_person == None: # main person could not be found
+        print("ERROR: main person not found, try a different name")
+        return
     for pers in list_of_persons:  # for each person read the attributes from the entries in the feed
         follow_list = pers.feed.read_follow_from_feed()
         birthday = pers.feed.read_birthday_from_feed()
@@ -79,7 +88,10 @@ def main():  # generates dummy feeds, later not used anymore -> feeds should be 
 
     # Json file for FrontEnd
     generate_json(list_of_persons, main_person)
+    #TODO: Vera: wenns ned klappet lösche
+    if argv[0] == "FrontEnd":
+        return (main_person, list_of_persons)
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])

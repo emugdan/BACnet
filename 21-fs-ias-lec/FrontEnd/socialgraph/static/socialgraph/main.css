@@ -649,6 +649,7 @@ ul {
 .settingsLabel {
   font-size: 11pt;
   text-align: left;
+  padding-left: 15px;
 }
 
 .colorDisplay {
@@ -667,4 +668,12 @@ ul {
 
 .colorDisplay::-webkit-color-swatch {
     border: none;
+}
+
+#settingsBtn {
+  margin-bottom: 30px;
+}
+
+#customizeSettingsLabel {
+  margin-top: 5px;
 }
