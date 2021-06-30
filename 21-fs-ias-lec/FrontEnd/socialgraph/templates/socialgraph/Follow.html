@@ -8,18 +8,26 @@
 
         <div class="col-md-4">
 
-            <h4 class="content-section-title">Filter</h4>
+            <h4 class="content-section-title" id = "filterTable">Filter</h4>
             <div class="content-section" id="usersContentSection">
 
                 <h6 class="p-1 border-bottom" style="margin-bottom: 20px;">Filter By</h6>
 
                 <div class="followFilters">
 
+                    <p class="mb-2">Mode</p>
+
+                    <div class="followUnfollowToggle">
+                    <input id="folUnfolTog" type="checkbox" checked data-toggle="toggle" data-on="Follow" data-off="Unfollow" data-onstyle="light outline-light" data-offstyle="danger" data-size="sm" onchange = changeMode()>
+
+                    </div>
+
                     <p class="mb-2">Gender</p>
 
                     <ul class="list-group">
                         <li class="list-group-item mb-2 rounded" id = "GenderFemale" value = "female" onclick = genderBasedFilter("female")> <span class="fa fa-circle pr-1 f" ></span>Female </li>
                         <li class="list-group-item mb-2 rounded" id = "GenderMale" value = "male" onclick = genderBasedFilter("male")> <span class="fa fa-circle pr-1" id="male"></span>Male </li>
+                        <li class="list-group-item mb-2 rounded" id = "GenderOther" value = "other" onclick = genderBasedFilter("other")> <span class="fa fa-circle pr-1" id="other"></span>Other </li>
                     </ul>
 
                     <p class="filterTitle">Name</p>
@@ -32,24 +40,24 @@
                         <input type="text" class="searchInput" id="searchInputFieldTown" name="searchInput" placeholder="Search Town">
                     </div>
 
-                    <p class="filterTitle">HopLayer</p>
+                    <p class="filterTitle" id = "filter">HopLayer</p>
                     <div>
-                        <input type="range" class="custom-range" value="2" min="2" max="5" step="1" id="slider" oninput=QueryForHopLayer(this.value)>
-                        <p id="hopsVal">2</p>
+                        <input type="range" class="custom-range" id = "slider" value="1" min="1" max="5" step="1" id="slider" oninput=QueryForHopLayer(this.value)>
+                        <p id="hopsVal">All</p>
                     </div>
 
                     <ul class="list-group">
-                        <li class="list-group-item mb-2 rounded" id = "ResetButton" value = "reset" onclick = genderBasedFilter("")> <span class="fa fa-circle pr-1" id="reset"></span>Reset </li>
+                        <li class="list-group-item mb-2 rounded" id = "ResetButton" value = "reset" onclick = reset()> <span class="fa fa-circle pr-1" id="reset"></span>Reset </li>
                     </ul>
 
                 </div>
 
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8" id = "Bod">
             <div class="row">
                 <div class="col-md-6">
-                    <h4 class="content-section-title">Recommendations</h4>
+                    <h4 class="content-section-title">Follow Recommendations</h4>
                 </div>
                 <div class="col-md-6">
 
@@ -59,7 +67,15 @@
 
 
 
-              {% include "./FollowBody.html" %}
+            {% include "./FollowBody.html" %}
+
+
+
+
+
+
+
+
 
 
 
@@ -74,40 +90,121 @@ function myFunction() {
   document.getElementById("demo").innerHTML = document.getElementById("searchbox").value;
 }
 
+        function getMode(){
+            checked = document.getElementById("folUnfolTog").checked
+            var mode;
+            if(checked){
+                mode = "1follow";
+            } else {
+                mode = "1unfollow";
+            }
+            return mode
+        }
+
 // MAKE AN AJAX CALL TO VIEWS.PY
-        function nameQuery(name) {
+        function changeMode(){
+            var mode = getMode();
 
-            var text = "nq" +name
+          $.ajax({
+
+            type: "POST",
+            url: '{{ '' }}',
+            async: false,
+
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}', text:"", mode: mode},
+            success: function (response){
+                if(mode === "1follow"){
+                  $('#Bod').html('').replaceWith("<div class=\"col-md-8\" id = \"Bod\">\n" +
+                    "            <div class=\"row\">\n" +
+                    "                <div class=\"col-md-6\">\n" +
+                    "                    <h4 class=\"content-section-title\">Follow Recommendations</h4>\n" +
+                    "                </div>\n" +
+                    "                <div class=\"col-md-6\">\n" +
+                    "\n" +
+                    "\n" +
+                    "                </div>\n" +
+                    "            </div>"+response)
 
 
+                    $('#filter').html('').replaceWith("<p class=\"filterTitle\" id = \"filter\">HopLayer</p>")
+                    $('#slider').html('').replaceWith("<input type=\"range\" class=\"custom-range\" id = \"slider\" value=\"1\" min=\"1\" max=\"5\" step=\"1\" id=\"slider\" oninput=QueryForHopLayer(this.value)>\n" +
+                        "                        ")
+                    $('#hopsVal').html('').replaceWith("<p id=\"hopsVal\">All</p>")
 
-            $.ajax({
 
-                type: "POST",
-                url: '{{ '' }}',
-                async: false,
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: text},
-                success: function (response){
-                    $('#test').html('').replaceWith(response)
+                }
+                else{
+                    $('#Bod').html('').replaceWith("<div class=\"col-md-8\" id = \"Bod\">\n" +
+                    "            <div class=\"row\">\n" +
+                    "                <div class=\"col-md-6\">\n" +
+                    "                    <h4 class=\"content-section-title\">Unfollow Recommendations</h4>\n" +
+                    "                </div>\n" +
+                    "                <div class=\"col-md-6\">\n" +
+                    "\n" +
+                    "\n" +
+                    "                </div>\n" +
+                    "            </div>"+response)
+
+                    $('#filter').html('').replaceWith("<p class=\"filterTitle\" id = \"filter\"></p>")
+                    $('#slider').html('').replaceWith("<p class=\"filterTitle\" id = \"slider\"></p>")
+                    $('#hopsVal').html('').replaceWith("<p id=\"hopsVal\"></p>")
 
                 }
 
-            });
+
+            }
+
+        });
+
+
+
+
 
         }
 
+
+        function nameQuery(name) {
+            var mode = getMode();
+
+            var txt = "nq" + name
+
+
+
+            if (txt === "nq") {
+                reset()
+            } else {
+                $.ajax({
+
+                    type: "POST",
+                    url: '{{ '' }}',
+                    async: false,
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: txt, mode: mode},
+                    success: function (response) {
+
+                        $('#test').html('').replaceWith(response)
+
+                    }
+
+                });
+
+            }
+        }
+
         function townQuery(town) {
+            var mode = getMode();
 
             var town = "tq" +town
 
 
 
+
+
             $.ajax({
 
                 type: "POST",
                 url: '{{ '' }}',
                 async: false,
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: town},
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: town, mode :mode},
                 success: function (response){
                     $('#test').html('').replaceWith(response)
 
@@ -118,7 +215,10 @@ function myFunction() {
         }
 
         function QueryForHopLayer(layer) {
-            document.getElementById('hopsVal').innerHTML = layer;
+            if(layer === "1"){
+                document.getElementById('hopsVal').innerHTML = "All";
+                layer = "All"
+            } else{document.getElementById('hopsVal').innerHTML = layer; }
             lay = "lq" + layer
 
             $.ajax({
@@ -138,11 +238,39 @@ function myFunction() {
         }
 
 
+        function reset(){
 
+            document.getElementById('hopsVal').innerHTML = "All";
+            document.getElementById('slider').value = 1;
+            document.getElementById('searchInputFieldName').value = "";
+            document.getElementById('searchInputFieldTown').value = "";
+
+            $.ajax({
+
+                type: "POST",
+                url: '{{ '' }}',
+                async: false,
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: "", mode: getMode()},
+                success: function (response){
+                    $('#test').html('').replaceWith(response)
+
+                }
+
+            });
+
+        }
 
          function genderBasedFilter(value) {
+             var mode = getMode();
 
              var gender = value;
+
+             if ( value === ""){
+
+                 document.getElementById('hopsVal').innerHTML = "All";
+                 document.getElementById('slider').value = 1;
+
+             }
 
 
             $.ajax({
@@ -150,7 +278,7 @@ function myFunction() {
                 type: "POST",
                 url: '{{ '' }}',
                 async: false,
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: gender},
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: gender, mode: mode},
                 success: function (response){
                     $('#test').html('').replaceWith(response)
 
@@ -168,9 +296,19 @@ function myFunction() {
 
         $('#searchInputFieldTown').on('keypress', function(e) {
             if (e.which == 13) {
-                nameQuery($("#searchInputFieldTown").val())
+                townQuery($("#searchInputFieldTown").val())
             }
         })
+
+        if(!document.getElementById("lafToggle").checked){
+            alert("checked")
+        }
+
+
+
+
+
+
 
 
 

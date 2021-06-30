@@ -12,8 +12,8 @@
             <p>{{person.gender}}</p>
             <p>{{person.town}}</p>
 
-            <button class="followButton" id = "button" onclick=follow("{{person.bacnet_id}}","{{person.name}}")>
-                Follow!
+            <button class="followButton" id = "button" onclick=unfollow("{{person.bacnet_id}}","{{person.name}}")>
+                Unfollow!
             </button>
 
         </div>
@@ -27,22 +27,9 @@
 
 <script>
 
-    function follow(bacnetID, name){
-       $('.list-item').off('click');
-
-
-        $.ajax({
-
-                type: "POST",
-                url: '{{ '' }}',
-                async: false,
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: "fo"+bacnetID+name},
-                success: function (response){
-                    $('#test').html('').replaceWith(response)
-
-                }
-
-            });
+    function unfollow(bacnetID, name){
+        $('.list-item').off('click');
+       alert("not yet implemented")
     }
 
 

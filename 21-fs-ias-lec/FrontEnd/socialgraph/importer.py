@@ -11,7 +11,8 @@ def create_profiles(data):
                     language=node.get('language'),
                     profile_pic=node.get('profile_pic') if node.get('profile_pic') is not None else 'default.jpg',
                     myself=node.get('hopLayer') == 0,
-                    node_id=node.get('id'))
+                    node_id=node.get('id'),
+                    status=node.get('status'))
         p.save()
     print("Updated Database!")
 

@@ -20,6 +20,15 @@
   --color-sliderTrack: #DEE2E6;
   --color-sliderThumb: grey;
   --color-buttonText: #000000;
+
+  --color-profileUpdateLegend: #F8F9FA;
+  --color-profileUpdateLegendText:  #000000;
+    --color-profileUpdateLegendBorder: #ced4da;
+  --color-profileUpdateTextBox: #cbd5db;
+  --color-profileUpdateTextBoxText: #000000;
+  --color-profileUpdatePlaceholder: #6c757d;
+  --color-profileUpdateDelGender: #ae4444;
+
 }
 
 .theme-dark {
@@ -42,6 +51,14 @@
   --color-sliderTrack: #585858;
   --color-sliderThumb: #00AEED;
   --color-buttonText: #ffffff;
+
+  --color-profileUpdateLegend: #7F7F7F;
+  --color-profileUpdateLegendText: #ffffff;
+    --color-profileUpdateLegendBorder: #7F7F7F;
+  --color-profileUpdateTextBox: #6c757d;
+  --color-profileUpdateTextBoxText: #ffffff;
+  --color-profileUpdatePlaceholder: #a4b5be;
+  --color-profileUpdateDelGender: #ae4444;
 }
 
 
@@ -113,6 +130,13 @@ h1, h2, h3, h4, h5, h6 {
 /* LOOK AND FEEL SWITCH BUTTON */
 .lookAndFeelToggle {
   margin-top: 8px;
+}
+
+
+/* TOGGLE SWITCH FOR FOLLOW UNFOLLOW  */
+.followUnfollowToggle {
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 
@@ -413,6 +437,76 @@ ul {
 .profileButton:hover {
   opacity: .7;
 }
+
+.updatePage .input-group-text:not(#profilePic){
+  background-color: var(--color-profileUpdateLegend);
+  color: var(--color-profileUpdateLegendText);
+    border-color: var(--color-profileUpdateLegendBorder);
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.updatePage [id="profilePic"]{
+    border-color: var(--color-profileUpdateLegendBorder);
+  background-color: var(--color-profileUpdateLegend);
+  color: var(--color-profileUpdateLegendText);
+}
+
+.updatePage .form-control{
+  background-color: var(--color-profileUpdateTextBox);
+  color: var(--color-profileUpdateTextBoxText);
+  border: 1px solid var(--color-profileUpdateTextBox);
+}
+
+.updatePage ::placeholder{
+ color: var(--color-profileUpdatePlaceholder);
+}
+
+.updatePage [id="del"]{
+  background-color: var(--color-profileUpdateDelGender);
+  border-color: var(--color-profileUpdateDelGender);
+}
+
+.updatePage .btn-secondary:not(:disabled):not(.disabled).active{
+    color: var(--color-profileUpdateTextBox);
+    background-color: var(--color-profileUpdatePlaceholder);
+    border-color: var(--color-profileUpdatePlaceholder);
+
+}
+
+.updatePage [id="gender"]{
+    color: var(--color-profileUpdatePlaceholder);
+    background-color: var(--color-profileUpdateTextBox);
+    border-color: var(--color-profileUpdateTextBox);
+
+}
+
+.updatePage [id="cancel"]{
+    background-color: var(--color-profileUpdateLegend);
+    color: var(--color-profileUpdateLegendText);
+    border: 1px solid var(--color-profileUpdateLegendBorder) ;
+}
+
+.updatePage [id="save"]{
+    background-color: #5f788a;
+    color: white;
+    border: 1px solid #5f788a;
+}
+
+::file-selector-button{ /*This works*/
+    background-color: var(--color-profileUpdateLegend);
+    color: var(--color-profileUpdateLegendText);
+    border: 1px solid var(--color-profileUpdateLegendBorder);
+    border-radius: .25rem;
+}
+
+.updatePage [id="id_profile_pic"]{
+    background-color: var(--color-profileUpdateTextBox);
+    color: white;
+    border: 0px;
+  border-radius: .25rem;;
+}
+
 
 .account-img {
   height: 125px;

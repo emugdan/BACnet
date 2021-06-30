@@ -100,14 +100,22 @@ class Person:
             print("ID:", key, " Name: ", value.name)
         print("\n")
 
-    def put_attributes(self, gender, birthday, town, country, language, status, profile_pic):    # writes given attributes to feed
-        self.put_gender(gender)
-        self.put_birthday(birthday)
-        self.put_town(town)
-        self.put_country(country)
-        self.put_language(language)
-        self.put_status(status)
-        self.put_profile_pic(profile_pic)
+    # triggers writing to the feed for changed attributes
+    def put_attributes(self, data):
+        if 'gender' in data.keys():
+            self.put_gender(data['gender'])
+        if 'birthday' in data.keys():
+            self.put_birthday(data['birthday'])
+        if 'town' in data.keys():
+            self.put_town(data['town'])
+        if 'country' in data.keys():
+            self.put_country(data['country'])
+        if 'language' in data.keys():
+            self.put_language(data['language'])
+        if 'status' in data.keys():
+            self.put_status(data['status'])
+        if 'profile_pic' in data.keys():
+            self.put_profile_pic(data['profile_pic'])
 
     def put_gender(self, gender):    # writes new gender to feed and updates Json for FrontEnd
         self.gender = gender
