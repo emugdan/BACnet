@@ -1,5 +1,5 @@
 import sys
-from datetime import date
+from datetime import datetime
 
 sys.path.append("../Feed")
 sys.path.append("../lib")
@@ -34,6 +34,7 @@ class Person:
         self.language = None
         self.status = None
         self.status_list = dict()
+        self.last_status = None
         self.profile_pic = "./media/default_pic.jpg"
         self.activity = 0  # number of events on the feed
         self.influencer_count = 0
@@ -151,7 +152,8 @@ class Person:
 
     def put_status(self, status):    # writes new status to feed and updates Json for FrontEnd
         if status is not None:
-            self.status_list[date.today()] = self.status
+            self.status_list[self.last_status] = self.status
+        self.last_status = datetime.now()
         self.status = status
         self.feed.write_status_to_feed(self.status)
         self.activity += 1
