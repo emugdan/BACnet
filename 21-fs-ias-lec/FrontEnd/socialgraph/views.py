@@ -254,12 +254,12 @@ def update_profile(request):
                 update['profile_pic'] = profile_pic_path
         # print(update)
 
-        # TODO trigger function call to backend with update-info.
         root = getRoot(data['nodes'])
         rootUser = root.get("name")
         rootUserID = root.get("BACnetID")
 
-        profileUpdateCall(rootUser, rootUserID, update)
+        if len(update) > 1:
+            profileUpdateCall(rootUser, rootUserID, update)
 
         x = pathlib.Path(__file__)
         print(x.parent.parent)
@@ -270,7 +270,6 @@ def update_profile(request):
         create_profiles(fresh_data)
         fresh_data_file.close()
 
-        # TODO trigger function call to backend with update-info.
 
         return HttpResponseRedirect("/profile/" + str(node.get('id')))
 
