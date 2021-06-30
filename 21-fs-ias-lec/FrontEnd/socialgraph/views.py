@@ -278,16 +278,22 @@ def update_profile(request):
 
 
 def handle_uploaded_file(f, id):
-    path = os.path.join('media', 'profile_pics', id + '.' + f.content_type[f.content_type.index('/') + 1:])
-    if os.path.exists(path):
-        os.remove(path)
+    path = os.path.join('media', 'profile_pics')
+    if not os.path.exists(path): #Check if directory already there
+        os.makedirs(path)
+    else:
+        for file in os.listdir(path):
+            if file.startswith(id):
+                os.remove(os.path.join(path, file)) #Delete old profile picture of this user
+    path = os.path.join(path, id + '.' + f.content_type[f.content_type.index('/') + 1:])
+
     with open(path, 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
         destination.flush()
         os.fsync(destination.fileno())
         destination.close()
-        return path
+        return os.path.join('profile_pics', id + '.' + f.content_type[f.content_type.index('/') + 1:])
 
 
 if __name__ == "__main__":
