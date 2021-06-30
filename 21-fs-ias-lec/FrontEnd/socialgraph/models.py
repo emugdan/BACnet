@@ -18,6 +18,7 @@ class Profile(models.Model):
     myself = models.BooleanField(default=False)
     node_id = models.IntegerField(primary_key=True)
     status = models.CharField(max_length=256, blank=True, null=True, default=None)
+    follows = models.ManyToManyField('self', symmetrical=False)
 
     def __str__(self):
         return f'{self.name} Profile / {self.bacnet_id}'

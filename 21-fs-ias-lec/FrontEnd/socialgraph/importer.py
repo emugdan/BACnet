@@ -17,6 +17,11 @@ def create_profiles(data):
                     node_id=node.get('id'),
                     status=node.get('status'))
         p.save()
+
+    for link in data['links']:
+        source = Profile.objects.filter(node_id=link['source']).first()
+        target = Profile.objects.filter(node_id=link['target']).first()
+        source.follows.add(target)
     print("Updated Database!")
 
 def create_Recommendations(data):

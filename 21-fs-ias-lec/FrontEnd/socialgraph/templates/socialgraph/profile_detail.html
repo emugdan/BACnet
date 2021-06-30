@@ -59,13 +59,15 @@
                     <div class="content-section">
                         <h3>Follows:</h3>
                         <div class="row" style="overflow: auto; white-space: nowrap; flex-flow: row">
-                            {% for key, value in object.get_details.items %}
+                            {% for profile in object.follows.all %}
                                 <div class="col-sm-3">
-                                    <p class="profile-follows-name">Firstname Lastname</p>
-                                    <p style="text-align: center; margin-bottom: 0.5em">
-                                        <img class="rounded-circle profile-follows-img"
-                                             src="/media/default.jpg">
-                                    </p>
+                                    <p class="profile-follows-name">{{ profile.name}}</p>
+                                    <a href="{% url 'profile-detail' profile.node_id %}" title="">
+                                        <p style="text-align: center; margin-bottom: 0.5em">
+                                            <img class="rounded-circle profile-follows-img"
+                                                 src="{{ profile.profile_pic.url }}">
+                                        </p>
+                                    </a>
                                 </div>
 
 
