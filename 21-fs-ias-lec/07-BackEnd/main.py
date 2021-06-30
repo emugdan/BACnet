@@ -26,7 +26,7 @@ def main(argv):  # generates dummy feeds, later not used anymore -> feeds should
     if(argv[0] == "FrontEnd"):
         name_main_person = argv[1]
     else:
-        if len(argv) != 1:
+        if len(argv) != 1: # more than one parameter --> print error
             print("ERROR: wrong number of parameters, please insert one parameter with the name of the main person")
             return
         name_main_person = argv[0]
@@ -54,7 +54,7 @@ def main(argv):  # generates dummy feeds, later not used anymore -> feeds should
 
             if name == name_main_person:  # main person is 'vera' in our case, should be determine from a login or similar
                 main_person = person
-    if main_person == None:
+    if main_person == None: # main person could not be found
         print("ERROR: main person not found, try a different name")
         return
     for pers in list_of_persons:  # for each person read the attributes from the entries in the feed
