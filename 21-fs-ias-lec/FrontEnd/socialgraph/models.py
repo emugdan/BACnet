@@ -17,6 +17,7 @@ class Profile(models.Model):
     profile_pic = models.ImageField(default='default.jpg', upload_to='profile_pics')
     myself = models.BooleanField(default=False)
     node_id = models.IntegerField(primary_key=True)
+    status = models.CharField(max_length=256, blank=True, null=True, default=None)
 
     def __str__(self):
         return f'{self.name} Profile / {self.bacnet_id}'
@@ -38,6 +39,7 @@ class Profile(models.Model):
 class FollowRecommendations(models.Model):
     layer = models.IntegerField(default=None)
     bacnet_id = models.CharField(max_length=64, primary_key=True)
+    id = models.CharField(max_length=64)
     name = models.CharField(max_length=64)
     gender = models.CharField(max_length=6, blank=True, null=True, default=None)
     birthday = models.DateField(blank=True, null=True, default=None)
@@ -48,10 +50,10 @@ class FollowRecommendations(models.Model):
     profile_pic = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     @classmethod
-    def create(cls, layerNode, bacnet_idNode, nameNode,
+    def create(cls, layerNode, bacnet_idNode, id, nameNode,
                genderNode, birthdayNode, countryNode,
                townNode, languageNode, profile_picNode):
-        recommendation = cls(layer = layerNode, bacnet_id = bacnet_idNode, name = nameNode,
+        recommendation = cls(layer = layerNode, bacnet_id = bacnet_idNode, id = id,name = nameNode,
                     gender = genderNode, birthday = birthdayNode, country = countryNode,
                     town = townNode, language = languageNode, profile_pic = profile_picNode)
         return recommendation
@@ -83,7 +85,7 @@ class FollowRecommendations(models.Model):
             hoplayer = node.get('hopLayer')
             if (hoplayer >1):
                 recommendationList.append(
-                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('id'),
+                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('BACnetID'), id = node.get("id"),
                                                  nameNode=node.get('name'), genderNode=node.get('gender'),
                                                  birthdayNode=node.get('birthday'), countryNode=node.get('country'),
                                                  townNode=node.get('town'),
@@ -98,7 +100,39 @@ class FollowRecommendations(models.Model):
         for node in jsonData['nodes']:
             if (node.get(criteria) == attribute and node.get('hopLayer') > 1):
                 recommendationList.append(
-                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('id'),
+                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('BACnetID'), id = node.get("id"),
+                                                 nameNode=node.get('name'), genderNode=node.get('gender'),
+                                                 birthdayNode=node.get('birthday'), countryNode=node.get('country'),
+                                                 townNode=node.get('town'),
+                                                 languageNode=node.get('language'),
+                                                 profile_picNode=node.get('profile_pic') if node.get(
+                                                     'profile_pic') is not None else 'default.jpg'))
+        return recommendationList
+
+    @classmethod
+    def createUnfollowRecommendation(self, jsonData, attribute, criteria):
+        recommendationList = []
+        for node in jsonData['nodes']:
+            if (node.get(criteria) == attribute and node.get('hopLayer') == 1):
+                recommendationList.append(
+                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('BACnetID'),
+                                                 id=node.get("id"),
+                                                 nameNode=node.get('name'), genderNode=node.get('gender'),
+                                                 birthdayNode=node.get('birthday'), countryNode=node.get('country'),
+                                                 townNode=node.get('town'),
+                                                 languageNode=node.get('language'),
+                                                 profile_picNode=node.get('profile_pic') if node.get(
+                                                     'profile_pic') is not None else 'default.jpg'))
+        return recommendationList
+
+    @classmethod
+    def createUnfollowRecommendationDefault(self, jsonData):
+        recommendationList = []
+        for node in jsonData['nodes']:
+            if (node.get('hopLayer') == 1):
+                recommendationList.append(
+                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('BACnetID'),
+                                                 id=node.get("id"),
                                                  nameNode=node.get('name'), genderNode=node.get('gender'),
                                                  birthdayNode=node.get('birthday'), countryNode=node.get('country'),
                                                  townNode=node.get('town'),
@@ -113,7 +147,7 @@ class FollowRecommendations(models.Model):
         for node in jsonData['nodes']:
             if (node.get('hopLayer') == criteria):
                 recommendationList.append(
-                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('id'),
+                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('BACnetID'), id =node.get("id"),
                                                  nameNode=node.get('name'), genderNode=node.get('gender'),
                                                  birthdayNode=node.get('birthday'), countryNode=node.get('country'),
                                                  townNode=node.get('town'),

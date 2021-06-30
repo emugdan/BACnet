@@ -1,4 +1,5 @@
 import sys
+from datetime import datetime
 
 sys.path.append("../Feed")
 sys.path.append("../lib")
@@ -32,6 +33,8 @@ class Person:
         self.town = None
         self.language = None
         self.status = None
+        self.status_list = dict()
+        self.last_status = None
         self.profile_pic = "./media/default_pic.jpg"
         self.activity = 0  # number of events on the feed
         self.influencer_count = 0
@@ -100,14 +103,22 @@ class Person:
             print("ID:", key, " Name: ", value.name)
         print("\n")
 
-    def put_attributes(self, gender, birthday, town, country, language, status, profile_pic):    # writes given attributes to feed
-        self.put_gender(gender)
-        self.put_birthday(birthday)
-        self.put_town(town)
-        self.put_country(country)
-        self.put_language(language)
-        self.put_status(status)
-        self.put_profile_pic(profile_pic)
+    # triggers writing to the feed for changed attributes
+    def put_attributes(self, data):
+        if 'gender' in data.keys():
+            self.put_gender(data['gender'])
+        if 'birthday' in data.keys():
+            self.put_birthday(data['birthday'])
+        if 'town' in data.keys():
+            self.put_town(data['town'])
+        if 'country' in data.keys():
+            self.put_country(data['country'])
+        if 'language' in data.keys():
+            self.put_language(data['language'])
+        if 'status' in data.keys():
+            self.put_status(data['status'])
+        if 'profile_pic' in data.keys():
+            self.put_profile_pic(data['profile_pic'])
 
     def put_gender(self, gender):    # writes new gender to feed and updates Json for FrontEnd
         self.gender = gender
@@ -140,6 +151,9 @@ class Person:
         generate_json(self.list_of_persons, self.main)
 
     def put_status(self, status):    # writes new status to feed and updates Json for FrontEnd
+        if status is not None:
+            self.status_list[self.last_status] = self.status
+        self.last_status = datetime.now()
         self.status = status
         self.feed.write_status_to_feed(self.status)
         self.activity += 1

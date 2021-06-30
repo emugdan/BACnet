@@ -34,6 +34,7 @@ def generate_json(person_list, we_are):  # Assumption that we have a follow list
         node['town'] = person.town
         node['language'] = person.language
         node['status'] = person.status
+        node['status_list'] = person.status_list
         node['activity level'] = person.get_activity()
         node['influencer'] = person.influencer
         node['hopLayer'] = 10000
@@ -54,6 +55,10 @@ def generate_json(person_list, we_are):  # Assumption that we have a follow list
 
     # Change working directory to Frontend
     backEnd = os.getcwd()
+    #If we called the callToBackEnd function from the Frontend:
+    if (backEnd.endswith("21-fs-ias-lec")):
+        os.chdir("07-BackEnd")
+        backEnd = os.getcwd()
     frontEnd = backEnd.replace("07-BackEnd", "FrontEnd")
     os.chdir(frontEnd)
 
