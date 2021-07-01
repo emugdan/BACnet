@@ -153,7 +153,7 @@ class Person:
 
     def put_status(self, status):    # writes new status to feed and updates Json for FrontEnd
         if self.status is not None:
-            self.status_list = [(self.status, self.last_status)] + self.status
+            self.status_list = [(self.status, self.last_status)] + self.status_list
         self.last_status = datetime.now()
         self.status = status
         self.feed.write_status_to_feed(self.status)
