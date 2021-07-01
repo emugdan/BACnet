@@ -117,8 +117,9 @@ class Person:
             self.put_language(data['language'])
         if 'status' in data.keys():
             self.put_status(data['status'])
-        if 'profile_pic' in data.keys():
-            self.put_profile_pic(data['profile_pic'])
+        if 'profile_pic' in data.keys() and 'profile_pic_data' in data.keys():      # TODO:
+            self.put_profile_pic(data['profile_pic'])                               # <--- old version delete this later
+            # self.put_profile_pic(data['profile_pic'], data['profile_pic_data'])   # <--- new version to wrote data
 
     def put_gender(self, gender):    # writes new gender to feed and updates Json for FrontEnd
         self.gender = gender
@@ -175,6 +176,7 @@ class Person:
             if self.list_of_persons is not None:
                 generate_json(self.list_of_persons, self.main)
 
+    # TODO: Make it compatible for path and data, let it write both to pcaps
     def put_profile_pic(self, picture):  # writes path to the new profile picture to feed and updates Json for FrontEnd
         self.profile_pic = picture
         self.feed.write_profile_pic_to_feed(self.profile_pic)
