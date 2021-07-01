@@ -82,13 +82,24 @@ def iterateThroughDirs(mainPersonName, mainPersonID):
 
 
 
+"""
+make unfollow call to BackEnd. The function creates an updated JSON file.
+"""
+def unfollowCall(mainPersonName, mainPersonID,unfollowPersonName, unfollowPersonID):
+    os.chdir(q.parent.parent.parent)
+    (mainPerson, list_of_persons) = iterateThroughDirs(mainPersonName, mainPersonID)
+    helper(list_of_persons, mainPerson)
+    if (sys.platform == "linux"):
+        mainPerson.unfollow(unfollowPersonID, unfollowPersonName)
+    else:
+        mainPerson.unfollow(unfollowPersonID.encode("utf-8"), unfollowPersonName)
+
 
 
 """
 make follow call to BackEnd. The function creates an updated JSON file.
 """
 def followCall(mainPersonName, mainPersonID,followPersonName, followPersonID):
-    print(q)
     os.chdir(q.parent.parent.parent)
     (mainPerson, list_of_persons) = iterateThroughDirs(mainPersonName, mainPersonID)
     helper(list_of_persons, mainPerson)
