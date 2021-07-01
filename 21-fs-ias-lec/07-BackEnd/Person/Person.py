@@ -161,7 +161,7 @@ class Person:
 
     def put_influencer(self):   # calculates if user is influencer or not: more than 3 follows -> influencer
 
-        if self.influencer_count > 3 and self.influencer is False:
+        if self.influencer_count >= 3 and self.influencer is False:
             self.influencer = True
             self.feed.write_influencer_to_feed(self.influencer)
             self.activity += 1
