@@ -47,8 +47,8 @@ def home(request):
     data = json.load(data_file)
     data_file.close()
     root = getRoot(data['nodes'])
-    follows = getRootFollowsSize(data['nodes'])
-    followers = getRootFollowersSize(data['links'])
+    follows = getRootFollowsSize(data['links'], root.get("id"))
+    followers = getRootFollowersSize(data['links'], root.get("id"))
 
     settings_data_file = open(settingsPath)
     settings_data = json.load(settings_data_file)
@@ -65,6 +65,8 @@ def home(request):
         'follows': follows,
         'followers': followers,
         'all': len(data['nodes']),
+        'activity': root.get("activity level"),
+        'influencer': root.get("influencer"),
         'graph': settings_data
     }
 
