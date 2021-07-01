@@ -1,7 +1,7 @@
 {
   "nodes": [
     {
-      "BACnetID": "c08c149127e86190",
+      "BACnetID": "6f1e41889227db9b",
       "id": 0,
       "name": "pascal",
       "gender": null,
@@ -11,13 +11,13 @@
       "language": null,
       "status": null,
       "status_list": [],
-      "activity level": 2,
+      "activity level": 0,
       "influencer": false,
       "hopLayer": 1,
       "profile_pic": null
     },
     {
-      "BACnetID": "5fd6cc669ffb0fa0",
+      "BACnetID": "8602d8fead8474a5",
       "id": 1,
       "name": "veri",
       "gender": null,
@@ -33,7 +33,7 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "d3a823b76dd98827",
+      "BACnetID": "82a45633a97a7b07",
       "id": 2,
       "name": "aline",
       "gender": null,
@@ -43,13 +43,13 @@
       "language": null,
       "status": null,
       "status_list": [],
-      "activity level": 3,
+      "activity level": 0,
       "influencer": false,
       "hopLayer": 10000,
       "profile_pic": null
     },
     {
-      "BACnetID": "6dfb6d3f3cf112de",
+      "BACnetID": "6a8ea4a108f3cfb2",
       "id": 3,
       "name": "caroline",
       "gender": null,
@@ -65,7 +65,7 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "04fe480977e657f7",
+      "BACnetID": "cb0928744a77b1b3",
       "id": 4,
       "name": "vera",
       "gender": null,
@@ -75,13 +75,13 @@
       "language": null,
       "status": null,
       "status_list": [],
-      "activity level": 5,
+      "activity level": 1,
       "influencer": false,
       "hopLayer": 10000,
       "profile_pic": null
     },
     {
-      "BACnetID": "1d1fc36b92f54fd3",
+      "BACnetID": "f83b2124653b1e68",
       "id": 5,
       "name": "julius",
       "gender": null,
@@ -91,13 +91,13 @@
       "language": null,
       "status": null,
       "status_list": [],
-      "activity level": 2,
+      "activity level": 0,
       "influencer": false,
       "hopLayer": 10000,
       "profile_pic": null
     },
     {
-      "BACnetID": "87fb846658d9def0",
+      "BACnetID": "96beaaa18a55e19a",
       "id": 6,
       "name": "georgia",
       "gender": null,
@@ -113,9 +113,9 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "429cd6ed4e501f77",
+      "BACnetID": "3e71d766adf523e3",
       "id": 7,
-      "name": "phillip",
+      "name": "philipp",
       "gender": null,
       "birthday": null,
       "country": null,
@@ -123,13 +123,13 @@
       "language": null,
       "status": null,
       "status_list": [],
-      "activity level": 4,
+      "activity level": 0,
       "influencer": false,
       "hopLayer": 0,
       "profile_pic": null
     },
     {
-      "BACnetID": "eed22e05cd54bd2f",
+      "BACnetID": "29de66e76853aab8",
       "id": 8,
       "name": "henry",
       "gender": null,
@@ -145,7 +145,7 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "ce2904e78945ee01",
+      "BACnetID": "ed37978705437881",
       "id": 9,
       "name": "eveline",
       "gender": null,
@@ -161,7 +161,7 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "be899281237b3e44",
+      "BACnetID": "9e15a5231fdc3284",
       "id": 10,
       "name": "david",
       "gender": null,
@@ -177,7 +177,7 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "3946f4cf3826d734",
+      "BACnetID": "accccf9963964e4e",
       "id": 11,
       "name": "ben",
       "gender": null,
@@ -187,13 +187,13 @@
       "language": null,
       "status": null,
       "status_list": [],
-      "activity level": 4,
+      "activity level": 0,
       "influencer": false,
       "hopLayer": 10000,
       "profile_pic": null
     },
     {
-      "BACnetID": "be3e582d322b03cc",
+      "BACnetID": "2f834e886dea674d",
       "id": 12,
       "name": "yasmin",
       "gender": null,
@@ -203,13 +203,13 @@
       "language": null,
       "status": null,
       "status_list": [],
-      "activity level": 4,
+      "activity level": 0,
       "influencer": true,
       "hopLayer": 10000,
       "profile_pic": null
     },
     {
-      "BACnetID": "3f33efcc3a6e335b",
+      "BACnetID": "49fd65acb22403d9",
       "id": 13,
       "name": "esther",
       "gender": null,
@@ -219,13 +219,13 @@
       "language": null,
       "status": null,
       "status_list": [],
-      "activity level": 3,
+      "activity level": 0,
       "influencer": false,
       "hopLayer": 10000,
       "profile_pic": null
     },
     {
-      "BACnetID": "51613e7bf3df9741",
+      "BACnetID": "ead282fe42e6b2fb",
       "id": 14,
       "name": "sebastian",
       "gender": null,
@@ -235,13 +235,13 @@
       "language": null,
       "status": null,
       "status_list": [],
-      "activity level": 2,
+      "activity level": 0,
       "influencer": false,
       "hopLayer": 1,
       "profile_pic": null
     },
     {
-      "BACnetID": "d8e4e5a0d4eb92fc",
+      "BACnetID": "11f5cf1ee09fd79f",
       "id": 15,
       "name": "isabelle",
       "gender": null,
@@ -257,7 +257,7 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "4a5ce2d51f943f18",
+      "BACnetID": "57446c63d48082c1",
       "id": 16,
       "name": "fitzgerald",
       "gender": null,

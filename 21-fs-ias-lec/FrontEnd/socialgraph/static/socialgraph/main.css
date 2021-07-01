@@ -267,10 +267,22 @@ h1, h2, h3, h4, h5, h6 {
 
 #followsLabel {
   margin-top: 20px;
+  margin-bottom: 30px;
 }
 
 #followersLabel {
   margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+#activityLabel {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+#influencerLabel {
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 
 

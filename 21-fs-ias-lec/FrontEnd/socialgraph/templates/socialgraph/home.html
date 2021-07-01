@@ -17,11 +17,11 @@
 
           <div class="row">
 
-              <div class="col-md-3">
+              <div class="col-md-2">
 
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-2">
 
                   <div class="progress mx-auto" id="followsProgress" data-value='0'>
                       <span class="progress-left">
@@ -39,7 +39,7 @@
 
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-2">
 
                   <div class="progress mx-auto" id="followersProgress" data-value='0'>
                       <span class="progress-left">
@@ -57,11 +57,50 @@
 
               </div>
 
+
+              <div class="col-md-2">
+
+                  <div class="progress mx-auto" id="activityProgress" data-value='0'>
+                      <span class="progress-left">
+                          <span class="progress-bar border-primary"></span>
+                      </span>
+                      <span class="progress-right">
+                          <span class="progress-bar border-primary"></span>
+                      </span>
+                      <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                          <div class="p font-weight-bold" id="activityProgressSpan">0</div>
+                      </div>
+                  </div>
+
+                  <div class="h6 font-weight-bold" id="activityLabel">Activity</div>
+
+              </div>
+
+              <div class="col-md-2">
+
+                  <div class="progress mx-auto" id="influencerProgress" data-value='0'>
+                      <span class="progress-left">
+                          <span class="progress-bar border-primary"></span>
+                      </span>
+                      <span class="progress-right">
+                          <span class="progress-bar border-primary"></span>
+                      </span>
+                      <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                          <div class="p font-weight-bold" id="influencerProgressSpan"></div>
+                      </div>
+                  </div>
+
+                  <div class="h6 font-weight-bold" id="influencerLabel">Influencer</div>
+
+              </div>
+
+
+              <div class="col-md-2">
+
+              </div>
+
           </div>
 
-          <div class="col-md-3">
-
-          </div>
 
           <hr class="homeDivider">
 
@@ -163,6 +202,16 @@
 
         $("#followersProgress").attr('data-value', 100 / {{ all }} * {{ followers }});
         $("#followersProgressSpan").html( "{{ followers }}   /   {{ all }}" );
+
+        $("#activityProgress").attr('data-value', 100 / 5 * {{ activity }});
+        $("#activityProgressSpan").html( "{{ activity }}   /   5" );
+
+        $("#influencerProgress").attr('data-value', "{{ influencer }}" == "False" ? 0 : 100);
+        if ("{{ influencer }}" == "False") {
+            $("#influencerProgressSpan").html( (4 - {{ followers }}) + " more follower needed!" );
+        } else {
+            $("#influencerProgressSpan").prepend('<img id="influencerImg" src="media/influencerImg.png" />');
+        }
 
           $(".progress").each(function() {
 

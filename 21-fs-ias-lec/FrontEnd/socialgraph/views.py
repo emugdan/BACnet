@@ -65,6 +65,8 @@ def home(request):
         'follows': follows,
         'followers': followers,
         'all': len(data['nodes']),
+        'activity': root.get("activity level"),
+        'influencer': root.get("influencer"),
         'graph': settings_data
     }
 
