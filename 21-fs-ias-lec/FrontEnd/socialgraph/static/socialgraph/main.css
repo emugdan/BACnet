@@ -682,8 +682,18 @@ ul {
     border: none;
 }
 
+#updateProfileBtn {
+  margin-bottom: 5px;
+  width: 100px;
+}
+
 #settingsBtn {
   margin-bottom: 30px;
+  width: 100px;
+}
+
+#updateProfileLabel {
+  margin-top: 5px;
 }
 
 #customizeSettingsLabel {

@@ -109,6 +109,22 @@
 
               </div>
               <div class="col-md-3">
+                <p id="updateProfileLabel">Update your profile:</p>
+              </div>
+
+              <div class="col-md-3">
+                  <button type="button" class="btn" id="updateProfileBtn">Profile</button>
+              </div>
+              <div class="col-md-3">
+
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-md-3">
+
+              </div>
+              <div class="col-md-3">
                 <p id="customizeSettingsLabel">Customize the graph settings:</p>
               </div>
 
@@ -246,6 +262,10 @@
 
           }
 
+      });
+
+      $('#updateProfileBtn').click(function() {
+         document.location.href = "{% url 'profile-detail' root.id %}";
       });
 
       $('#settingsBtn').click(function() {
