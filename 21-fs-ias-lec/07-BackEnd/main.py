@@ -1,3 +1,4 @@
+import random
 import generateDirectories
 from Person import Person
 from generateJson import generate_json
@@ -57,6 +58,7 @@ def main(argv):  # generates dummy feeds, later not used anymore -> feeds should
     if main_person == None: # main person could not be found
         print("ERROR: main person not found, try a different name")
         return
+
     for pers in list_of_persons:  # for each person read the attributes from the entries in the feed
         follow_list = pers.feed.read_follow_from_feed()
         birthday = pers.feed.read_birthday_from_feed()
@@ -86,11 +88,30 @@ def main(argv):  # generates dummy feeds, later not used anymore -> feeds should
         # tell each person who the mainPerson is and what persons we "know" (= have the feed at the moment)
         pers.main = main_person
 
+    for pers in list_of_persons:
+        createRandomAttributes(pers)
+
     # Json file for FrontEnd
     generate_json(list_of_persons, main_person)
     #TODO: Vera: wenns ned klappet lösche
     if argv[0] == "FrontEnd":
         return (main_person, list_of_persons)
+
+
+def createRandomAttributes(pers):
+    genders = ["male", "female", "other"]
+    birthday = ["1999-06-01", "1998-11-26", "1997-01-08", "1995-07-13"]
+    town = ["Basel", "Bern", "Zuerich", "Luzern"]
+    country = "Schweiz"
+    language = ["Deutsch", "Englisch", "Franzoesisch"]
+
+    data = {'gender': genders[random.randint(0, len(genders) - 1)],
+            'birthday': birthday[random.randint(0, len(birthday) - 1)],
+            'town': town[random.randint(0, len(town) - 1)],
+            'country': country,
+            'language': language[random.randint(0, len(language) - 1)]}
+
+    pers.put_attributes(data)
 
 
 if __name__ == "__main__":
