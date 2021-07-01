@@ -141,7 +141,7 @@ def follow(request):
         queryList = []
 
         # Gender Query
-        if (response == 'male' or response == 'female'):
+        if (response == 'male' or response == 'female' or response == 'other'):
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=response,
                                                                              criteria='gender') \
             if mode == "1follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data, attribute=response,
