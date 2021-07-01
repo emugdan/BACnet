@@ -27,9 +27,9 @@
       "language": "Englisch",
       "status": null,
       "status_list": [],
-      "activity level": 0,
+      "activity level": 5,
       "influencer": false,
-      "hopLayer": 10000,
+      "hopLayer": 1,
       "profile_pic": null
     },
     {
@@ -61,7 +61,7 @@
       "status_list": [],
       "activity level": 0,
       "influencer": false,
-      "hopLayer": 10000,
+      "hopLayer": 1,
       "profile_pic": null
     },
     {
@@ -157,7 +157,7 @@
       "status_list": [],
       "activity level": 0,
       "influencer": false,
-      "hopLayer": 10000,
+      "hopLayer": 1,
       "profile_pic": null
     },
     {
@@ -171,7 +171,7 @@
       "language": "Englisch",
       "status": null,
       "status_list": [],
-      "activity level": 0,
+      "activity level": 5,
       "influencer": false,
       "hopLayer": 3,
       "profile_pic": null
@@ -267,75 +267,87 @@
       "language": "Franzoesisch",
       "status": null,
       "status_list": [],
-      "activity level": 0,
-      "influencer": false,
-      "hopLayer": 10000,
+      "activity level": 5,
+      "influencer": true,
+      "hopLayer": 1,
       "profile_pic": null
     }
   ],
   "links": [
     {
       "source": 0,
-      "target": 14
+      "target": 17
     },
     {
       "source": 0,
       "target": 7
     },
     {
-      "source": 2,
-      "target": 12
-    },
-    {
-      "source": 2,
-      "target": 6
-    },
-    {
-      "source": 2,
+      "source": 0,
       "target": 8
     },
     {
-      "source": 4,
-      "target": 13
-    },
-    {
-      "source": 4,
-      "target": 12
-    },
-    {
-      "source": 4,
-      "target": 14
-    },
-    {
-      "source": 4,
+      "source": 1,
       "target": 0
     },
     {
-      "source": 4,
-      "target": 7
+      "source": 1,
+      "target": 15
+    },
+    {
+      "source": 1,
+      "target": 4
+    },
+    {
+      "source": 1,
+      "target": 17
     },
     {
       "source": 4,
-      "target": 5
+      "target": 17
     },
     {
-      "source": 5,
-      "target": 2
+      "source": 4,
+      "target": 15
     },
     {
-      "source": 5,
+      "source": 4,
+      "target": 3
+    },
+    {
+      "source": 10,
+      "target": 0
+    },
+    {
+      "source": 10,
+      "target": 1
+    },
+    {
+      "source": 11,
+      "target": 14
+    },
+    {
+      "source": 11,
+      "target": 13
+    },
+    {
+      "source": 11,
+      "target": 12
+    },
+    {
+      "source": 11,
+      "target": 15
+    },
+    {
+      "source": 12,
+      "target": 14
+    },
+    {
+      "source": 12,
       "target": 11
     },
     {
       "source": 7,
-      "target": 14
-    },
-    {
-      "source": 7,
-      "target": 0
-    },
-    {
-      "source": 7,
       "target": 4
     },
     {
@@ -343,48 +355,96 @@
       "target": 2
     },
     {
-      "source": 11,
-      "target": 4
+      "source": 13,
+      "target": 11
     },
     {
-      "source": 11,
+      "source": 14,
       "target": 13
     },
     {
-      "source": 11,
+      "source": 14,
+      "target": 11
+    },
+    {
+      "source": 14,
       "target": 12
     },
     {
-      "source": 12,
+      "source": 15,
       "target": 4
     },
     {
-      "source": 12,
+      "source": 15,
+      "target": 17
+    },
+    {
+      "source": 15,
+      "target": 14
+    },
+    {
+      "source": 15,
+      "target": 11
+    },
+    {
+      "source": 15,
       "target": 13
     },
     {
-      "source": 12,
-      "target": 5
-    },
-    {
-      "source": 13,
-      "target": 12
-    },
-    {
-      "source": 13,
-      "target": 4
-    },
-    {
-      "source": 13,
+      "source": 15,
       "target": 10
     },
     {
-      "source": 14,
+      "source": 15,
+      "target": 0
+    },
+    {
+      "source": 15,
+      "target": 1
+    },
+    {
+      "source": 15,
+      "target": 2
+    },
+    {
+      "source": 15,
+      "target": 3
+    },
+    {
+      "source": 15,
+      "target": 5
+    },
+    {
+      "source": 15,
+      "target": 6
+    },
+    {
+      "source": 15,
       "target": 7
     },
     {
-      "source": 14,
-      "target": 0
+      "source": 15,
+      "target": 12
+    },
+    {
+      "source": 15,
+      "target": 8
+    },
+    {
+      "source": 15,
+      "target": 9
+    },
+    {
+      "source": 17,
+      "target": 15
+    },
+    {
+      "source": 17,
+      "target": 4
+    },
+    {
+      "source": 17,
+      "target": 10
     }
   ]
 }

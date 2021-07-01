@@ -129,7 +129,7 @@ def helper(list_of_persons, main_person):
         country = pers.feed.read_country_from_feed()
         town = pers.feed.read_town_from_feed()
         language = pers.feed.read_language_from_feed()
-        status = pers.feed.read_status_from_feed()
+        status, status_list = pers.feed.read_status_from_feed()
         profile_pic = pers.feed.read_profile_pic_from_feed()
         pers.list_of_persons = list_of_persons
 
@@ -146,6 +146,7 @@ def helper(list_of_persons, main_person):
         pers.town = town
         pers.language = language
         pers.status = status
+        pers.status_list = status_list
         pers.profile_pic = profile_pic
 
         # tell each person who the mainPerson is and what persons we "know" (= have the feed at the moment)

@@ -273,27 +273,26 @@ def update_profile(request):
 
         if len(request.FILES) > 0:
             for f in request.FILES.keys():
-                profile_pic_path = handle_uploaded_file(request.FILES[f], node.get('BACnetID'))
+                profile_pic_path, profile_pic_data = handle_uploaded_file(request.FILES[f], node.get('BACnetID'))
                 update['profile_pic'] = profile_pic_path
+                update['profile_pic_data'] = profile_pic_data
         # print(update)
 
-        # TODO trigger function call to backend with update-info.
         root = getRoot(data['nodes'])
         rootUser = root.get("name")
         rootUserID = root.get("BACnetID")
 
-        profileUpdateCall(rootUser, rootUserID, update)
+        if len(update) > 1: # Only make an UpdateCall if there is a real update
+            profileUpdateCall(rootUser, rootUserID, update)
 
-        x = pathlib.Path(__file__)
+        x = pathlib.Path(__file__) # Change working directory back to Frontend
         print(x.parent.parent)
         os.chdir(x.parent.parent)
 
-        fresh_data_file = open(path)
+        fresh_data_file = open(path) # Open the new json-file, and create profiles out of the data.
         fresh_data = json.load(fresh_data_file)
         create_profiles(fresh_data)
         fresh_data_file.close()
-
-        # TODO trigger function call to backend with update-info.
 
         return HttpResponseRedirect("/profile/" + str(node.get('id')))
 
@@ -301,16 +300,28 @@ def update_profile(request):
 
 
 def handle_uploaded_file(f, id):
-    path = os.path.join('media', 'profile_pics', id + '.' + f.content_type[f.content_type.index('/') + 1:])
-    if os.path.exists(path):
-        os.remove(path)
-    with open(path, 'wb+') as destination:
+    path = os.path.join('media', 'profile_pics')
+    if not os.path.exists(path): # Check if directory already there
+        os.makedirs(path)
+    else:
+        for file in os.listdir(path):
+            if file.startswith(id):
+                os.remove(os.path.join(path, file)) # Delete old profile picture of this user
+    path = os.path.join(path, id + '.' + f.content_type[f.content_type.index('/') + 1:])
+
+    with open(path, 'wb+') as destination:  # Write the image file
         for chunk in f.chunks():
             destination.write(chunk)
         destination.flush()
         os.fsync(destination.fileno())
         destination.close()
-        return path
+
+    reader = open(path, 'rb')   # read the image bytes, to put them in the pcap-files
+    binImage = reader.read()
+    reader.close()
+
+    # return the path and the data_bytes
+    return os.path.join('profile_pics', id + '.' + f.content_type[f.content_type.index('/') + 1:]), binImage
 
 
 if __name__ == "__main__":
