@@ -113,19 +113,19 @@ def getRoot(nodes):
             return n
 
 
-def getRootFollowsSize(nodes):
+def getRootFollowsSize(links, rootId):
     f = 0
-    for n in nodes:
-        if n.get("hopLayer") == 1:
+    for l in links:
+        if l.get("source") == rootId:
             f += 1
 
     return f
 
 
-def getRootFollowersSize(links):
+def getRootFollowersSize(links, rootId):
     f = 0
     for l in links:
-        if l.get("target") == 0:
+        if l.get("target") == rootId:
             f += 1
 
     return f

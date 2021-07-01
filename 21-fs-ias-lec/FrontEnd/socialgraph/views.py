@@ -47,8 +47,8 @@ def home(request):
     data = json.load(data_file)
     data_file.close()
     root = getRoot(data['nodes'])
-    follows = getRootFollowsSize(data['nodes'])
-    followers = getRootFollowersSize(data['links'])
+    follows = getRootFollowsSize(data['links'], root.get("id"))
+    followers = getRootFollowersSize(data['links'], root.get("id"))
 
     settings_data_file = open(settingsPath)
     settings_data = json.load(settings_data_file)
