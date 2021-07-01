@@ -60,7 +60,7 @@ def generate_directories():     # generates directories and connections between 
     esther, esthers_id = generate("esther")
     vera, veras_id = generate("vera")
     pascal, pascals_id = generate("pascal")
-    phillip, phillips_id = generate("phillip")
+    philipp, philipps_id = generate("philipp")
     sebastian, sebastians_id = generate("sebastian")
     aline, alines_id = generate("aline")
     ben, bens_id = generate("ben")
@@ -82,7 +82,7 @@ def generate_directories():     # generates directories and connections between 
     vera.write(["bacnet/following", time.time(), yasmins_id])  # follow Yasmin
     vera.write(["bacnet/following", time.time(), sebastians_id])  # follow Sebastian
     vera.write(["bacnet/following", time.time(), pascals_id])  # follow Pascal
-    vera.write(["bacnet/following", time.time(), phillips_id])  # follow Phillip
+    vera.write(["bacnet/following", time.time(), philipps_id])  # follow Phillip
 
     vera.write(["bacnet/following", time.time(), julius_id])  # follow julius
 
@@ -91,12 +91,12 @@ def generate_directories():     # generates directories and connections between 
     esther.write(["bacnet/following", time.time(), davids_id])  # follow David
 
     pascal.write(["bacnet/following", time.time(), sebastians_id])  # follow Sebastian
-    pascal.write(["bacnet/following", time.time(), phillips_id])  # follow Phillip
+    pascal.write(["bacnet/following", time.time(), philipps_id])  # follow Phillip
 
-    phillip.write(["bacnet/following", time.time(), sebastians_id])  # follow Sebastian
-    phillip.write(["bacnet/following", time.time(), pascals_id])  # follow Pascal
+    philipp.write(["bacnet/following", time.time(), sebastians_id])  # follow Sebastian
+    philipp.write(["bacnet/following", time.time(), pascals_id])  # follow Pascal
 
-    sebastian.write(["bacnet/following", time.time(), phillips_id])  # follow Phillip
+    sebastian.write(["bacnet/following", time.time(), philipps_id])  # follow Phillip
     sebastian.write(["bacnet/following", time.time(), pascals_id])  # follow Pascal
 
     aline.write(["bacnet/following", time.time(), yasmins_id])  # follow Yasmin

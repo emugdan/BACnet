@@ -33,7 +33,7 @@ class Person:
         self.town = None
         self.language = None
         self.status = None
-        self.status_list = dict()
+        self.status_list = []
         self.last_status = None
         self.profile_pic = "./media/default_pic.jpg"
         self.activity = 0  # number of events on the feed
@@ -152,8 +152,8 @@ class Person:
         generate_json(self.list_of_persons, self.main)
 
     def put_status(self, status):    # writes new status to feed and updates Json for FrontEnd
-        if status is not None:
-            self.status_list[self.last_status] = self.status
+        if self.status is not None:
+            self.status_list = [(self.status, self.last_status)] + self.status
         self.last_status = datetime.now()
         self.status = status
         self.feed.write_status_to_feed(self.status)

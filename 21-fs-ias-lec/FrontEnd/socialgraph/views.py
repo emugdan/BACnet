@@ -16,9 +16,8 @@ from .models import Profile, FollowRecommendations
 from .utils.jsonUtils import extract_connections, getRoot, getRootFollowsSize, getRootFollowersSize, saveSettings
 
 x = os.getcwd()
-print(x)
-from .utils.callToBackend import followCall
-from .utils.callToBackend import profileUpdateCall
+from .utils.callToBackend import followCall, unfollowCall, profileUpdateCall
+
 
 os.chdir(x)
 
@@ -48,8 +47,8 @@ def home(request):
     data = json.load(data_file)
     data_file.close()
     root = getRoot(data['nodes'])
-    follows = getRootFollowsSize(data['nodes'])
-    followers = getRootFollowersSize(data['links'])
+    follows = getRootFollowsSize(data['links'], root.get("id"))
+    followers = getRootFollowersSize(data['links'], root.get("id"))
 
     settings_data_file = open(settingsPath)
     settings_data = json.load(settings_data_file)
@@ -66,6 +65,8 @@ def home(request):
         'follows': follows,
         'followers': followers,
         'all': len(data['nodes']),
+        'activity': root.get("activity level"),
+        'influencer': root.get("influencer"),
         'graph': settings_data
     }
 
@@ -152,13 +153,14 @@ def follow(request):
                                                                              criteria='name')\
             if mode == "1follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data, attribute=name,
                                                                              criteria='name')
-        # User has searched for name
+        # User has searched for town
         elif (response.startswith("tq")):
             town = response[2:len(response)]
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=town,
                                                                              criteria='town')\
             if mode == "follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data, attribute=town,
-                                                                             criteria='town')
+                                                                                     criteria='town')
+        #User has altered hoplayer slider
         elif (response.startswith("lq")):
             if(len(response) > 3):
                 queryList = FollowRecommendations.createRecommendationList(jsonData=data)
@@ -173,19 +175,40 @@ def follow(request):
             rootUserID = root.get("BACnetID")
             followID = str(response[2:18])
             followName = str(response[18:len(response)])
-
             followCall(mainPersonName=rootUser, mainPersonID=rootUserID, followPersonName=followName,
                        followPersonID=followID)
             x = pathlib.Path(__file__)
-            print(x.parent.parent)
             os.chdir(x.parent.parent)
             data_file = open(path)
             data = json.load(data_file)
             data_file.close()
             queryList = FollowRecommendations.createRecommendationList(jsonData=data)
+
+        #User wants to unfollow other user
+        elif (response.startswith("uf")):
+            root = getRoot(data['nodes'])
+            rootUser = root.get("name")
+            rootUserID = root.get("BACnetID")
+            unfollowID = str(response[2:18])
+            unfollowName = str(response[18:len(response)])
+            print(unfollowName)
+            unfollowCall(mainPersonName=rootUser, mainPersonID=rootUserID, unfollowPersonName=unfollowName,
+                       unfollowPersonID=unfollowID)
+            x = pathlib.Path(__file__)
+            os.chdir(x.parent.parent)
+            data_file = open(path)
+            data = json.load(data_file)
+            data_file.close()
+            queryList = FollowRecommendations.createUnfollowRecommendationDefault(jsonData=data)
+
+
+
+        #User has reset the filters
         elif(response == ""):
             queryList = FollowRecommendations.createRecommendationList(jsonData=data) \
             if mode == "1follow" else FollowRecommendations.createUnfollowRecommendationDefault(jsonData=data)
+
+
 
             # Create a new context variable
         text = {

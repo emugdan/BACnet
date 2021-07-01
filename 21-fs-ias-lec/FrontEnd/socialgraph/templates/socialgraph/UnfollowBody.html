@@ -29,7 +29,19 @@
 
     function unfollow(bacnetID, name){
         $('.list-item').off('click');
-       alert("not yet implemented")
+        $.ajax({
+
+                type: "POST",
+                url: '{{ '' }}',
+                async: false,
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: "uf"+bacnetID+name, mode : "1unfollow"},
+                success: function (response){
+                    $('#test').html('').replaceWith(response)
+
+                }
+
+            });
+
     }
 
 
