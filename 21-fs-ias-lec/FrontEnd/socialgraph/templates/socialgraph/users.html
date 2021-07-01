@@ -241,9 +241,12 @@
             if (id === nodeId) {
               if ("{{ node.gender }}" === "male") {
                 color = "{{ graph.maleColor }}";
-              } else {
+              } else if ("{{ node.gender }}" === "female") {
                 color = "{{ graph.femaleColor }}";
+              } else {
+                color = "{{ graph.otherColor }}";
               }
+
             }
 
           {% endfor %}

@@ -179,6 +179,16 @@
                                 </div>
                             </div>
 
+                            <div class="row modalRow">
+                                <div class="col-md-4">
+                                    <p class="mb-2 settingsLabel">Node (other)</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <input class="colorDisplay" type="color" id='otherColorDisplay' name="otherColorDisplay"
+                                    value="{{ graph.otherColor }}">
+                                </div>
+                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-link" data-dismiss="modal" id="saveModalBtn">Save changes</button>
@@ -247,8 +257,10 @@
       var curTextFontSize = 12;
       var curMaleColor = "#0095FF";
       var curFemaleColor = "#E97091";
+      var curOtherColor = "#7F7F7F";
       var maleColorInput = document.getElementById("maleColorDisplay");
       var femaleColorInput = document.getElementById("femaleColorDisplay");
+      var otherColorInput = document.getElementById("otherColorDisplay");
 
       maleColorInput.addEventListener("input", function() {
         var color = maleColorInput.value;
@@ -258,14 +270,19 @@
         var color = femaleColorInput.value;
       }, false);
 
+      otherColorInput.addEventListener("input", function() {
+        var color = otherColorInput.value;
+      }, false);
+
       $('#saveModalBtn').click(function() {
          curNodeRadius = nodeRadius.value;
          curLinkLength = linkLength.value;
          curTextFontSize = textFontSize.value;
          curMaleColor = maleColorInput.value;
          curFemaleColor = femaleColorInput.value;
+         curOtherColor = otherColorInput.value;
 
-         saveSettings(curNodeRadius.toString() + " " + curLinkLength.toString() + " " + curTextFontSize.toString() + " " + curMaleColor + " " + curFemaleColor);
+         saveSettings(curNodeRadius.toString() + " " + curLinkLength.toString() + " " + curTextFontSize.toString() + " " + curMaleColor + " " + curFemaleColor + " " + curOtherColor);
       });
 
       $('#closeModalBtn').click(function() {
@@ -274,6 +291,7 @@
          textFontSize.value = curTextFontSize;
          maleColorInput.value = curMaleColor;
          femaleColorInput.value = curFemaleColor;
+         otherColorInput.value = curOtherColor;
       });
 
       function saveSettings(text) {
