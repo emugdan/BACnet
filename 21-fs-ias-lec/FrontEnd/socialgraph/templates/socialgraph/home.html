@@ -208,7 +208,7 @@
 
         $("#influencerProgress").attr('data-value', "{{ influencer }}" == "False" ? 0 : 100);
         if ("{{ influencer }}" == "False") {
-            $("#influencerProgressSpan").html( (4 - {{ followers }}) + " more follower needed!" );
+            $("#influencerProgressSpan").html( (3 - {{ followers }}) + " more follower needed!" );
         } else {
             $("#influencerProgressSpan").prepend('<img id="influencerImg" src="media/influencerImg.png" />');
         }
