@@ -1,41 +1,30 @@
 {
   "nodes": [
     {
-      "BACnetID": "6f1e41889227db9b",
+      "BACnetID": "f4b64622394bda2f",
       "id": 0,
-      "name": "pascal",
-      "gender": null,
-      "birthday": null,
-      "country": null,
-      "town": null,
-      "language": null,
-      "status": null,
-      "status_list": [],
-      "activity level": 0,
-      "influencer": false,
-      "hopLayer": 1,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "8602d8fead8474a5",
-      "id": 1,
-      "name": "veri",
-      "gender": null,
-      "birthday": null,
-      "country": null,
-      "town": null,
-      "language": null,
-      "status": null,
-      "status_list": [],
-      "activity level": 0,
-      "influencer": false,
-      "hopLayer": 10000,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "82a45633a97a7b07",
-      "id": 2,
       "name": "aline",
+      "gender": "other",
+      "birthday": "1993-05-23",
+      "country": "Schweizerland",
+      "town": "Basel",
+      "language": null,
+      "status": "Hello There",
+      "status_list": [
+        [
+          "Hello There",
+          1625147537.2913744
+        ]
+      ],
+      "activity level": 5,
+      "influencer": false,
+      "hopLayer": 2,
+      "profile_pic": "profile_pics/f4b64622394bda2f.png"
+    },
+    {
+      "BACnetID": "96dfc32ec211506f",
+      "id": 1,
+      "name": "ben",
       "gender": null,
       "birthday": null,
       "country": null,
@@ -43,14 +32,14 @@
       "language": null,
       "status": null,
       "status_list": [],
-      "activity level": 0,
+      "activity level": 5,
       "influencer": false,
-      "hopLayer": 10000,
+      "hopLayer": 2,
       "profile_pic": null
     },
     {
-      "BACnetID": "6a8ea4a108f3cfb2",
-      "id": 3,
+      "BACnetID": "636dd8b5f142bf31",
+      "id": 2,
       "name": "caroline",
       "gender": null,
       "birthday": null,
@@ -65,9 +54,25 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "cb0928744a77b1b3",
+      "BACnetID": "e8f81c18fa39afab",
+      "id": 3,
+      "name": "david",
+      "gender": null,
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "status_list": [],
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 2,
+      "profile_pic": null
+    },
+    {
+      "BACnetID": "a752861aa3e9869e",
       "id": 4,
-      "name": "vera",
+      "name": "esther",
       "gender": null,
       "birthday": null,
       "country": null,
@@ -75,78 +80,14 @@
       "language": null,
       "status": null,
       "status_list": [],
-      "activity level": 1,
-      "influencer": false,
-      "hopLayer": 10000,
+      "activity level": 5,
+      "influencer": true,
+      "hopLayer": 1,
       "profile_pic": null
     },
     {
-      "BACnetID": "f83b2124653b1e68",
+      "BACnetID": "516ad3172e0cb89f",
       "id": 5,
-      "name": "julius",
-      "gender": null,
-      "birthday": null,
-      "country": null,
-      "town": null,
-      "language": null,
-      "status": null,
-      "status_list": [],
-      "activity level": 0,
-      "influencer": false,
-      "hopLayer": 10000,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "96beaaa18a55e19a",
-      "id": 6,
-      "name": "georgia",
-      "gender": null,
-      "birthday": null,
-      "country": null,
-      "town": null,
-      "language": null,
-      "status": null,
-      "status_list": [],
-      "activity level": 0,
-      "influencer": false,
-      "hopLayer": 10000,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "3e71d766adf523e3",
-      "id": 7,
-      "name": "philipp",
-      "gender": null,
-      "birthday": null,
-      "country": null,
-      "town": null,
-      "language": null,
-      "status": null,
-      "status_list": [],
-      "activity level": 0,
-      "influencer": false,
-      "hopLayer": 0,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "29de66e76853aab8",
-      "id": 8,
-      "name": "henry",
-      "gender": null,
-      "birthday": null,
-      "country": null,
-      "town": null,
-      "language": null,
-      "status": null,
-      "status_list": [],
-      "activity level": 0,
-      "influencer": false,
-      "hopLayer": 10000,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "ed37978705437881",
-      "id": 9,
       "name": "eveline",
       "gender": null,
       "birthday": null,
@@ -161,9 +102,9 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "9e15a5231fdc3284",
-      "id": 10,
-      "name": "david",
+      "BACnetID": "8d12feb20caf4805",
+      "id": 6,
+      "name": "fitzgerald",
       "gender": null,
       "birthday": null,
       "country": null,
@@ -177,9 +118,9 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "accccf9963964e4e",
-      "id": 11,
-      "name": "ben",
+      "BACnetID": "0a113da0c24f3bbb",
+      "id": 7,
+      "name": "georgia",
       "gender": null,
       "birthday": null,
       "country": null,
@@ -189,29 +130,13 @@
       "status_list": [],
       "activity level": 0,
       "influencer": false,
-      "hopLayer": 10000,
+      "hopLayer": 3,
       "profile_pic": null
     },
     {
-      "BACnetID": "2f834e886dea674d",
-      "id": 12,
-      "name": "yasmin",
-      "gender": null,
-      "birthday": null,
-      "country": null,
-      "town": null,
-      "language": null,
-      "status": null,
-      "status_list": [],
-      "activity level": 0,
-      "influencer": true,
-      "hopLayer": 10000,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "49fd65acb22403d9",
-      "id": 13,
-      "name": "esther",
+      "BACnetID": "07fabe2fa82bc432",
+      "id": 8,
+      "name": "henry",
       "gender": null,
       "birthday": null,
       "country": null,
@@ -221,28 +146,12 @@
       "status_list": [],
       "activity level": 0,
       "influencer": false,
-      "hopLayer": 10000,
+      "hopLayer": 3,
       "profile_pic": null
     },
     {
-      "BACnetID": "ead282fe42e6b2fb",
-      "id": 14,
-      "name": "sebastian",
-      "gender": null,
-      "birthday": null,
-      "country": null,
-      "town": null,
-      "language": null,
-      "status": null,
-      "status_list": [],
-      "activity level": 0,
-      "influencer": false,
-      "hopLayer": 1,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "11f5cf1ee09fd79f",
-      "id": 15,
+      "BACnetID": "8c1e90ed6c1b8cf3",
+      "id": 9,
       "name": "isabelle",
       "gender": null,
       "birthday": null,
@@ -257,9 +166,110 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "57446c63d48082c1",
+      "BACnetID": "c6e18886a539d979",
+      "id": 10,
+      "name": "julius",
+      "gender": null,
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "status_list": [],
+      "activity level": 5,
+      "influencer": false,
+      "hopLayer": 1,
+      "profile_pic": null
+    },
+    {
+      "BACnetID": "17908c6b4dae55cd",
+      "id": 11,
+      "name": "pascal",
+      "gender": null,
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "status_list": [],
+      "activity level": 5,
+      "influencer": true,
+      "hopLayer": 1,
+      "profile_pic": null
+    },
+    {
+      "BACnetID": "2ef91b55b8ce12bc",
+      "id": 12,
+      "name": "philipp",
+      "gender": null,
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "status_list": [],
+      "activity level": 5,
+      "influencer": true,
+      "hopLayer": 1,
+      "profile_pic": null
+    },
+    {
+      "BACnetID": "bd931e0d56ee2c66",
+      "id": 13,
+      "name": "phillip",
+      "gender": null,
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "status_list": [],
+      "activity level": 5,
+      "influencer": true,
+      "hopLayer": 1,
+      "profile_pic": null
+    },
+    {
+      "BACnetID": "0054c5c132af41f2",
+      "id": 14,
+      "name": "sebastian",
+      "gender": null,
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "status_list": [],
+      "activity level": 5,
+      "influencer": true,
+      "hopLayer": 1,
+      "profile_pic": null
+    },
+    {
+      "BACnetID": "0d1ebae440af1f20",
+      "id": 15,
+      "name": "vera",
+      "gender": "female",
+      "birthday": "1999-02-13",
+      "country": "Schweiz",
+      "town": "Ehrendingen Downtown",
+      "language": null,
+      "status": null,
+      "status_list": [
+        [
+          null,
+          1622212606.6198587
+        ]
+      ],
+      "activity level": 5,
+      "influencer": true,
+      "hopLayer": 0,
+      "profile_pic": "profile_pics/0d1ebae440af1f20.png"
+    },
+    {
+      "BACnetID": "c37f9f0677a76ef5",
       "id": 16,
-      "name": "fitzgerald",
+      "name": "veri",
       "gender": null,
       "birthday": null,
       "country": null,
@@ -271,116 +281,152 @@
       "influencer": false,
       "hopLayer": 10000,
       "profile_pic": null
+    },
+    {
+      "BACnetID": "49e4d66f0cd76374",
+      "id": 17,
+      "name": "yasmin",
+      "gender": null,
+      "birthday": null,
+      "country": null,
+      "town": null,
+      "language": null,
+      "status": null,
+      "status_list": [],
+      "activity level": 5,
+      "influencer": true,
+      "hopLayer": 1,
+      "profile_pic": "profile_pics/49e4d66f0cd76374.png"
     }
   ],
   "links": [
     {
       "source": 0,
-      "target": 14
+      "target": 17
     },
     {
       "source": 0,
       "target": 7
     },
     {
-      "source": 2,
-      "target": 12
-    },
-    {
-      "source": 2,
-      "target": 6
-    },
-    {
-      "source": 2,
+      "source": 0,
       "target": 8
     },
     {
-      "source": 4,
-      "target": 13
-    },
-    {
-      "source": 4,
-      "target": 12
-    },
-    {
-      "source": 4,
-      "target": 14
-    },
-    {
-      "source": 4,
+      "source": 1,
       "target": 0
     },
     {
-      "source": 4,
-      "target": 7
+      "source": 1,
+      "target": 15
+    },
+    {
+      "source": 1,
+      "target": 4
+    },
+    {
+      "source": 1,
+      "target": 17
     },
     {
       "source": 4,
-      "target": 5
+      "target": 17
     },
     {
-      "source": 5,
-      "target": 2
+      "source": 4,
+      "target": 15
     },
     {
-      "source": 5,
+      "source": 4,
+      "target": 3
+    },
+    {
+      "source": 10,
+      "target": 0
+    },
+    {
+      "source": 10,
+      "target": 1
+    },
+    {
+      "source": 11,
+      "target": 14
+    },
+    {
+      "source": 11,
+      "target": 13
+    },
+    {
+      "source": 11,
+      "target": 12
+    },
+    {
+      "source": 12,
+      "target": 14
+    },
+    {
+      "source": 12,
       "target": 11
     },
     {
-      "source": 7,
+      "source": 13,
       "target": 14
     },
     {
-      "source": 7,
-      "target": 0
+      "source": 13,
+      "target": 11
     },
     {
-      "source": 11,
-      "target": 2
-    },
-    {
-      "source": 11,
-      "target": 4
-    },
-    {
-      "source": 11,
+      "source": 14,
       "target": 13
     },
     {
-      "source": 11,
+      "source": 14,
+      "target": 11
+    },
+    {
+      "source": 14,
       "target": 12
     },
     {
-      "source": 12,
+      "source": 15,
       "target": 4
     },
     {
-      "source": 12,
+      "source": 15,
+      "target": 17
+    },
+    {
+      "source": 15,
+      "target": 14
+    },
+    {
+      "source": 15,
+      "target": 11
+    },
+    {
+      "source": 15,
       "target": 13
     },
     {
-      "source": 12,
-      "target": 5
-    },
-    {
-      "source": 13,
-      "target": 12
-    },
-    {
-      "source": 13,
-      "target": 4
-    },
-    {
-      "source": 13,
+      "source": 15,
       "target": 10
     },
     {
-      "source": 14,
-      "target": 7
+      "source": 15,
+      "target": 12
     },
     {
-      "source": 14,
-      "target": 0
+      "source": 17,
+      "target": 15
+    },
+    {
+      "source": 17,
+      "target": 4
+    },
+    {
+      "source": 17,
+      "target": 10
     }
   ]
 }

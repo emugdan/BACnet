@@ -36,6 +36,7 @@ class Person:
         self.status = None
         self.status_list = []
         self.profile_pic = "./media/default_pic.jpg"
+        self.profile_pic_data = None
         self.activity = 0  # number of events on the feed
         self.influencer_count = 0
         self.influencer = False
@@ -117,9 +118,8 @@ class Person:
             self.put_language(data['language'])
         if 'status' in data.keys():
             self.put_status(data['status'])
-        if 'profile_pic' in data.keys() and 'profile_pic_data' in data.keys():      # TODO:
-            self.put_profile_pic(data['profile_pic'])                               # <--- old version delete this later
-            # self.put_profile_pic(data['profile_pic'], data['profile_pic_data'])   # <--- new version to wrote data
+        if 'profile_pic' in data.keys() and 'profile_pic_data' in data.keys():
+            self.put_profile_pic(data['profile_pic'], data['profile_pic_data'])
 
     def put_gender(self, gender):    # writes new gender to feed and updates Json for FrontEnd
         self.gender = gender
@@ -176,9 +176,10 @@ class Person:
                 generate_json(self.list_of_persons, self.main)
 
     # TODO: Make it compatible for path and data, let it write both to pcaps
-    def put_profile_pic(self, picture):  # writes path to the new profile picture to feed and updates Json for FrontEnd
-        self.profile_pic = picture
-        self.feed.write_profile_pic_to_feed(self.profile_pic)
+    def put_profile_pic(self, pic, data):  # path and data of new profile pic to feed and updates Json for FrontEnd
+        self.profile_pic = pic
+        self.profile_pic_data = data
+        self.feed.write_profile_pic_to_feed(self.profile_pic, self.profile_pic_data)
         self.activity += 1
         generate_json(self.list_of_persons, self.main)
 

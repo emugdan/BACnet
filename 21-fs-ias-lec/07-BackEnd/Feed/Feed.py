@@ -92,13 +92,17 @@ class Feed:  # read from and write to the feed
 
     def read_profile_pic_from_feed(self):    # reads the path of the current profile pic
         path = None
+        data = None
         for event in self.myFeed:
             if event.content()[0] == "bacnet/profile_pic":
                 path = event.content()[2]
-        if path is None:  # return if no profile pic found
+            if event.content()[0] == "bacnet/profile_pic_data":
+                data = event.content()[2]
+        if path and data is None:  # return if no profile pic found
+            print("profile pic not found")
             return
 
-        return path
+        return path #, data
 
     def write_gender_to_feed(self, gender):    # writes the new gender to the feed
         self.myFeed.write(["bacnet/gender", time.time(), gender])
@@ -124,5 +128,6 @@ class Feed:  # read from and write to the feed
     def write_influencer_to_feed(self, influencer):    # writes the influencer status to feed
         self.myFeed.write(["bacnet/influencer", time.time(), influencer])
 
-    def write_profile_pic_to_feed(self, path):    # writes the new profile picture to the feed
+    def write_profile_pic_to_feed(self, path, data):    # writes the new profile picture to the feed
         self.myFeed.write(["bacnet/profile_pic", time.time(), path])
+        self.myFeed.write(["bacnet/profile_pic_data", time.time(), data])
