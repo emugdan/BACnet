@@ -101,18 +101,30 @@ class FollowRecommendations(models.Model):
         return recommendationList
 
     @classmethod
-    def createRecommendationsFromQuery(self, jsonData, attribute, criteria):
+    def createRecommendationsFromQuery(self, jsonData, attribute, criteria, layer):
         recommendationList = []
         for node in jsonData['nodes']:
-            if (node.get(criteria) == attribute and node.get('hopLayer') > 1):
-                recommendationList.append(
-                    FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('BACnetID'), id = node.get("id"),
-                                                 nameNode=node.get('name'), genderNode=node.get('gender'),
-                                                 birthdayNode=node.get('birthday'), countryNode=node.get('country'),
-                                                 townNode=node.get('town'),
-                                                 languageNode=node.get('language'),
-                                                 profile_picNode=node.get('profile_pic') if node.get(
-                                                     'profile_pic') is not None else 'default.jpg'))
+            if (int(layer) == 1):
+                if (node.get(criteria) == attribute and node.get('hopLayer') > 1):
+                    recommendationList.append(
+                        FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('BACnetID'), id = node.get("id"),
+                                                     nameNode=node.get('name'), genderNode=node.get('gender'),
+                                                     birthdayNode=node.get('birthday'), countryNode=node.get('country'),
+                                                     townNode=node.get('town'),
+                                                     languageNode=node.get('language'),
+                                                     profile_picNode=node.get('profile_pic') if node.get(
+                                                         'profile_pic') is not None else 'default.jpg'))
+            else:
+                if (node.get(criteria) == attribute and node.get('hopLayer') == int(layer)):
+                    recommendationList.append(
+                        FollowRecommendations.create(layerNode=node.get('hopLayer'), bacnet_idNode=node.get('BACnetID'), id = node.get("id"),
+                                                     nameNode=node.get('name'), genderNode=node.get('gender'),
+                                                     birthdayNode=node.get('birthday'), countryNode=node.get('country'),
+                                                     townNode=node.get('town'),
+                                                     languageNode=node.get('language'),
+                                                     profile_picNode=node.get('profile_pic') if node.get(
+                                                         'profile_pic') is not None else 'default.jpg'))
+
         return recommendationList
 
     @classmethod

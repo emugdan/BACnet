@@ -110,7 +110,7 @@
             url: '{{ '' }}',
             async: false,
 
-            data: {csrfmiddlewaretoken: '{{ csrf_token }}', text:"", mode: mode},
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}', text:"", mode: mode, layer:getHopsSliderVal()},
             success: function (response){
                 if(mode === "1follow"){
                   $('#Bod').html('').replaceWith("<div class=\"col-md-8\" id = \"Bod\">\n" +
@@ -177,7 +177,7 @@
                     type: "POST",
                     url: '{{ '' }}',
                     async: false,
-                    data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: txt, mode: mode},
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: txt, mode: mode, layer : getHopsSliderVal()},
                     success: function (response) {
 
                         $('#test').html('').replaceWith(response)
@@ -203,7 +203,7 @@
                 type: "POST",
                 url: '{{ '' }}',
                 async: false,
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: town, mode :mode},
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: town, mode :mode, layer :getHopsSliderVal()},
                 success: function (response){
                     $('#test').html('').replaceWith(response)
 
@@ -225,7 +225,7 @@
                 type: "POST",
                 url: '{{ '' }}',
                 async: false,
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: lay},
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: lay, mode: getMode(), layer:getHopsSliderVal()},
                 success: function (response){
                     $('#test').html('').replaceWith(response)
 
@@ -249,7 +249,7 @@
                 type: "POST",
                 url: '{{ '' }}',
                 async: false,
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: "", mode: getMode()},
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: "", mode: getMode(), layer : getHopsSliderVal()},
                 success: function (response){
                     $('#test').html('').replaceWith(response)
 
@@ -257,6 +257,10 @@
 
             });
 
+        }
+
+        function getHopsSliderVal(){
+            return document.getElementById('slider').value
         }
 
          function genderBasedFilter(value) {
@@ -277,7 +281,7 @@
                 type: "POST",
                 url: '{{ '' }}',
                 async: false,
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: gender, mode: mode},
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: gender, mode: mode, layer : getHopsSliderVal()},
                 success: function (response){
                     $('#test').html('').replaceWith(response)
 

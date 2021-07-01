@@ -138,26 +138,27 @@ def follow(request):
         # This response is the name of the User that was searched
         response = request.POST.get('text', False)
         mode = request.POST.get('mode', False)
+        layer = request.POST.get('layer', False)
         queryList = []
 
         # Gender Query
         if (response == 'male' or response == 'female' or response == 'other'):
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=response,
-                                                                             criteria='gender') \
+                                                                             criteria='gender', layer=layer) \
             if mode == "1follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data, attribute=response,
                                                                              criteria='gender')
         # User has searched for name
         elif (response.startswith("nq")):
             name = response[2:len(response)]
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=name,
-                                                                             criteria='name')\
+                                                                             criteria='name', layer = layer)\
             if mode == "1follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data, attribute=name,
                                                                              criteria='name')
         # User has searched for town
         elif (response.startswith("tq")):
             town = response[2:len(response)]
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=town,
-                                                                             criteria='town')\
+                                                                             criteria='town', layer = layer)\
             if mode == "follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data, attribute=town,
                                                                                      criteria='town')
         #User has altered hoplayer slider
@@ -167,7 +168,7 @@ def follow(request):
             else:
                 layer = int(response[2])
                 queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=layer,
-                                                                             criteria='hopLayer')
+                                                                             criteria='hopLayer', layer = layer)
         # User wants to follow another user
         elif (response.startswith("fo")):
             root = getRoot(data['nodes'])
