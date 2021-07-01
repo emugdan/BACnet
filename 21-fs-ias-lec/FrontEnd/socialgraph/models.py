@@ -5,6 +5,10 @@ from django.urls import reverse
 
 # Create your models here.
 
+class Status(models.Model):
+    timestamp = models.DateTimeField(blank=True, null=True, default=None)
+    status = models.CharField(max_length=256, blank=True, null=True, default=None)
+
 
 class Profile(models.Model):
     bacnet_id = models.CharField(max_length=64)
@@ -19,6 +23,7 @@ class Profile(models.Model):
     node_id = models.IntegerField(primary_key=True)
     status = models.CharField(max_length=256, blank=True, null=True, default=None)
     follows = models.ManyToManyField('self', symmetrical=False)
+    status_list = models.ManyToManyField(Status, symmetrical=False)
 
     def __str__(self):
         return f'{self.name} Profile / {self.bacnet_id}'

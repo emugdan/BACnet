@@ -138,6 +138,7 @@ def saveSettings(settings_data, settings, path):
     settings_data["textFontSize"] = s[2]
     settings_data["maleColor"] = s[3]
     settings_data["femaleColor"] = s[4]
+    settings_data["otherColor"] = s[5]
 
     if os.path.exists(path):
         os.remove(path)
