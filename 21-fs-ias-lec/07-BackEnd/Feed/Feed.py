@@ -80,13 +80,15 @@ class Feed:  # read from and write to the feed
 
         return language
 
-    def read_status_from_feed(self):    # reads the current status from the feed
+    def read_status_from_feed(self):    # reads the current status and past status from feed
         status = None
+        status_list = []
         for event in self.myFeed:
-            if event.content()[0] == "bacnet/status":
-                status = event.content()[2]
-
-        return status
+            content = event.content()
+            if content[0] == "bacnet/status":
+                status = content[2]
+                status_list = [(content[2], content[1])] + status_list
+        return status, status_list
 
     def read_profile_pic_from_feed(self):    # reads the path of the current profile pic
         path = None
