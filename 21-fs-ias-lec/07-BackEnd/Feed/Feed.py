@@ -1,3 +1,5 @@
+import os
+import pathlib
 import sys
 
 # add the lib to the module folder
@@ -100,6 +102,30 @@ class Feed:  # read from and write to the feed
 
         return path
 
+    def load_profile_pic(self, path):   # reads the current profile picture data and stores it in an image file.
+        fileNameSuffix = os.path.split(path)[1]
+        feedID, suffix = fileNameSuffix.split('.')
+        data = None
+        for event in self.myFeed:
+            if event.content()[0] == "bacnet/profile_pic_data":
+                data = event.content()[2]   # get data of most recent picture
+
+        if data is not None:  # return if no profile pic data found
+            picDirPath = os.path.join(pathlib.Path(os.getcwd()).parent, 'FrontEnd', 'media', 'profile_pics')
+            if not os.path.exists(picDirPath):  # Check if directory already there
+                os.makedirs(picDirPath)
+            for file in os.listdir(picDirPath):
+                if file.startswith(feedID):
+                    os.remove(os.path.join(picDirPath, file))  # Delete old profile picture of this user
+                    # TODO: is it more efficient to check if the file is equal?
+
+            fullPath = os.path.join(picDirPath, feedID + '.' + suffix)
+            freshImage = open(fullPath, 'wb')
+            freshImage.write(data)  # write image to the defined path
+            freshImage.flush()
+            os.fsync(freshImage.fileno())
+            freshImage.close()
+
     def write_gender_to_feed(self, gender):    # writes the new gender to the feed
         self.myFeed.write(["bacnet/gender", time.time(), gender])
 
@@ -126,3 +152,6 @@ class Feed:  # read from and write to the feed
 
     def write_profile_pic_to_feed(self, path):    # writes the new profile picture to the feed
         self.myFeed.write(["bacnet/profile_pic", time.time(), path])
+
+    def write_profile_pic_data_to_feed(self, data):    # writes the new profile picture data to the feed
+        self.myFeed.write(["bacnet/profile_pic_data", time.time(), data])

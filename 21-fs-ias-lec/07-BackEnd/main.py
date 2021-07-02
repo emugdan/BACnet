@@ -76,7 +76,7 @@ def main(argv):  # generates dummy feeds, later not used anymore -> feeds should
                     pers.follow(follow_entry["Feed ID"], p.name)
                     break
 
-        pers.print_follow_list()  # for testing
+        #pers.print_follow_list()  # for testing
         pers.birthday = birthday
         pers.gender = gender
         pers.country = country

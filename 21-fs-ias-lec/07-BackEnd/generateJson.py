@@ -44,6 +44,8 @@ def generate_json(person_list, we_are):  # Assumption that we have a follow list
             link = {'source': node['id'],
                     'target': nodeIDs[friend]}  # .decode("utf-8")]}
             links.append(link)
+        if person.profile_pic is not None:  # Refresh Profile Pictures
+            person.feed.load_profile_pic(person.profile_pic)
 
     calculate_hops(ourID, links, nodes, 0)
 
