@@ -139,6 +139,7 @@ def follow(request):
         response = request.POST.get('text', False)
         mode = request.POST.get('mode', False)
         layer = request.POST.get('layer', False)
+        print(layer)
         queryList = []
 
         # Gender Query
@@ -159,7 +160,7 @@ def follow(request):
             town = response[2:len(response)]
             queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=town,
                                                                              criteria='town', layer = layer)\
-            if mode == "follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data, attribute=town,
+            if mode == "1follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data, attribute=town,
                                                                                      criteria='town')
         #User has altered hoplayer slider
         elif (response.startswith("lq")):
@@ -169,6 +170,16 @@ def follow(request):
                 layer = int(response[2])
                 queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=layer,
                                                                              criteria='hopLayer', layer = layer)
+        #User has searched for Influencers
+        elif (response.startswith("inf")):
+            print("asdk")
+            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute= True,
+                                                                             criteria='influencer', layer=layer) \
+            if mode == "1follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data,
+                                                                                             attribute= True,
+                                                                                             criteria='influencer')
+            print(len(queryList))
+
         # User wants to follow another user
         elif (response.startswith("fo")):
             root = getRoot(data['nodes'])

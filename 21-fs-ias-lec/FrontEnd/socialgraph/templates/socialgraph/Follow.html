@@ -41,6 +41,14 @@
                         <input type="text" class="searchInput" id="searchInputFieldTown" name="searchInput" placeholder="Search Town">
                     </div>
 
+                    <p class="mb-2">Social Status</p>
+
+                    <ul class="list-group">
+
+                        <li class="list-group-item mb-2 rounded" id = "Influencer"  onclick = influencerQuery()> <span class="fa fa-circle pr-1 f" ></span>Influencer </li>
+
+                    </ul>
+
                     <p class="filterTitle" id = "filter">HopLayer</p>
                     <div>
                         <input type="range" class="custom-range" id = "slider" value="1" min="1" max="5" step="1" id="slider" oninput=QueryForHopLayer(this.value)>
@@ -162,6 +170,8 @@
         }
 
 
+
+
         function nameQuery(name) {
             var mode = getMode();
 
@@ -198,12 +208,13 @@
 
 
 
+
             $.ajax({
 
                 type: "POST",
                 url: '{{ '' }}',
                 async: false,
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: town, mode :mode, layer :getHopsSliderVal()},
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: town, mode :mode, layer : getHopsSliderVal()},
                 success: function (response){
                     $('#test').html('').replaceWith(response)
 
@@ -282,6 +293,23 @@
                 url: '{{ '' }}',
                 async: false,
                 data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: gender, mode: mode, layer : getHopsSliderVal()},
+                success: function (response){
+                    $('#test').html('').replaceWith(response)
+
+                }
+
+            });
+
+        }
+
+        function influencerQuery() {
+
+            $.ajax({
+
+                type: "POST",
+                url: '{{ '' }}',
+                async: false,
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: "inf", mode: getMode(), layer : getHopsSliderVal()},
                 success: function (response){
                     $('#test').html('').replaceWith(response)
 
