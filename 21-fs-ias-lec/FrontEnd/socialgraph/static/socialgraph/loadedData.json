@@ -1,14 +1,14 @@
 {
   "nodes": [
     {
-      "BACnetID": "8977f584be905b17",
+      "BACnetID": "a73497b9f4cb413b",
       "id": 0,
       "name": "pascal",
       "gender": "male",
-      "birthday": "1998-11-26",
+      "birthday": "1999-06-01",
       "country": "Schweiz",
-      "town": "Luzern",
-      "language": "Franzoesisch",
+      "town": "Bern",
+      "language": "Deutsch",
       "status": null,
       "status_list": [],
       "activity level": 1,
@@ -17,30 +17,30 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "20427fb1d69fd480",
+      "BACnetID": "b08d12785fbfd8bf",
       "id": 1,
       "name": "veri",
-      "gender": "male",
-      "birthday": "1995-07-13",
+      "gender": "other",
+      "birthday": "1997-01-08",
       "country": "Schweiz",
-      "town": "Basel",
-      "language": "Englisch",
+      "town": "Zuerich",
+      "language": "Franzoesisch",
       "status": null,
       "status_list": [],
-      "activity level": 5,
+      "activity level": 0,
       "influencer": false,
-      "hopLayer": 1,
+      "hopLayer": 10000,
       "profile_pic": null
     },
     {
-      "BACnetID": "710c9bff90c1913e",
+      "BACnetID": "8b14badae287e3ac",
       "id": 2,
       "name": "aline",
-      "gender": "other",
-      "birthday": "1999-06-01",
+      "gender": "male",
+      "birthday": "1995-07-13",
       "country": "Schweiz",
-      "town": "Zuerich",
-      "language": "Deutsch",
+      "town": "Luzern",
+      "language": "Franzoesisch",
       "status": null,
       "status_list": [],
       "activity level": 1,
@@ -49,9 +49,142 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "662c86e18c4bcd9b",
+      "BACnetID": "ea195b968c69eb57",
       "id": 3,
       "name": "caroline",
+      "gender": "other",
+      "birthday": "1997-01-08",
+      "country": "Schweiz",
+      "town": "Zuerich",
+      "language": "Deutsch",
+      "status": null,
+      "status_list": [],
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 10000,
+      "profile_pic": null
+    },
+    {
+      "BACnetID": "c3597b5f5c1636a6",
+      "id": 4,
+      "name": "vera",
+      "gender": "female",
+      "birthday": "1999-06-01",
+      "country": "Schweiz",
+      "town": "Basel",
+      "language": "Deutsch",
+      "status": null,
+      "status_list": [],
+      "activity level": 3,
+      "influencer": true,
+      "hopLayer": 1,
+      "profile_pic": null
+    },
+    {
+      "BACnetID": "7b2bb7f7484c2500",
+      "id": 5,
+      "name": "julius",
+      "gender": "male",
+      "birthday": "1999-06-01",
+      "country": "Schweiz",
+      "town": "Zuerich",
+      "language": "Englisch",
+      "status": null,
+      "status_list": [],
+      "activity level": 1,
+      "influencer": false,
+      "hopLayer": 2,
+      "profile_pic": null
+    },
+    {
+      "BACnetID": "22d78b97e8e2928d",
+      "id": 6,
+      "name": "georgia",
+      "gender": "other",
+      "birthday": "1998-11-26",
+      "country": "Schweiz",
+      "town": "Zuerich",
+      "language": "Deutsch",
+      "status": null,
+      "status_list": [],
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 4,
+      "profile_pic": null
+    },
+    {
+      "BACnetID": "3e37497df59d95d3",
+      "id": 7,
+      "name": "philipp",
+      "gender": "male",
+      "birthday": "1995-07-13",
+      "country": "Schweiz",
+      "town": "Basel",
+      "language": "Franzoesisch",
+      "status": "Let's go my Geeeees",
+      "status_list": [
+        [
+          "Let's go my Geeeees",
+          1625158665.575134
+        ]
+      ],
+      "activity level": 2,
+      "influencer": true,
+      "hopLayer": 0,
+      "profile_pic": "profile_pics/3e37497df59d95d3.jpeg"
+    },
+    {
+      "BACnetID": "3752ed6b01cd561b",
+      "id": 8,
+      "name": "henry",
+      "gender": "other",
+      "birthday": "1999-06-01",
+      "country": "Schweiz",
+      "town": "Zuerich",
+      "language": "Deutsch",
+      "status": null,
+      "status_list": [],
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 4,
+      "profile_pic": null
+    },
+    {
+      "BACnetID": "7f9369081e583a88",
+      "id": 9,
+      "name": "eveline",
+      "gender": "male",
+      "birthday": "1997-01-08",
+      "country": "Schweiz",
+      "town": "Basel",
+      "language": "Deutsch",
+      "status": null,
+      "status_list": [],
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 10000,
+      "profile_pic": null
+    },
+    {
+      "BACnetID": "a23c3877937fb746",
+      "id": 10,
+      "name": "david",
+      "gender": "other",
+      "birthday": "1997-01-08",
+      "country": "Schweiz",
+      "town": "Zuerich",
+      "language": "Deutsch",
+      "status": null,
+      "status_list": [],
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 3,
+      "profile_pic": null
+    },
+    {
+      "BACnetID": "aeb4f704dd66ad3c",
+      "id": 11,
+      "name": "ben",
       "gender": "other",
       "birthday": "1998-11-26",
       "country": "Schweiz",
@@ -59,179 +192,51 @@
       "language": "Englisch",
       "status": null,
       "status_list": [],
-      "activity level": 0,
+      "activity level": 2,
       "influencer": false,
-      "hopLayer": 1,
+      "hopLayer": 3,
       "profile_pic": null
     },
     {
-      "BACnetID": "4cf8e1598df04ece",
-      "id": 4,
-      "name": "vera",
-      "gender": "male",
-      "birthday": "1995-07-13",
+      "BACnetID": "901218f19d4be6ec",
+      "id": 12,
+      "name": "yasmin",
+      "gender": "female",
+      "birthday": "1998-11-26",
       "country": "Schweiz",
-      "town": "Basel",
+      "town": "Bern",
+      "language": "Deutsch",
+      "status": null,
+      "status_list": [],
+      "activity level": 2,
+      "influencer": true,
+      "hopLayer": 2,
+      "profile_pic": null
+    },
+    {
+      "BACnetID": "8d1e4961c63a87a2",
+      "id": 13,
+      "name": "esther",
+      "gender": "female",
+      "birthday": "1999-06-01",
+      "country": "Schweiz",
+      "town": "Luzern",
       "language": "Franzoesisch",
       "status": null,
       "status_list": [],
       "activity level": 2,
       "influencer": true,
-      "hopLayer": 1,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "c6341d2b97c11f45",
-      "id": 5,
-      "name": "julius",
-      "gender": "male",
-      "birthday": "1998-11-26",
-      "country": "Schweiz",
-      "town": "Basel",
-      "language": "Englisch",
-      "status": null,
-      "status_list": [],
-      "activity level": 1,
-      "influencer": false,
       "hopLayer": 2,
       "profile_pic": null
     },
     {
-      "BACnetID": "0de373a67b3f80f9",
-      "id": 6,
-      "name": "georgia",
-      "gender": "male",
-      "birthday": "1997-01-08",
-      "country": "Schweiz",
-      "town": "Zuerich",
-      "language": "Deutsch",
-      "status": null,
-      "status_list": [],
-      "activity level": 0,
-      "influencer": false,
-      "hopLayer": 4,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "65b9b399426d7f97",
-      "id": 7,
-      "name": "philipp",
-      "gender": "male",
-      "birthday": "1997-01-08",
-      "country": "Schweiz",
-      "town": "Zuerich",
-      "language": "Franzoesisch",
-      "status": null,
-      "status_list": [],
-      "activity level": 1,
-      "influencer": true,
-      "hopLayer": 0,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "915c1c84b1ae87a5",
-      "id": 8,
-      "name": "henry",
-      "gender": "male",
-      "birthday": "1997-01-08",
-      "country": "Schweiz",
-      "town": "Basel",
-      "language": "Deutsch",
-      "status": null,
-      "status_list": [],
-      "activity level": 0,
-      "influencer": false,
-      "hopLayer": 4,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "1abcddfa2bcdfd62",
-      "id": 9,
-      "name": "eveline",
-      "gender": "other",
-      "birthday": "1995-07-13",
-      "country": "Schweiz",
-      "town": "Zuerich",
-      "language": "Deutsch",
-      "status": null,
-      "status_list": [],
-      "activity level": 0,
-      "influencer": false,
-      "hopLayer": 1,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "309f38c7935a718b",
-      "id": 10,
-      "name": "david",
-      "gender": "female",
-      "birthday": "1997-01-08",
-      "country": "Schweiz",
-      "town": "Basel",
-      "language": "Englisch",
-      "status": null,
-      "status_list": [],
-      "activity level": 5,
-      "influencer": false,
-      "hopLayer": 3,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "eabe4462eae5bd0f",
-      "id": 11,
-      "name": "ben",
-      "gender": "female",
-      "birthday": "1998-11-26",
-      "country": "Schweiz",
-      "town": "Zuerich",
-      "language": "Deutsch",
-      "status": null,
-      "status_list": [],
-      "activity level": 1,
-      "influencer": false,
-      "hopLayer": 3,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "1cc097a88b9eec0c",
-      "id": 12,
-      "name": "yasmin",
-      "gender": "other",
-      "birthday": "1995-07-13",
-      "country": "Schweiz",
-      "town": "Basel",
-      "language": "Franzoesisch",
-      "status": null,
-      "status_list": [],
-      "activity level": 1,
-      "influencer": true,
-      "hopLayer": 2,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "cbe16530eb8fdd03",
-      "id": 13,
-      "name": "esther",
-      "gender": "other",
-      "birthday": "1999-06-01",
-      "country": "Schweiz",
-      "town": "Zuerich",
-      "language": "Deutsch",
-      "status": null,
-      "status_list": [],
-      "activity level": 1,
-      "influencer": true,
-      "hopLayer": 2,
-      "profile_pic": null
-    },
-    {
-      "BACnetID": "9139283487ab6710",
+      "BACnetID": "34c9dd9770793e4a",
       "id": 14,
       "name": "sebastian",
-      "gender": "female",
+      "gender": "other",
       "birthday": "1997-01-08",
       "country": "Schweiz",
-      "town": "Luzern",
+      "town": "Bern",
       "language": "Englisch",
       "status": null,
       "status_list": [],
@@ -241,13 +246,13 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "130e6105f109017a",
+      "BACnetID": "a6df26466aab4763",
       "id": 15,
       "name": "isabelle",
-      "gender": "other",
-      "birthday": "1999-06-01",
+      "gender": "female",
+      "birthday": "1997-01-08",
       "country": "Schweiz",
-      "town": "Bern",
+      "town": "Basel",
       "language": "Englisch",
       "status": null,
       "status_list": [],
@@ -257,94 +262,82 @@
       "profile_pic": null
     },
     {
-      "BACnetID": "4555b3371b01c064",
+      "BACnetID": "a16d3528211cf410",
       "id": 16,
       "name": "fitzgerald",
-      "gender": "female",
-      "birthday": "1999-06-01",
+      "gender": "other",
+      "birthday": "1997-01-08",
       "country": "Schweiz",
-      "town": "Basel",
-      "language": "Franzoesisch",
+      "town": "Luzern",
+      "language": "Deutsch",
       "status": null,
       "status_list": [],
-      "activity level": 5,
-      "influencer": true,
-      "hopLayer": 1,
+      "activity level": 0,
+      "influencer": false,
+      "hopLayer": 10000,
       "profile_pic": null
     }
   ],
   "links": [
     {
       "source": 0,
-      "target": 17
+      "target": 14
     },
     {
       "source": 0,
       "target": 7
     },
     {
-      "source": 0,
-      "target": 8
-    },
-    {
-      "source": 1,
-      "target": 0
-    },
-    {
-      "source": 1,
-      "target": 15
-    },
-    {
-      "source": 1,
-      "target": 4
-    },
-    {
-      "source": 1,
-      "target": 17
-    },
-    {
-      "source": 4,
-      "target": 17
-    },
-    {
-      "source": 4,
-      "target": 15
-    },
-    {
-      "source": 4,
-      "target": 3
-    },
-    {
-      "source": 10,
-      "target": 0
-    },
-    {
-      "source": 10,
-      "target": 1
-    },
-    {
-      "source": 11,
-      "target": 14
-    },
-    {
-      "source": 11,
-      "target": 13
-    },
-    {
-      "source": 11,
+      "source": 2,
       "target": 12
     },
     {
-      "source": 11,
-      "target": 15
+      "source": 2,
+      "target": 6
     },
     {
-      "source": 12,
+      "source": 2,
+      "target": 8
+    },
+    {
+      "source": 4,
+      "target": 13
+    },
+    {
+      "source": 4,
+      "target": 12
+    },
+    {
+      "source": 4,
       "target": 14
     },
     {
-      "source": 12,
+      "source": 4,
+      "target": 0
+    },
+    {
+      "source": 4,
+      "target": 7
+    },
+    {
+      "source": 4,
+      "target": 5
+    },
+    {
+      "source": 5,
+      "target": 2
+    },
+    {
+      "source": 5,
       "target": 11
+    },
+    {
+      "source": 7,
+      "target": 14
+    },
+    {
+      "source": 7,
+      "target": 0
     },
     {
       "source": 7,
@@ -355,96 +348,48 @@
       "target": 2
     },
     {
-      "source": 13,
-      "target": 11
-    },
-    {
-      "source": 14,
-      "target": 13
-    },
-    {
-      "source": 14,
-      "target": 11
-    },
-    {
-      "source": 14,
-      "target": 12
-    },
-    {
-      "source": 15,
+      "source": 11,
       "target": 4
     },
     {
-      "source": 15,
-      "target": 17
-    },
-    {
-      "source": 15,
-      "target": 14
-    },
-    {
-      "source": 15,
-      "target": 11
-    },
-    {
-      "source": 15,
+      "source": 11,
       "target": 13
     },
     {
-      "source": 15,
-      "target": 10
+      "source": 11,
+      "target": 12
     },
     {
-      "source": 15,
-      "target": 0
+      "source": 12,
+      "target": 4
     },
     {
-      "source": 15,
-      "target": 1
+      "source": 12,
+      "target": 13
     },
     {
-      "source": 15,
-      "target": 2
-    },
-    {
-      "source": 15,
-      "target": 3
-    },
-    {
-      "source": 15,
+      "source": 12,
       "target": 5
     },
     {
-      "source": 15,
-      "target": 6
-    },
-    {
-      "source": 15,
-      "target": 7
-    },
-    {
-      "source": 15,
+      "source": 13,
       "target": 12
     },
     {
-      "source": 15,
-      "target": 8
-    },
-    {
-      "source": 15,
-      "target": 9
-    },
-    {
-      "source": 17,
-      "target": 15
-    },
-    {
-      "source": 17,
+      "source": 13,
       "target": 4
     },
     {
-      "source": 17,
+      "source": 13,
       "target": 10
+    },
+    {
+      "source": 14,
+      "target": 7
+    },
+    {
+      "source": 14,
+      "target": 0
     }
   ]
 }
