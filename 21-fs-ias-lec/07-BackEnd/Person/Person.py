@@ -1,5 +1,4 @@
 import sys
-from datetime import datetime
 import time
 
 sys.path.append("../Feed")
@@ -152,8 +151,7 @@ class Person:
         generate_json(self.list_of_persons, self.main)
 
     def put_status(self, status):    # writes new status to feed and updates Json for FrontEnd
-        if self.status is not None:
-            self.status_list = [(status, time.time())] + self.status_list
+        self.status_list = [(status, time.time())] + self.status_list
         self.status = status
         self.feed.write_status_to_feed(self.status)
         self.activity += 1

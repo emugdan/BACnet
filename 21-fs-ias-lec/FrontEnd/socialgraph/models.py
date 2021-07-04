@@ -24,6 +24,7 @@ class Profile(models.Model):
     status = models.CharField(max_length=256, blank=True, null=True, default=None)
     follows = models.ManyToManyField('self', symmetrical=False)
     status_list = models.ManyToManyField(Status, symmetrical=False)
+    influencer = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.name} Profile / {self.bacnet_id}'
