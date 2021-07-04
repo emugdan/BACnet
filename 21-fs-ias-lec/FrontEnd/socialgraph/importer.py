@@ -3,11 +3,13 @@
 import os
 import json
 from datetime import datetime
+import datetime as dt
 
 import pytz
 import tzlocal as tzlocal
 
-from socialgraph.models import Profile, FollowRecommendations, Status
+
+from socialgraph.models import Profile, FollowRecommendations, Status, UnfollowRecommendations
 
 
 def create_profiles(data):
@@ -42,13 +44,23 @@ def create_profiles(data):
 
 
 def create_Recommendations(data):
-    FollowRecommendations.objects.all().delete()  # Delete all profile entries in the database.
+    FollowRecommendations.objects.all().delete()
     for node in data['nodes']:
-        r = FollowRecommendations(layer=node.get('hopLayer'), bacnet_id=node.get('id'), name=node.get('name'),
+        r = FollowRecommendations(layer=node.get('hopLayer'), bacnet_id=node.get('BACnetID'), id = node.get('id'), name=node.get('name'),
                                   gender=node.get('gender'),
-                                  birthday=node.get('birthday'), country=node.get('country'), town=node.get('town'),
+                                  birthday=node.get('birthday'), influencer = node.get('influencer'), age = calculate_age(node.get('birthday')), country=node.get('country'), town=node.get('town'),
                                   language=node.get('language'),
                                   profile_pic=node.get('profile_pic') if node.get(
                                       'profile_pic') is not None else 'default.jpg')
         r.save()
     print("Updated Database!")
+
+def calculate_age(date):
+    a = date[0:4]
+    b = date[5:7]
+    c = date[8:10]
+    birth_date = dt.date(int(a), int(b), int(c))
+    end_date = dt.date.today()
+    time_difference = end_date - birth_date
+    age = int(time_difference.days/365)
+    return age

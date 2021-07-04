@@ -11,8 +11,8 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.views.generic import DetailView
 
-from .importer import create_profiles
-from .models import Profile, FollowRecommendations
+from .importer import create_profiles, create_Recommendations
+from .models import Profile, FollowRecommendations, UnfollowRecommendations
 from .utils.jsonUtils import extract_connections, getRoot, getRootFollowsSize, getRootFollowersSize, saveSettings
 
 x = os.getcwd()
@@ -110,135 +110,160 @@ def users(request):
 
 """
 This function creates and renders Follow recommendations based on the hoplayer.
-Per default I chose max hoplayer provided from json file.
 Also, the function follow is able to handle ajax calls from the UI Layer in order
 to rerender the FollowRecommendation HTML files.
 """
 def follow(request):
     x = pathlib.Path(__file__)
-    print(x.parent.parent)
     os.chdir(x.parent.parent)
     data_file = open(path)
     data = json.load(data_file)
     data_file.close()
-
-    # Create Initial follow recommendation
-    recommendationList = FollowRecommendations.createRecommendationList(jsonData=data)
+    create_Recommendations(data)
+    querySetFollow = FollowRecommendations.objects.filter(layer__gte = 2)
 
     # Add the recommendationList to the context which will be passed to the render function
     context = {
         'data': json.dumps(data),
         'nodes': data['nodes'],
         'links': data['links'],
-        'recommendations': recommendationList
+        'recommendations': querySetFollow
     }
 
     # In case we have received an Ajax call from the UI-Layer:
     if request.method == "POST":
-        # This response is the name of the User that was searched
+        # Get the values of the Ajax call
         response = request.POST.get('text', False)
         mode = request.POST.get('mode', False)
-        layer = request.POST.get('layer', False)
-        print(layer)
-        queryList = []
+        layer = int(request.POST.get('layer', False))
+        influencer = request.POST.get('influencer', False)
+        gender = request.POST.get('gender', False)
+        ageLower = request.POST.get('ageLower', False)
+        ageUpper = request.POST.get('ageUpper', False)
+        name = request.POST.get('name', False)
+        town = request.POST.get('town', False)
 
-        # Gender Query
-        if (response == 'male' or response == 'female' or response == 'other'):
-            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=response,
-                                                                             criteria='gender', layer=layer) \
-            if mode == "1follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data, attribute=response,
-                                                                             criteria='gender')
-        # User has searched for name
-        elif (response.startswith("nq")):
-            name = response[2:len(response)]
-            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=name,
-                                                                             criteria='name', layer = layer)\
-            if mode == "1follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data, attribute=name,
-                                                                             criteria='name')
-        # User has searched for town
-        elif (response.startswith("tq")):
-            town = response[2:len(response)]
-            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=town,
-                                                                             criteria='town', layer = layer)\
-            if mode == "1follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data, attribute=town,
-                                                                                     criteria='town')
-        #User has altered hoplayer slider
-        elif (response.startswith("lq")):
-            if(len(response) > 3):
-                queryList = FollowRecommendations.createRecommendationList(jsonData=data)
-            else:
-                layer = int(response[2])
-                queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute=layer,
-                                                                             criteria='hopLayer', layer = layer)
-        #User has searched for Influencers
-        elif (response.startswith("inf")):
-            print("asdk")
-            queryList = FollowRecommendations.createRecommendationsFromQuery(jsonData=data, attribute= True,
-                                                                             criteria='influencer', layer=layer) \
-            if mode == "1follow" else FollowRecommendations.createUnfollowRecommendation(jsonData=data,
-                                                                                             attribute= True,
-                                                                                             criteria='influencer')
-            print(len(queryList))
-
-        # User wants to follow another user
-        elif (response.startswith("fo")):
-            root = getRoot(data['nodes'])
-            rootUser = root.get("name")
-            rootUserID = root.get("BACnetID")
-            followID = str(response[2:18])
-            followName = str(response[18:len(response)])
-            followCall(mainPersonName=rootUser, mainPersonID=rootUserID, followPersonName=followName,
-                       followPersonID=followID)
-            x = pathlib.Path(__file__)
-            os.chdir(x.parent.parent)
-            data_file = open(path)
-            data = json.load(data_file)
-            data_file.close()
-            queryList = FollowRecommendations.createRecommendationList(jsonData=data)
-
-        #User wants to unfollow other user
-        elif (response.startswith("uf")):
-            root = getRoot(data['nodes'])
-            rootUser = root.get("name")
-            rootUserID = root.get("BACnetID")
-            unfollowID = str(response[2:18])
-            unfollowName = str(response[18:len(response)])
-            print(unfollowName)
-            unfollowCall(mainPersonName=rootUser, mainPersonID=rootUserID, unfollowPersonName=unfollowName,
-                       unfollowPersonID=unfollowID)
-            x = pathlib.Path(__file__)
-            os.chdir(x.parent.parent)
-            data_file = open(path)
-            data = json.load(data_file)
-            data_file.close()
-            queryList = FollowRecommendations.createUnfollowRecommendationDefault(jsonData=data)
-
-
-
-        #User has reset the filters
-        elif(response == ""):
-            queryList = FollowRecommendations.createRecommendationList(jsonData=data) \
-            if mode == "1follow" else FollowRecommendations.createUnfollowRecommendationDefault(jsonData=data)
-
-
-
-            # Create a new context variable
-        text = {
-            'data': json.dumps(data),
-            'nodes': data['nodes'],
-            'links': data['links'],
-            'recommendations': queryList
-        }
-
-
-        if(mode == "1unfollow"):
-            return render(request, 'socialgraph/UnfollowBody.html', text)
+        if (influencer == "false"):
+            influencer = "ignore"
         else:
+            influencer = True
+
+
+        if(mode == "1follow"):
+            if layer == 0:
+                layer = 1
+            query_values = {'layer': layer,
+                           'influencer': influencer, 'gender':gender, 'age__gte': ageLower, 'age__lte':ageUpper, 'name': name}
+            arguments = {}
+            for k, v in query_values.items():
+                if ((v and v != "all" and v!= "ignore" and v != 1) or (k == 'influencer' and v == True)):
+                    arguments[k] = v
+            if (layer == 1):
+                querySet = FollowRecommendations.objects.filter(**arguments).filter(layer__gte =2)
+            else:
+                querySet = FollowRecommendations.objects.filter(**arguments)
+
+
+
+            if (response == "reset"):
+                querySet = FollowRecommendations.objects.all()
+
+            # User wants to follow another user
+            elif (response.startswith("fo")):
+                root = getRoot(data['nodes'])
+                rootUser = root.get("name")
+                rootUserID = root.get("BACnetID")
+                followID = str(response[2:18])
+                followName = str(response[18:len(response)])
+                followCall(mainPersonName=rootUser, mainPersonID=rootUserID, followPersonName=followName,
+                           followPersonID=followID)
+                x = pathlib.Path(__file__)
+                os.chdir(x.parent.parent)
+                data_file = open(path)
+                data = json.load(data_file)
+                data_file.close()
+                #Update entry in database
+                entry = FollowRecommendations.objects.filter(bacnet_id=followID)
+                entry.update(layer = 1)
+                query_values = {'layer': layer,
+                               'influencer': influencer, 'gender': gender, 'age__gte': ageLower, 'age__lte': ageUpper,
+                               'name': name}
+                arguments = {}
+                for k, v in query_values.items():
+                    if ((v and v != "all" and v != "ignore" and v != 1) or (k == 'influencer' and v == True)):
+                        arguments[k] = v
+                if (layer == 1):
+                    querySet = FollowRecommendations.objects.filter(**arguments).filter(layer__gte=2)
+                else:
+                    querySet = FollowRecommendations.objects.filter(**arguments)
+
+            text = {
+                'data': json.dumps(data),
+                'nodes': data['nodes'],
+                'links': data['links'],
+                'recommendations': querySet
+            }
+
             return render(request, 'socialgraph/FollowBody.html', text)
+
+        if (mode == "1unfollow"):
+            query_values = {
+                           'influencer': influencer, 'gender': gender, 'age__gte': ageLower, 'age__lte': ageUpper,
+                           'name': name}
+            arguments = {}
+            for k, v in query_values.items():
+                if ((v and v != "all" and v != "ignore") or (k == 'influencer' and v == True)):
+                    arguments[k] = v
+            querySet = FollowRecommendations.objects.filter(**arguments).filter(layer = 1)
+
+
+            if (response == "reset"):
+                querySet = FollowRecommendations.objects.filter(layer =1)
+
+
+            # User wants to follow another user
+            if (response.startswith("uf")):
+                root = getRoot(data['nodes'])
+                rootUser = root.get("name")
+                rootUserID = root.get("BACnetID")
+                unfollowID = str(response[2:18])
+                unfollowName = str(response[18:len(response)])
+                unfollowCall(mainPersonName=rootUser, mainPersonID=rootUserID, unfollowPersonName=unfollowName,
+                             unfollowPersonID=unfollowID)
+                x = pathlib.Path(__file__)
+                os.chdir(x.parent.parent)
+                data_file = open(path)
+                data = json.load(data_file)
+                data_file.close()
+                create_Recommendations(data)
+                query_values = {'layer': 1,
+                               'influencer': influencer, 'gender': gender, 'age__gte': ageLower, 'age__lte': ageUpper,
+                               'name': name}
+                arguments = {}
+                for k, v in query_values.items():
+                    if ((v and v != "all" and v != "ignore") or (k == 'influencer' and v == True)):
+                        arguments[k] = v
+                querySet = FollowRecommendations.objects.filter(**arguments).filter(layer = 1)
+
+
+
+            text = {
+                'data': json.dumps(data),
+                'nodes': data['nodes'],
+                'links': data['links'],
+                'recommendations': querySet
+            }
+
+
+            return render(request, 'socialgraph/UnfollowBody.html', text)
 
 
 
     return render(request, 'socialgraph/Follow.html', context)
+
+def returnQuerySet(name = None, layer = None, gender = None, influencer = None, mode = None):
+    return
+
 
 
 def followBody(request):
@@ -254,7 +279,6 @@ def update_profile(request):
     context = None
 
     x = pathlib.Path(__file__)
-    print(x.parent.parent)
     os.chdir(x.parent.parent)
     fresh_data_file = open(path)
     fresh_data = json.load(fresh_data_file)
@@ -298,7 +322,6 @@ def update_profile(request):
             profileUpdateCall(rootUser, rootUserID, update)
 
         x = pathlib.Path(__file__) # Change working directory back to Frontend
-        print(x.parent.parent)
         os.chdir(x.parent.parent)
 
         fresh_data_file = open(path) # Open the new json-file, and create profiles out of the data.
