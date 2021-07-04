@@ -39,7 +39,7 @@ def generate_json(person_list, we_are):  # Assumption that we have a follow list
         node['influencer'] = person.influencer
         node['hopLayer'] = 10000
         node['profile_pic'] = person.profile_pic
-        #node['profile_pic_data'] = person.profile_pic_data  # TODO profile pic
+        #node['profile_pic_data'] = person.profile_pic_data  # TODO profile pic - future changes; to write data to feed
         nodes.append(node)
         for friend in followList:
             link = {'source': node['id'],

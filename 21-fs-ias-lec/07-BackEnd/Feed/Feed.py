@@ -12,7 +12,7 @@ class Feed:  # read from and write to the feed
         self.myFeed = myFeed                # Feed from lib/feed.py
         self.id = id                        # BacNetID
         self.name = name                    # Name of the feed owner
-        self.timestamp = None               # TODO Doc für was wird das gebraucht?
+        self.timestamp = None
 
     def write_follow_to_feed(self, new_friends_feed):    # writes a new follow to the feed
         self.myFeed.write(["bacnet/following", time.time(), new_friends_feed.id])
@@ -102,7 +102,7 @@ class Feed:  # read from and write to the feed
             print("profile pic not found")
             return
 
-        return path #, data
+        return path  # TODO profile pic - future changes; method returns two values --> , data
 
     def write_gender_to_feed(self, gender):    # writes the new gender to the feed
         self.myFeed.write(["bacnet/gender", time.time(), gender])

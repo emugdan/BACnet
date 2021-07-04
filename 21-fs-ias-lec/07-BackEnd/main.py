@@ -67,7 +67,7 @@ def main(argv):  # generates dummy feeds, later not used anymore -> feeds should
         town = pers.feed.read_town_from_feed()
         language = pers.feed.read_language_from_feed()
         status, status_list = pers.feed.read_status_from_feed()
-        profile_pic = pers.feed.read_profile_pic_from_feed()  # TODO profile pic, profile_pic_data
+        profile_pic = pers.feed.read_profile_pic_from_feed()  # TODO profile pic - future changes; returns two values --> , profile_pic_data
         pers.list_of_persons = list_of_persons
 
         for follow_entry in follow_list:  # creates follow list
@@ -85,7 +85,7 @@ def main(argv):  # generates dummy feeds, later not used anymore -> feeds should
         pers.status = status
         pers.status_list = status_list
         pers.profile_pic = profile_pic
-        # pers.profile_pic_data = profile_pic_data # TODO profile pic changes
+        # pers.profile_pic_data = profile_pic_data # TODO profile pic - future changes; to write data to feed
 
         # tell each person who the mainPerson is and what persons we "know" (= have the feed at the moment)
         pers.main = main_person
