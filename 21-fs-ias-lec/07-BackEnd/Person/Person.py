@@ -34,8 +34,7 @@ class Person:
         self.language = None
         self.status = None
         self.status_list = []
-        self.profile_pic = "./media/default_pic.jpg"
-        self.profile_pic_data = None
+        self.profile_pic = None # the default pic is used by the Frontend if None
         self.activity = 0  # number of events on the feed
         self.influencer_count = 0
         self.influencer = False

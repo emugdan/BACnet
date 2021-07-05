@@ -39,12 +39,15 @@ def generate_json(person_list, we_are):  # Assumption that we have a follow list
         node['influencer'] = person.influencer
         node['hopLayer'] = 10000
         node['profile_pic'] = person.profile_pic
-        #node['profile_pic_data'] = person.profile_pic_data  # TODO profile pic - future changes; to write data to feed
         nodes.append(node)
         for friend in followList:
             link = {'source': node['id'],
                     'target': nodeIDs[friend]}  # .decode("utf-8")]}
             links.append(link)
+
+        # TODO: In the future refreshes Profilepics.
+        #if person.profile_pic is not None:
+        #    person.feed.load_profile_pic(person.profile_pic)
 
     calculate_hops(ourID, links, nodes, 0)
 
