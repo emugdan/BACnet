@@ -133,12 +133,6 @@ def helper(list_of_persons, main_person):
         profile_pic = pers.feed.read_profile_pic_from_feed()
         pers.list_of_persons = list_of_persons
 
-        for follow_entry in follow_list:  # creates follow list
-            for p in list_of_persons:  # go through all persons
-                if follow_entry["Feed ID"] == p.id:
-                    pers.follow(follow_entry["Feed ID"], p.name)
-                    break
-
         #pers.print_follow_list()  # for testing
         pers.birthday = birthday
         pers.gender = gender
@@ -152,6 +146,11 @@ def helper(list_of_persons, main_person):
         # tell each person who the mainPerson is and what persons we "know" (= have the feed at the moment)
         pers.main = main_person
 
+        for follow_entry in follow_list:  # creates follow list
+            for p in list_of_persons:  # go through all persons
+                if follow_entry["Feed ID"] == p.id:
+                    pers.follow(follow_entry["Feed ID"], p.name)
+                    break
 
 
 #For testing purposes
