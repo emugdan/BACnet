@@ -16,8 +16,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-2">
-
+                <div class="p-2" style="margin-right: 5px">
                     <div class="row justify-content-center">
                         {% if object.myself %}
                             <button type="button" class="btn btn-primary"
@@ -27,11 +26,19 @@
                             </button>
                         {% endif %}
                     </div>
+
                     <div class="row justify-content-center">
                         {% if object.influencer %}
-                            <img class="account-img" src="/media/InfluencerTransparentGray.png" style="margin-top: 2px; margin-right: 0px; margin-bottom: 0px; width: 95px; height: 95px">
+                            {% if object.myself %}
+                                <img class="account-img" src="/media/InfluencerTransparentGray.png"
+                                     style="margin-top: 10px; margin-right: 0px; margin-bottom: 0px; width: 95px; height: 83px">
+                            {% else %}
+                                <img class="account-img" src="/media/InfluencerTransparentGray.png"
+                                     style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; width: 95px; height: 83px">
+                            {% endif %}
                         {% endif %}
                     </div>
+
                 </div>
             </div>
 
