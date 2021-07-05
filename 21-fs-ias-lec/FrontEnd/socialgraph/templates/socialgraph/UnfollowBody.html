@@ -10,6 +10,7 @@
 
             <h4>{{person.name}}</h4>
             <p>{{person.gender}}</p>
+            <p>{{person.age}}</p>
             <p>{{person.town}}</p>
 
             <button class="followButton" id = "button" onclick=unfollow("{{person.bacnet_id}}","{{person.name}}")>
@@ -29,12 +30,28 @@
 
     function unfollow(bacnetID, name){
         $('.list-item').off('click');
+        var gender = getGender();
+        var mode = getMode();
+        var layer = getLayer();
+        var nameIn = getname();
+        var Town = getTown();
+        var influencer = getInfluencerChecked();
+        var al;
+        var au;
+        if (ageLower() === "")
+            al = 0;
+        else
+            al = document.getElementById('ageMin').value
+        if (ageUpper() === "")
+            au = 120
+        else
+            au = document.getElementById('ageMax').value
         $.ajax({
 
                 type: "POST",
                 url: '{{ '' }}',
                 async: false,
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: "uf"+bacnetID+name, mode : "1unfollow"},
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: "uf"+bacnetID+name, mode : "1unfollow", gender : gender,  layer : layer, name: nameIn, town : Town, influencer : influencer, ageLower : al, ageUpper : au},
                 success: function (response){
                     $('#test').html('').replaceWith(response)
 
