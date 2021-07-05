@@ -1,25 +1,23 @@
+__author__ = "Philipp Haller, Pascal Kunz, Sebastian Schlachter"
 import sys
 import os
 import pathlib
 
-#get the momentary path
+# get the momentary path
 x = pathlib.Path(__file__)
-#move to directory ../21-fs-ias-lec
+# move to directory ../21-fs-ias-lec
 
 q = pathlib.Path(__file__).parent.parent / 'views.py'
 print(q.parent.parent.parent)
 os.chdir(q.parent.parent.parent)
 
-
-#Append the path to get access to the modules
+# Append the path to get access to the modules
 sys.path.append("07-BackEnd")
 sys.path.append("07-BackEnd/Feed")
 sys.path.append("07-BackEnd/lib")
 sys.path.append("07-BackEnd/Person")
 
-
 import main
-
 
 from Feed import Feed
 import feed
@@ -31,10 +29,16 @@ from Feed import Feed
 
 import crypto
 
-"""
-iterate though the directories and determine the mainPerson and return the full list of persons
-"""
+
 def iterateThroughDirs(mainPersonName, mainPersonID):
+    """
+    Iterate through the directories and determine the mainPerson and return the full list of persons.
+
+    Returns
+    -------
+    The main Person, instance of the current user
+    List of all th other persons.
+    """
     os.chdir("07-BackEnd")
 
     digestmod = "sha256"
@@ -76,16 +80,13 @@ def iterateThroughDirs(mainPersonName, mainPersonID):
                     mainPerson = person
                     mainPerson.main = person
 
-
-
     return (mainPerson, list_of_persons)
 
 
-
-"""
-make unfollow call to BackEnd. The function creates an updated JSON file.
-"""
-def unfollowCall(mainPersonName, mainPersonID,unfollowPersonName, unfollowPersonID):
+def unfollowCall(mainPersonName, mainPersonID, unfollowPersonName, unfollowPersonID):
+    """
+    make unfollow call to BackEnd. The function creates an updated JSON file.
+    """
     os.chdir(q.parent.parent.parent)
     (mainPerson, list_of_persons) = iterateThroughDirs(mainPersonName, mainPersonID)
     helper(list_of_persons, mainPerson)
@@ -95,11 +96,10 @@ def unfollowCall(mainPersonName, mainPersonID,unfollowPersonName, unfollowPerson
         mainPerson.unfollow(unfollowPersonID.encode("utf-8"), unfollowPersonName)
 
 
-
-"""
-make follow call to BackEnd. The function creates an updated JSON file.
-"""
-def followCall(mainPersonName, mainPersonID,followPersonName, followPersonID):
+def followCall(mainPersonName, mainPersonID, followPersonName, followPersonID):
+    """
+    make follow call to BackEnd. The function creates an updated JSON file.
+    """
     os.chdir(q.parent.parent.parent)
     (mainPerson, list_of_persons) = iterateThroughDirs(mainPersonName, mainPersonID)
     helper(list_of_persons, mainPerson)
@@ -109,11 +109,17 @@ def followCall(mainPersonName, mainPersonID,followPersonName, followPersonID):
         mainPerson.follow(followPersonID.encode("utf-8"), followPersonName)
 
 
-
-"""
-make update call to BackEnd. The function creates an updated JSON file.
-"""
 def profileUpdateCall(mainPersonName, mainPersonID, data):
+    """
+    Makes an update call to the BackEnd. This function passes updated information to the backend, which results an
+    updated JSON file.
+
+    Parameters
+    ----------
+    mainPersonName
+    mainPersonID
+    data: A map that contains only the data which should be updated
+    """
     print(q)
     os.chdir(q.parent.parent.parent)
     (mainPerson, list_of_persons) = iterateThroughDirs(mainPersonName, mainPersonID)
@@ -122,6 +128,22 @@ def profileUpdateCall(mainPersonName, mainPersonID, data):
 
 
 def helper(list_of_persons, main_person):
+    '''
+    Reads all the attributes of all given persons from the Feed and stores the informations in the corresponding person
+    instances (This includes the fields follow_list and main).
+    All this information is needed because the updated json-file has to be writen as a hole.
+    For the future a more efficient approach would probably be to read the data from the already existing JSON-file,
+    and only read it from the Feed if necessary.
+
+    Parameters
+    ----------
+    list_of_persons
+    main_person
+
+    Returns
+    -------
+
+    '''
     for pers in list_of_persons:  # for each person read the attributes from the entries in the feed
         follow_list = pers.feed.read_follow_from_feed()
         birthday = pers.feed.read_birthday_from_feed()
@@ -133,7 +155,7 @@ def helper(list_of_persons, main_person):
         profile_pic = pers.feed.read_profile_pic_from_feed()
         pers.list_of_persons = list_of_persons
 
-        #pers.print_follow_list()  # for testing
+        # pers.print_follow_list()  # for testing
         pers.birthday = birthday
         pers.gender = gender
         pers.country = country
@@ -153,8 +175,7 @@ def helper(list_of_persons, main_person):
                     break
 
 
-#For testing purposes
-if __name__ =="__main__":
-
-    followCall(mainPersonName="vera", mainPersonID="9ff78df97744c0d5", followPersonName="esther", followPersonID="4076cc22fa40fa84")
-
+# For testing purposes
+if __name__ == "__main__":
+    followCall(mainPersonName="vera", mainPersonID="9ff78df97744c0d5", followPersonName="esther",
+               followPersonID="4076cc22fa40fa84")

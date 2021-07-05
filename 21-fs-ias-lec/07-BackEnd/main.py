@@ -102,6 +102,18 @@ def main(argv):  # generates dummy feeds, later not used anymore -> feeds should
 
 
 def createRandomAttributes(pers):
+    """
+    Adds random attribute values to a given person.
+    
+    Parameters
+    ----------
+    pers: The Person instance that gets random attributes.
+
+    Returns
+    -------
+    """
+    __author__ = "Philipp Haller, Pascal Kunz, Sebastian Schlachter"
+
     genders = ["male", "female", "other"]
     birthday = ["1999-06-01", "1998-11-26", "1997-01-08", "1995-07-13"]
     town = ["Basel", "Bern", "Zuerich", "Luzern"]
