@@ -1,3 +1,5 @@
+__author__ = "Philipp Haller, Pascal Kunz, Sebastian Schlachter"
+
 import json
 import os
 import pathlib
@@ -17,7 +19,6 @@ from .utils.jsonUtils import extract_connections, getRoot, getRootFollowsSize, g
 
 x = os.getcwd()
 from .utils.callToBackend import followCall, unfollowCall, profileUpdateCall
-
 
 os.chdir(x)
 
@@ -72,6 +73,7 @@ def home(request):
 
     return render(request, 'socialgraph/home.html', context)
 
+
 def users(request):
     x = pathlib.Path(__file__)
     print(x.parent.parent)
@@ -108,19 +110,20 @@ def users(request):
 #     return render(request, 'socialgraph/about.html', {'title': 'About'})
 
 
-"""
-This function creates and renders Follow recommendations based on the hoplayer.
-Also, the function follow is able to handle ajax calls from the UI Layer in order
-to rerender the FollowRecommendation HTML files.
-"""
 def follow(request):
+    """
+    This function creates and renders Follow recommendations based on the hoplayer.
+    Also, the function follow is able to handle ajax calls from the UI Layer in order
+    to rerender the FollowRecommendation HTML files.
+    """
+
     x = pathlib.Path(__file__)
     os.chdir(x.parent.parent)
     data_file = open(path)
     data = json.load(data_file)
     data_file.close()
     create_Recommendations(data)
-    querySetFollow = FollowRecommendations.objects.filter(layer__gte = 2)
+    querySetFollow = FollowRecommendations.objects.filter(layer__gte=2)
 
     # Add the recommendationList to the context which will be passed to the render function
     context = {
@@ -148,22 +151,20 @@ def follow(request):
         else:
             influencer = True
 
-
-        if(mode == "1follow"):
+        if (mode == "1follow"):
             if layer == 0:
                 layer = 1
             query_values = {'layer': layer,
-                           'influencer': influencer, 'gender':gender, 'age__gte': ageLower, 'age__lte':ageUpper, 'name': name}
+                            'influencer': influencer, 'gender': gender, 'age__gte': ageLower, 'age__lte': ageUpper,
+                            'name': name}
             arguments = {}
             for k, v in query_values.items():
-                if ((v and v != "all" and v!= "ignore" and v != 1) or (k == 'influencer' and v == True)):
+                if ((v and v != "all" and v != "ignore" and v != 1) or (k == 'influencer' and v == True)):
                     arguments[k] = v
             if (layer == 1):
-                querySet = FollowRecommendations.objects.filter(**arguments).filter(layer__gte =2)
+                querySet = FollowRecommendations.objects.filter(**arguments).filter(layer__gte=2)
             else:
                 querySet = FollowRecommendations.objects.filter(**arguments)
-
-
 
             if (response == "reset"):
                 querySet = FollowRecommendations.objects.all()
@@ -182,12 +183,12 @@ def follow(request):
                 data_file = open(path)
                 data = json.load(data_file)
                 data_file.close()
-                #Update entry in database
+                # Update entry in database
                 entry = FollowRecommendations.objects.filter(bacnet_id=followID)
-                entry.update(layer = 1)
+                entry.update(layer=1)
                 query_values = {'layer': layer,
-                               'influencer': influencer, 'gender': gender, 'age__gte': ageLower, 'age__lte': ageUpper,
-                               'name': name}
+                                'influencer': influencer, 'gender': gender, 'age__gte': ageLower, 'age__lte': ageUpper,
+                                'name': name}
                 arguments = {}
                 for k, v in query_values.items():
                     if ((v and v != "all" and v != "ignore" and v != 1) or (k == 'influencer' and v == True)):
@@ -208,18 +209,16 @@ def follow(request):
 
         if (mode == "1unfollow"):
             query_values = {
-                           'influencer': influencer, 'gender': gender, 'age__gte': ageLower, 'age__lte': ageUpper,
-                           'name': name}
+                'influencer': influencer, 'gender': gender, 'age__gte': ageLower, 'age__lte': ageUpper,
+                'name': name}
             arguments = {}
             for k, v in query_values.items():
                 if ((v and v != "all" and v != "ignore") or (k == 'influencer' and v == True)):
                     arguments[k] = v
-            querySet = FollowRecommendations.objects.filter(**arguments).filter(layer = 1)
-
+            querySet = FollowRecommendations.objects.filter(**arguments).filter(layer=1)
 
             if (response == "reset"):
-                querySet = FollowRecommendations.objects.filter(layer =1)
-
+                querySet = FollowRecommendations.objects.filter(layer=1)
 
             # User wants to follow another user
             if (response.startswith("uf")):
@@ -237,15 +236,13 @@ def follow(request):
                 data_file.close()
                 create_Recommendations(data)
                 query_values = {'layer': 1,
-                               'influencer': influencer, 'gender': gender, 'age__gte': ageLower, 'age__lte': ageUpper,
-                               'name': name}
+                                'influencer': influencer, 'gender': gender, 'age__gte': ageLower, 'age__lte': ageUpper,
+                                'name': name}
                 arguments = {}
                 for k, v in query_values.items():
                     if ((v and v != "all" and v != "ignore") or (k == 'influencer' and v == True)):
                         arguments[k] = v
-                querySet = FollowRecommendations.objects.filter(**arguments).filter(layer = 1)
-
-
+                querySet = FollowRecommendations.objects.filter(**arguments).filter(layer=1)
 
             text = {
                 'data': json.dumps(data),
@@ -254,16 +251,13 @@ def follow(request):
                 'recommendations': querySet
             }
 
-
             return render(request, 'socialgraph/UnfollowBody.html', text)
-
-
 
     return render(request, 'socialgraph/Follow.html', context)
 
-def returnQuerySet(name = None, layer = None, gender = None, influencer = None, mode = None):
-    return
 
+def returnQuerySet(name=None, layer=None, gender=None, influencer=None, mode=None):
+    return
 
 
 def followBody(request):
@@ -275,14 +269,18 @@ class PostDetailView(DetailView):
 
 
 def update_profile(request):
-
     context = None
 
+    # Change Working directory
     x = pathlib.Path(__file__)
     os.chdir(x.parent.parent)
+
+    # load data from JSON
     fresh_data_file = open(path)
     fresh_data = json.load(fresh_data_file)
     fresh_data_file.close()
+
+    #  get the root node and Profile
     for node in fresh_data['nodes']:
         if node.get('hopLayer') == 0:
             context = {
@@ -291,57 +289,71 @@ def update_profile(request):
             }
             break
 
-    if request.method == "POST":
+    if request.method == "POST":  # after 'save' is pressed on update page.
         update = {'BACnetID': node.get('BACnetID')}
         fieldnames = ['gender', 'birthday', 'country', 'town', 'language', 'status']
+        # iterate over fieldnames and check if they are contained in the POST and if so, if there value is an update.
+        # Add all update values to a hashmap.
         for fn in fieldnames:
             if fn in request.POST:
-
                 if node.get(fn) is not None and node.get(fn) != request.POST[fn] or node.get(fn) is None and \
                         request.POST[fn] != '':
                     if isinstance(request.POST[fn], str):
-                        value = request.POST[fn].strip()
+                        value = request.POST[fn].strip()  # remove dangling spaces
                         update[fn] = value if value != '' else None
                     else:
                         update[fn] = request.POST[fn]
         if 'gender' in update.keys() and update['gender'] == 'other' and request.POST['other'] != '':
-            update['gender'] = request.POST['other']
+            update['gender'] = request.POST['other']  # update of custom gender
 
-        if len(request.FILES) > 0:
+        if len(request.FILES) > 0:  # Check if a profile Picture has been uploaded.
             for f in request.FILES.keys():
                 profile_pic_path, profile_pic_data = handle_uploaded_file(request.FILES[f], node.get('BACnetID'))
                 update['profile_pic'] = profile_pic_path
                 update['profile_pic_data'] = profile_pic_data
-        # print(update)
 
         root = getRoot(data['nodes'])
         rootUser = root.get("name")
         rootUserID = root.get("BACnetID")
 
-        if len(update) > 1: # Only make an UpdateCall if there is a real update
+        if len(update) > 1:  # Only make an UpdateCall if there is a real update
             profileUpdateCall(rootUser, rootUserID, update)
 
-        x = pathlib.Path(__file__) # Change working directory back to Frontend
+        x = pathlib.Path(__file__)  # Change working directory back to Frontend
         os.chdir(x.parent.parent)
 
-        fresh_data_file = open(path) # Open the new json-file, and create profiles out of the data.
+        fresh_data_file = open(path)  # Open the new json-file, and create database profiles out of the data.
         fresh_data = json.load(fresh_data_file)
         create_profiles(fresh_data)
         fresh_data_file.close()
 
-        return HttpResponseRedirect("/profile/" + str(node.get('id')))
+        return HttpResponseRedirect(
+            "/profile/" + str(node.get('id')))  # after saving redirect the user back to his profile page
 
-    return render(request, 'socialgraph/profile_update.html', context)
+    return render(request, 'socialgraph/profile_update.html', context)  # display the update page
 
 
 def handle_uploaded_file(f, id):
+    '''
+    Reads the image data from the given File, renames it (according to the id) and stores it on a specific path.
+
+    Parameters
+    ----------
+    f: the Image File
+    id: The BACnetID of the user
+
+    Returns
+    -------
+    The path to the new Profilepicture
+    The data bytes of the Profilepicture
+    '''
     path = os.path.join('media', 'profile_pics')
-    if not os.path.exists(path): # Check if directory already there
-        os.makedirs(path)
+    if not os.path.exists(path):  # Check if directory already there
+        os.makedirs(path)  # Else create it
     else:
         for file in os.listdir(path):
             if file.startswith(id):
-                os.remove(os.path.join(path, file)) # Delete old profile picture of this user
+                os.remove(os.path.join(path, file))  # Delete old profile pictures of this user
     path = os.path.join(path, id + '.' + f.content_type[f.content_type.index('/') + 1:])
 
     with open(path, 'wb+') as destination:  # Write the image file
@@ -351,7 +363,7 @@ def handle_uploaded_file(f, id):
         os.fsync(destination.fileno())
         destination.close()
 
-    reader = open(path, 'rb')   # read the image bytes, to put them in the pcap-files
+    reader = open(path, 'rb')  # read the image bytes, to put them in the pcap-files
     binImage = reader.read()
     reader.close()
 
@@ -362,4 +374,3 @@ def handle_uploaded_file(f, id):
 if __name__ == "__main__":
     followCall(mainPersonName="vera", mainPersonID="9ff78df97744c0d5", followPersonName="esther",
                followPersonID="4076cc22fa40fa84")
-
