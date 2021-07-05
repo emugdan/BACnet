@@ -45,7 +45,11 @@ def generate_json(person_list, we_are):  # Assumption that we have a follow list
                     'target': nodeIDs[friend]}  # .decode("utf-8")]}
             links.append(link)
 
-    calculate_hops(ourID, links, nodes, 0)
+        # TODO: In the future refreshes Profilepics.
+        #if person.profile_pic is not None:
+        #    person.feed.load_profile_pic(person.profile_pic)
+
+    calculate_hops(ourID, links, nodes)
 
     data = {'nodes': nodes, 'links': links}
 
@@ -74,9 +78,19 @@ def generate_json(person_list, we_are):  # Assumption that we have a follow list
     return json.dumps(data)
 
 
-def calculate_hops(curr_id, links, nodes, layer):  # Calculates the hop layer of each node recursively
-    nodes[curr_id]['hopLayer'] = layer
-    for link in links:
-        if link['source'] == curr_id:
-            if nodes[link['target']]['hopLayer'] > layer + 1:
-                calculate_hops(link['target'], links, nodes, layer + 1)
+def calculate_hops(root_id, links, nodes):  # Calculates the hop layer of each node iteratively
+    nodes[root_id]['hopLayer'] = 0
+    distances = []
+    for node in nodes:
+        distances.append(10000)
+
+    oldDistances = distances.copy()
+    distances[root_id] = 0
+    while distances != oldDistances:
+        oldDistances = distances.copy()
+        for link in links:
+            if distances[link['source']] + 1 < distances[link['target']]:
+                distances[link['target']] = distances[link['source']] + 1
+
+    for node in nodes:
+        node['hopLayer'] = distances[node['id']]

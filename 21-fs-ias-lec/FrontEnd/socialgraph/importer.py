@@ -23,7 +23,8 @@ def create_profiles(data):
                         os.path.join(os.getcwd(), 'media', node.get('profile_pic'))) else 'default.jpg',
                     myself=node.get('hopLayer') == 0,
                     node_id=node.get('id'),
-                    status=node.get('status')
+                    status=node.get('status'),
+                    influencer=node.get('influencer')
                     )
         p.save()
 

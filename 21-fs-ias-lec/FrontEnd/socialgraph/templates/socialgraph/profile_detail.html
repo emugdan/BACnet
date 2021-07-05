@@ -16,14 +16,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-2">
-                    {% if object.myself %}
-                        <button type="button" class="btn btn-primary"
-                                onclick="location.href='{% url 'profile-update' %}';">
-                            <img src="/media/ProfileUpdateIconWhite30.png" style="height: 30px; width: 30px">
-                            <span>Update</span>
-                        </button>
-                    {% endif %}
+                <div class="p-2" style="margin-right: 5px">
+                    <div class="row justify-content-center">
+                        {% if object.myself %}
+                            <button type="button" class="btn btn-primary"
+                                    onclick="location.href='{% url 'profile-update' %}';">
+                                <img src="/media/ProfileUpdateIconWhite30.png" style="height: 30px; width: 30px">
+                                <span>Update</span>
+                            </button>
+                        {% endif %}
+                    </div>
+
+                    <div class="row justify-content-center">
+                        {% if object.influencer %}
+                            {% if object.myself %}
+                                <img class="account-img" src="/media/InfluencerTransparentGray.png"
+                                     style="margin-top: 10px; margin-right: 0px; margin-bottom: 0px; width: 95px; height: 83px">
+                            {% else %}
+                                <img class="account-img" src="/media/InfluencerTransparentGray.png"
+                                     style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; width: 95px; height: 83px">
+                            {% endif %}
+                        {% endif %}
+                    </div>
+
                 </div>
             </div>
 
@@ -34,21 +49,23 @@
 
 
     <div class="container">
-        <div class="container-fluid">
+
+        <div class="content-section">
             <div class="row">
                 <div class="col-sm-6" style="padding-left: 0;padding-right: 0">
                     <div class="content-section">
+                        <h3>Details:</h3>
                         <div class="container-fluid">
                             {% for key, value in object.get_details.items %}
                                 <div class="row">
                                     <div class="col-sm-4"
                                          style="padding-left: 0;padding-right: 0; <!--background-color:#aaa;-->">
-                                        <div class="profile-detail-key">{{ key }}:</div>
+                                        <div class="profile-detail-key" style="padding-left: 0px">{{ key }}:</div>
 
                                     </div>
                                     <div class="col-sm-8"
                                          style="padding-left: 0;padding-right: 0; <!--background-color:#bbb;-->">
-                                        <div class="profile-detail-value">{{ value }}</div>
+                                        <div class="profile-detail-value" style="padding-left: 0px">{{ value }}</div>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -79,6 +96,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     <div class="container">
