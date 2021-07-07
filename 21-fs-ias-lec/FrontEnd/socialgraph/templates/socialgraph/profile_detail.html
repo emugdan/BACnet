@@ -53,7 +53,7 @@
         <div class="content-section">
             <div class="row">
                 <div class="col-sm-6" style="padding-left: 0;padding-right: 0">
-                    <div class="content-section">
+                    <div class="content-section" style="border: 0px">
                         <h3>Details:</h3>
                         <div class="container-fluid">
                             {% for key, value in object.get_details.items %}
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6" style="padding-left: 0;padding-right: 0">
-                    <div class="content-section">
+                    <div class="content-section" style="border: 0px">
                         <h3>Follows:</h3>
                         <div class="row" style="overflow: auto; white-space: nowrap; flex-flow: row">
                             {% for profile in object.follows.all %}
