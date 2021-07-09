@@ -56,7 +56,7 @@
 
         var nodeRadius = {{ graph.nodeRadius }};
         var markerSize = 10;
-        var markerX = nodeRadius + markerSize;
+        var markerX = nodeRadius - 5;
 
         var margin = {top: 30, right: 30, bottom: 30, left: 30},
           width = 700,
@@ -95,6 +95,29 @@
 
         function createGraph(data) {
 
+            var lineX2 = function (d) {
+                var nodeR = getNodeSizeMultiplier("id" + d.target.id);
+                var length = Math.sqrt(Math.pow(d.target.y - d.source.y, 2) + Math.pow(d.target.x - d.source.x, 2));
+                var scale = (length - nodeR) / length;
+                var offset = (d.target.x - d.source.x) - (d.target.x - d.source.x) * scale;
+                return d.target.x - offset;
+            };
+            var lineY2 = function (d) {
+                var nodeR = getNodeSizeMultiplier("id" + d.target.id);
+                var length = Math.sqrt(Math.pow(d.target.y - d.source.y, 2) + Math.pow(d.target.x - d.source.x, 2));
+                var scale = (length - nodeR) / length;
+                var offset = (d.target.y - d.source.y) - (d.target.y - d.source.y) * scale;
+                return d.target.y - offset;
+            };
+
+            var link = svg
+                .selectAll("line")
+                .data(data.links)
+                .enter()
+                .append("line")
+                    .style("stroke", getGraphAttrColor('link'))
+                .attr("marker-end", "url(#end)")
+
             svg.append("svg:defs").selectAll("marker")
                 .data(["end"])
               .enter().append("svg:marker")
@@ -108,14 +131,6 @@
                 .attr("d", "M0,-5L10,0L0,5")
                     .style("fill", getGraphAttrColor('link'));
 
-          var link = svg
-            .selectAll("line")
-            .data(data.links)
-            .enter()
-            .append("line")
-              .style("stroke", getGraphAttrColor('link'))
-            .attr("marker-end", "url(#end)")
-
           var node = svg
             .selectAll(null)
             .data(data.nodes)
@@ -124,8 +139,8 @@
 
           var circle = node
             .append("circle")
-              .attr("r", nodeRadius)
               .attr('id', function(d){ return 'id' + d.id })
+              .attr("r", function(d) { return getNodeSizeMultiplier(d3.select(this).attr("id")) })
               .style("fill", function(d) { return nodeColor(d3.select(this).attr("id")) })
               .on("click", function(d) { return nodeClick(d3.select(this).attr("id")) })
               .call(d3.drag()
@@ -136,7 +151,7 @@
           var text = node
               .append("text")
               .text(function(d) { return d.name; })
-              .attr("dx", nodeRadius + 5)
+              .attr("dx", function(d) { return getNodeSizeMultiplier("id" + d.id) + 5 })
               .attr("dy", ".35em")
               .attr("font-size", {{ graph.textFontSize }})
                 .style("fill", getGraphAttrColor('text'))
@@ -152,8 +167,8 @@
             link
                 .attr("x1", function(d) { return d.source.x; })
                 .attr("y1", function(d) { return d.source.y; })
-                .attr("x2", function(d) { return d.target.x; })
-                .attr("y2", function(d) { return d.target.y; });
+                .attr("x2", lineX2)
+                .attr("y2", lineY2);
 
             circle
                  .attr("cx", function (d) { return d.x; })
@@ -235,8 +250,6 @@
 
           {% for node in nodes %}
 
-          console.log("{{ graph.maleColor }}")
-
             var nodeId = "{{ node.id }}";
             if (id === nodeId) {
               if ("{{ node.gender }}" === "male") {
@@ -308,6 +321,32 @@
                 }
 
             }
+        }
+
+        function getNodeSizeMultiplier(d) {
+
+            var id = d.substring(2);
+            var counter = 0;
+
+            {% for node in nodes %}
+
+                var nodeId = "{{ node.id }}";
+                if (id === nodeId) {
+
+                    {% for link in links %}
+
+                        if ( "{{ link.target }}" === id) {
+                            counter = counter + 1;
+                        }
+
+                    {% endfor %}
+
+                }
+
+            {% endfor %}
+
+            return nodeRadius * counter;
+
         }
 
         /* *** ADD FUNCTIONALITY TO LIST ITEMS *** */
