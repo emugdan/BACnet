@@ -226,6 +226,7 @@
 
                         </div>
                         <div class="modal-footer">
+                            <button type="button" class="btn btn-link mr-auto" id="resetModalBtn">Reset</button>
                             <button type="button" class="btn btn-link" data-dismiss="modal" id="saveModalBtn">Save changes</button>
                             <button type="button" class="btn btn-link" data-dismiss="modal" id="closeModalBtn">Close</button>
                         </div>
@@ -292,7 +293,7 @@
       });
 
       var curNodeRadius = 15;
-      var curLinkLength = 100;
+      var curLinkLength = 200;
       var curTextFontSize = 12;
       var curMaleColor = "#0095FF";
       var curFemaleColor = "#E97091";
@@ -312,6 +313,23 @@
       otherColorInput.addEventListener("input", function() {
         var color = otherColorInput.value;
       }, false);
+
+      $('#resetModalBtn').click(function() {
+         curNodeRadius = 15;
+         nodeRadius.value = curNodeRadius;
+         curLinkLength = 200;
+         linkLength.value = curLinkLength;
+         curTextFontSize = 12;
+         textFontSize.value = curTextFontSize;
+         curMaleColor = "#0095FF";
+         maleColorInput.value = curMaleColor;
+         curFemaleColor = "#E97091";
+         femaleColorInput.value = curFemaleColor;
+         curOtherColor = "#7F7F7F";
+         otherColorInput.value = curOtherColor;
+
+         saveSettings(curNodeRadius.toString() + " " + curLinkLength.toString() + " " + curTextFontSize.toString() + " " + curMaleColor + " " + curFemaleColor + " " + curOtherColor);
+      });
 
       $('#saveModalBtn').click(function() {
          curNodeRadius = nodeRadius.value;
