@@ -23,14 +23,11 @@ def main(argv):  # generates dummy feeds, later not used anymore -> feeds should
     rootdir = "./data"
     list_of_persons = []  # list of all persons of whom a feed exists
     main_person = None
-    # TODO: Vera: wenns ned klappet nur s else verwende
-    if(argv[0] == "FrontEnd"):
-        name_main_person = argv[1]
-    else:
-        if len(argv) != 1: # more than one parameter --> print error
-            print("ERROR: wrong number of parameters, please insert one parameter with the name of the main person")
-            return
-        name_main_person = argv[0]
+
+    if len(argv) != 1: # more than one parameter --> print error
+        print("ERROR: wrong number of parameters, please insert one parameter with the name of the main person")
+        return
+    name_main_person = argv[0]
 
     for subdir, dirs, files in os.walk(rootdir):  # iterate through all folders in 'data'
         for name in dirs:
@@ -96,9 +93,6 @@ def main(argv):  # generates dummy feeds, later not used anymore -> feeds should
 
     # Json file for FrontEnd
     generate_json(list_of_persons, main_person)
-    #TODO: Vera: wenns ned klappet lösche
-    if argv[0] == "FrontEnd":
-        return (main_person, list_of_persons)
 
 
 def createRandomAttributes(pers):
