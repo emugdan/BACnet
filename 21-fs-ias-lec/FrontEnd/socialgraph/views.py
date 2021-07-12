@@ -1,3 +1,5 @@
+__author__ = "Philipp Haller, Pascal Kunz, Sebastian Schlachter"
+
 import json
 import os
 import pathlib
@@ -20,7 +22,6 @@ import Levenshtein
 
 x = os.getcwd()
 from .utils.callToBackend import followCall, unfollowCall, profileUpdateCall
-
 
 os.chdir(x)
 
@@ -75,6 +76,7 @@ def home(request):
 
     return render(request, 'socialgraph/home.html', context)
 
+
 def users(request):
     x = pathlib.Path(__file__)
     print(x.parent.parent)
@@ -120,7 +122,7 @@ def follow(request):
     create_Recommendations(data)
     #Initial QuerySet
     querySetFollow = FollowRecommendations.objects.filter(layer__gte = 2)
-    # create a context variable will be passed to the render of the Follow GUI
+    # create a context variable, will be passed to the render of the Follow GUI
     context = {
         'data': json.dumps(data),
         'nodes': data['nodes'],
@@ -281,11 +283,16 @@ def update_profile(request):
 
     context = None
 
+    # Change Working directory
     x = pathlib.Path(__file__)
     os.chdir(x.parent.parent)
+
+    # load data from JSON
     fresh_data_file = open(path)
     fresh_data = json.load(fresh_data_file)
     fresh_data_file.close()
+
+    #  get the root node and Profile
     for node in fresh_data['nodes']:
         if node.get('hopLayer') == 0:
             context = {
@@ -294,57 +301,71 @@ def update_profile(request):
             }
             break
 
-    if request.method == "POST":
+    if request.method == "POST":  # after 'save' is pressed on update page.
         update = {'BACnetID': node.get('BACnetID')}
         fieldnames = ['gender', 'birthday', 'country', 'town', 'language', 'status']
+        # iterate over fieldnames and check if they are contained in the POST and if so, if there value is an update.
+        # Add all update values to a hashmap.
         for fn in fieldnames:
             if fn in request.POST:
-
                 if node.get(fn) is not None and node.get(fn) != request.POST[fn] or node.get(fn) is None and \
                         request.POST[fn] != '':
                     if isinstance(request.POST[fn], str):
-                        value = request.POST[fn].strip()
+                        value = request.POST[fn].strip()  # remove dangling spaces
                         update[fn] = value if value != '' else None
                     else:
                         update[fn] = request.POST[fn]
         if 'gender' in update.keys() and update['gender'] == 'other' and request.POST['other'] != '':
-            update['gender'] = request.POST['other']
+            update['gender'] = request.POST['other']  # update of custom gender
 
-        if len(request.FILES) > 0:
+        if len(request.FILES) > 0:  # Check if a profile Picture has been uploaded.
             for f in request.FILES.keys():
                 profile_pic_path, profile_pic_data = handle_uploaded_file(request.FILES[f], node.get('BACnetID'))
                 update['profile_pic'] = profile_pic_path
                 update['profile_pic_data'] = profile_pic_data
-        # print(update)
 
         root = getRoot(data['nodes'])
         rootUser = root.get("name")
         rootUserID = root.get("BACnetID")
 
-        if len(update) > 1: # Only make an UpdateCall if there is a real update
+        if len(update) > 1:  # Only make an UpdateCall if there is a real update
             profileUpdateCall(rootUser, rootUserID, update)
 
-        x = pathlib.Path(__file__) # Change working directory back to Frontend
+        x = pathlib.Path(__file__)  # Change working directory back to Frontend
         os.chdir(x.parent.parent)
 
-        fresh_data_file = open(path) # Open the new json-file, and create profiles out of the data.
+        fresh_data_file = open(path)  # Open the new json-file, and create database profiles out of the data.
         fresh_data = json.load(fresh_data_file)
         create_profiles(fresh_data)
         fresh_data_file.close()
 
-        return HttpResponseRedirect("/profile/" + str(node.get('id')))
+        return HttpResponseRedirect(
+            "/profile/" + str(node.get('id')))  # after saving redirect the user back to his profile page
 
-    return render(request, 'socialgraph/profile_update.html', context)
+    return render(request, 'socialgraph/profile_update.html', context)  # display the update page
 
 
 def handle_uploaded_file(f, id):
+    '''
+    Reads the image data from the given File, renames it (according to the id) and stores it on a specific path.
+
+    Parameters
+    ----------
+    f: the Image File
+    id: The BACnetID of the user
+
+    Returns
+    -------
+    The path to the new Profilepicture
+    The data bytes of the Profilepicture
+    '''
     path = os.path.join('media', 'profile_pics')
-    if not os.path.exists(path): # Check if directory already there
-        os.makedirs(path)
+    if not os.path.exists(path):  # Check if directory already there
+        os.makedirs(path)  # Else create it
     else:
         for file in os.listdir(path):
             if file.startswith(id):
-                os.remove(os.path.join(path, file)) # Delete old profile picture of this user
+                os.remove(os.path.join(path, file))  # Delete old profile pictures of this user
     path = os.path.join(path, id + '.' + f.content_type[f.content_type.index('/') + 1:])
 
     with open(path, 'wb+') as destination:  # Write the image file
@@ -354,15 +375,11 @@ def handle_uploaded_file(f, id):
         os.fsync(destination.fileno())
         destination.close()
 
-    reader = open(path, 'rb')   # read the image bytes, to put them in the pcap-files
+    reader = open(path, 'rb')  # read the image bytes, to put them in the pcap-files
     binImage = reader.read()
     reader.close()
 
     # return the path and the data_bytes
     return os.path.join('profile_pics', id + '.' + f.content_type[f.content_type.index('/') + 1:]), binImage
 
-
-if __name__ == "__main__":
-    followCall(mainPersonName="vera", mainPersonID="9ff78df97744c0d5", followPersonName="esther",
-               followPersonID="4076cc22fa40fa84")
 

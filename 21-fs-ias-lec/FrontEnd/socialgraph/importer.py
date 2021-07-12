@@ -1,5 +1,5 @@
-# Creates Profile Entries in the Database for each Node.
-# TODO: Move somewhere else
+__author__ = "Philipp Haller, Pascal Kunz, Sebastian Schlachter"
+
 import os
 import json
 from datetime import datetime
@@ -14,6 +14,14 @@ from socialgraph.models import Profile, FollowRecommendations, Status
 
 
 def create_profiles(data):
+    """
+    Creates profile database objects with the information contained in the given hashmap.
+
+    Parameters
+    ----------
+    data: data in the form of a hashmap, that contains all the user data.
+    """
+
     Profile.objects.all().delete()  # Delete all profile entries in the database.
     Status.objects.all().delete()  # Delete all status entries in the database.
     for node in data['nodes']:
@@ -29,12 +37,14 @@ def create_profiles(data):
                     )
         p.save()
 
+        # iterate through all status in an nodes status list and create a status database object for each,
+        # link them all to the profile object.
         for status in node.get('status_list'):
-            dt = datetime.fromtimestamp(status[1]+7200)  # calculate date and time from ms
-            # TODO: the addition is a temporary fix (Something is wrong with the timezone)
+            timeFromTS = datetime.fromtimestamp(status[1] + 7200)  # calculate date and time from ms
+            # TODO: the addition above is a temporary fix (Something is wrong with the timezone)
             timezone = tzlocal.get_localzone()  # get the local timezone
-            dt = timezone.localize(dt)  # adjust for timezone
-            s = Status(timestamp=dt, status=status[0])  # create a status entry
+            timeFromTS = timezone.localize(timeFromTS)  # adjust for timezone
+            s = Status(timestamp=timeFromTS, status=status[0])  # create a status entry
             s.save()
             p.status_list.add(s)  # add the status entry to the status list of the current profile entry
 
@@ -46,6 +56,14 @@ def create_profiles(data):
 
 
 def create_Recommendations(data):
+    """
+    Creates FollowRecommendation database objects with the information contained in the given hashmap.
+
+    Parameters
+    ----------
+    data: data in the form of a hashmap, that contains all the user data.
+    """
+
     FollowRecommendations.objects.all().delete()
     for node in data['nodes']:
         r = FollowRecommendations(layer=node.get('hopLayer'), bacnet_id=node.get('BACnetID'), id = node.get('id'), name=node.get('name'),
@@ -59,12 +77,25 @@ def create_Recommendations(data):
         r.save()
     print("Updated Database!")
 
+
 def calculate_age(date):
+    """
+    Calculates the age of a person with a given birthdate.
+
+    Parameters
+    ----------
+    date: The birthdate in the format YYYY-MM-DD
+
+    Returns
+    -------
+    The age in years.
+    """
+
     a = date[0:4]
     b = date[5:7]
     c = date[8:10]
     birth_date = dt.date(int(a), int(b), int(c))
     end_date = dt.date.today()
     time_difference = end_date - birth_date
-    age = int(time_difference.days/365)
+    age = int(time_difference.days / 365)
     return age

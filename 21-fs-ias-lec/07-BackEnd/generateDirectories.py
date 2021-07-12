@@ -20,7 +20,7 @@ def generate(name):  # generates a folder, feed, and key pair for a given person
     if not os.path.isdir("data/" + name):
         os.mkdir("data/" + name)
 
-    # TODO Doc
+    # is used for the encryption
     digestmod = "sha256"
     h, signer = None, None
 

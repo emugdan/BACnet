@@ -56,7 +56,7 @@
 
         var nodeRadius = {{ graph.nodeRadius }};
         var markerSize = 10;
-        var markerX = nodeRadius + markerSize;
+        var markerX = markerSize;
 
         var margin = {top: 30, right: 30, bottom: 30, left: 30},
           width = 700,
@@ -95,6 +95,29 @@
 
         function createGraph(data) {
 
+            var lineX2 = function (d) {
+                var nodeR = getNodeSizeMultiplier("id" + d.target.id);
+                var length = Math.sqrt(Math.pow(d.target.y - d.source.y, 2) + Math.pow(d.target.x - d.source.x, 2));
+                var scale = (length - nodeR) / length;
+                var offset = (d.target.x - d.source.x) - (d.target.x - d.source.x) * scale;
+                return d.target.x - offset;
+            };
+            var lineY2 = function (d) {
+                var nodeR = getNodeSizeMultiplier("id" + d.target.id);
+                var length = Math.sqrt(Math.pow(d.target.y - d.source.y, 2) + Math.pow(d.target.x - d.source.x, 2));
+                var scale = (length - nodeR) / length;
+                var offset = (d.target.y - d.source.y) - (d.target.y - d.source.y) * scale;
+                return d.target.y - offset;
+            };
+
+            var link = svg
+                .selectAll("line")
+                .data(data.links)
+                .enter()
+                .append("line")
+                    .style("stroke", getGraphAttrColor('link'))
+                .attr("marker-end", "url(#end)")
+
             svg.append("svg:defs").selectAll("marker")
                 .data(["end"])
               .enter().append("svg:marker")
@@ -108,14 +131,6 @@
                 .attr("d", "M0,-5L10,0L0,5")
                     .style("fill", getGraphAttrColor('link'));
 
-          var link = svg
-            .selectAll("line")
-            .data(data.links)
-            .enter()
-            .append("line")
-              .style("stroke", getGraphAttrColor('link'))
-            .attr("marker-end", "url(#end)")
-
           var node = svg
             .selectAll(null)
             .data(data.nodes)
@@ -124,9 +139,11 @@
 
           var circle = node
             .append("circle")
-              .attr("r", nodeRadius)
               .attr('id', function(d){ return 'id' + d.id })
+              .attr("r", function(d) { return getNodeSizeMultiplier(d3.select(this).attr("id")) })
               .style("fill", function(d) { return nodeColor(d3.select(this).attr("id")) })
+              .style("stroke-width", 3)
+              .style("stroke", "#00000040")
               .on("click", function(d) { return nodeClick(d3.select(this).attr("id")) })
               .call(d3.drag()
                   .on("start", dragstarted)
@@ -136,7 +153,7 @@
           var text = node
               .append("text")
               .text(function(d) { return d.name; })
-              .attr("dx", nodeRadius + 5)
+              .attr("dx", function(d) { return getNodeSizeMultiplier("id" + d.id) + 5 })
               .attr("dy", ".35em")
               .attr("font-size", {{ graph.textFontSize }})
                 .style("fill", getGraphAttrColor('text'))
@@ -152,8 +169,8 @@
             link
                 .attr("x1", function(d) { return d.source.x; })
                 .attr("y1", function(d) { return d.source.y; })
-                .attr("x2", function(d) { return d.target.x; })
-                .attr("y2", function(d) { return d.target.y; });
+                .attr("x2", lineX2)
+                .attr("y2", lineY2);
 
             circle
                  .attr("cx", function (d) { return d.x; })
@@ -235,8 +252,6 @@
 
           {% for node in nodes %}
 
-          console.log("{{ graph.maleColor }}")
-
             var nodeId = "{{ node.id }}";
             if (id === nodeId) {
               if ("{{ node.gender }}" === "male") {
@@ -256,21 +271,20 @@
 
         function markNode(circle) {
             circle = getName(circle)
+            var found = false;
 
             {% for node in nodes %}
 
                 var currentNode = "{{ node.name }}";
-                var c = d3.select("#id" + {{ node.id }});
-                    c.style("stroke", "none");
 
                 if (circle === currentNode) {
 
                     var hops = document.getElementById('hopsVal').innerHTML;
                     callPythonFunction({{ node.id }}, hops)
 
-                    var circle = d3.select("#id" + {{ node.id }});
-                    circle.style("stroke-width", 4);
-                    circle.style("stroke", getGraphAttrColor('border'));
+                    var circle2 = d3.select("#id" + {{ node.id }});
+                    circle2.style("stroke-width", 4);
+                    circle2.style("stroke", getGraphAttrColor('border'));
 
                 }
 
@@ -308,6 +322,32 @@
                 }
 
             }
+        }
+
+        function getNodeSizeMultiplier(d) {
+
+            var id = d.substring(2);
+            var counter = 0;
+
+            {% for node in nodes %}
+
+                var nodeId = "{{ node.id }}";
+                if (id === nodeId) {
+
+                    {% for link in links %}
+
+                        if ( "{{ link.target }}" === id) {
+                            counter = counter + 1;
+                        }
+
+                    {% endfor %}
+
+                }
+
+            {% endfor %}
+
+            return nodeRadius * (1 + 0.5 * counter);
+
         }
 
         /* *** ADD FUNCTIONALITY TO LIST ITEMS *** */
