@@ -12,8 +12,11 @@ from django.template.loader import render_to_string
 from django.views.generic import DetailView
 
 from .importer import create_profiles, create_Recommendations
-from .models import Profile, FollowRecommendations, UnfollowRecommendations
+from .models import Profile, FollowRecommendations
 from .utils.jsonUtils import extract_connections, getRoot, getRootFollowsSize, getRootFollowersSize, saveSettings
+from django.db.models import F
+from django.db.models import Min, Max
+import Levenshtein
 
 x = os.getcwd()
 from .utils.callToBackend import followCall, unfollowCall, profileUpdateCall
@@ -101,28 +104,23 @@ def users(request):
     return render(request, 'socialgraph/users.html', context)
 
 
-# def feed(request):
-#     return render(request, 'socialgraph/Feed.html', {'title': 'Feed'})
-
-# def about(request):
-#     return render(request, 'socialgraph/about.html', {'title': 'About'})
-
-
-"""
-This function creates and renders Follow recommendations based on the hoplayer.
-Also, the function follow is able to handle ajax calls from the UI Layer in order
-to rerender the FollowRecommendation HTML files.
-"""
-def follow(request):
+def reloadJson():
     x = pathlib.Path(__file__)
     os.chdir(x.parent.parent)
     data_file = open(path)
     data = json.load(data_file)
     data_file.close()
-    create_Recommendations(data)
-    querySetFollow = FollowRecommendations.objects.filter(layer__gte = 2)
+    return data
 
-    # Add the recommendationList to the context which will be passed to the render function
+"""
+Handle UserInputs coming from the Follow / Unfollow GUI.
+"""
+def follow(request):
+    data = reloadJson()
+    create_Recommendations(data)
+    #Initial QuerySet
+    querySetFollow = FollowRecommendations.objects.filter(layer__gte = 2)
+    # create a context variable will be passed to the render of the Follow GUI
     context = {
         'data': json.dumps(data),
         'nodes': data['nodes'],
@@ -147,13 +145,15 @@ def follow(request):
             influencer = "ignore"
         else:
             influencer = True
-
-
+        #If we are in the follow mode:
         if(mode == "1follow"):
             if layer == 0:
                 layer = 1
             query_values = {'layer': layer,
-                           'influencer': influencer, 'gender':gender, 'age__gte': ageLower, 'age__lte':ageUpper, 'name': name}
+                           'influencer': influencer, 'gender':gender,
+                            'age__gte': ageLower, 'age__lte':ageUpper,
+                            }
+            #Create the arguments for the SQL-Query
             arguments = {}
             for k, v in query_values.items():
                 if ((v and v != "all" and v!= "ignore" and v != 1) or (k == 'influencer' and v == True)):
@@ -162,12 +162,9 @@ def follow(request):
                 querySet = FollowRecommendations.objects.filter(**arguments).filter(layer__gte =2)
             else:
                 querySet = FollowRecommendations.objects.filter(**arguments)
-
-
-
+            #User has reset the filters
             if (response == "reset"):
                 querySet = FollowRecommendations.objects.all()
-
             # User wants to follow another user
             elif (response.startswith("fo")):
                 root = getRoot(data['nodes'])
@@ -177,17 +174,15 @@ def follow(request):
                 followName = str(response[18:len(response)])
                 followCall(mainPersonName=rootUser, mainPersonID=rootUserID, followPersonName=followName,
                            followPersonID=followID)
-                x = pathlib.Path(__file__)
-                os.chdir(x.parent.parent)
-                data_file = open(path)
-                data = json.load(data_file)
-                data_file.close()
+
+                data = reloadJson()
                 #Update entry in database
                 entry = FollowRecommendations.objects.filter(bacnet_id=followID)
                 entry.update(layer = 1)
                 query_values = {'layer': layer,
-                               'influencer': influencer, 'gender': gender, 'age__gte': ageLower, 'age__lte': ageUpper,
-                               'name': name}
+                               'influencer': influencer, 'gender': gender,
+                               'age__gte': ageLower, 'age__lte': ageUpper,
+                               }
                 arguments = {}
                 for k, v in query_values.items():
                     if ((v and v != "all" and v != "ignore" and v != 1) or (k == 'influencer' and v == True)):
@@ -196,6 +191,9 @@ def follow(request):
                     querySet = FollowRecommendations.objects.filter(**arguments).filter(layer__gte=2)
                 else:
                     querySet = FollowRecommendations.objects.filter(**arguments)
+            #Filter with levenshtein if name or town is filled out.
+            querySet = filterWithLevenshtein(querySet, name, town)
+
 
             text = {
                 'data': json.dumps(data),
@@ -205,22 +203,19 @@ def follow(request):
             }
 
             return render(request, 'socialgraph/FollowBody.html', text)
-
+        #if we are in the unfollow mode
         if (mode == "1unfollow"):
-            query_values = {
-                           'influencer': influencer, 'gender': gender, 'age__gte': ageLower, 'age__lte': ageUpper,
-                           'name': name}
+            query_values = {'influencer': influencer, 'gender': gender,
+                            'age__gte': ageLower, 'age__lte': ageUpper,
+                            }
             arguments = {}
             for k, v in query_values.items():
                 if ((v and v != "all" and v != "ignore") or (k == 'influencer' and v == True)):
                     arguments[k] = v
             querySet = FollowRecommendations.objects.filter(**arguments).filter(layer = 1)
-
-
+            #User has reset the filters
             if (response == "reset"):
                 querySet = FollowRecommendations.objects.filter(layer =1)
-
-
             # User wants to follow another user
             if (response.startswith("uf")):
                 root = getRoot(data['nodes'])
@@ -230,22 +225,18 @@ def follow(request):
                 unfollowName = str(response[18:len(response)])
                 unfollowCall(mainPersonName=rootUser, mainPersonID=rootUserID, unfollowPersonName=unfollowName,
                              unfollowPersonID=unfollowID)
-                x = pathlib.Path(__file__)
-                os.chdir(x.parent.parent)
-                data_file = open(path)
-                data = json.load(data_file)
-                data_file.close()
+                data = reloadJson()
                 create_Recommendations(data)
-                query_values = {'layer': 1,
-                               'influencer': influencer, 'gender': gender, 'age__gte': ageLower, 'age__lte': ageUpper,
-                               'name': name}
+                query_values = {'layer': 1, 'influencer': influencer,
+                                'gender': gender, 'age__gte': ageLower,
+                                'age__lte': ageUpper}
                 arguments = {}
                 for k, v in query_values.items():
                     if ((v and v != "all" and v != "ignore") or (k == 'influencer' and v == True)):
                         arguments[k] = v
                 querySet = FollowRecommendations.objects.filter(**arguments).filter(layer = 1)
 
-
+            querySet = filterWithLevenshtein(querySet, name, town)
 
             text = {
                 'data': json.dumps(data),
@@ -253,17 +244,29 @@ def follow(request):
                 'links': data['links'],
                 'recommendations': querySet
             }
-
-
             return render(request, 'socialgraph/UnfollowBody.html', text)
-
-
-
     return render(request, 'socialgraph/Follow.html', context)
 
-def returnQuerySet(name = None, layer = None, gender = None, influencer = None, mode = None):
-    return
+def addLevenshtein(name, mode):
+    if (name == ""):
+        return
+    if mode == "name":
+        for entry in FollowRecommendations.objects.filter():
+            entry.levenshteinDistName = Levenshtein.distance(entry.name, name)
+            entry.save()
+    else:
+        for entry in FollowRecommendations.objects.filter():
+            entry.levenshteinDistTown = Levenshtein.distance(entry.town, name)
+            entry.save()
 
+def filterWithLevenshtein(querySet,name,town):
+    addLevenshtein(name, "name")
+    addLevenshtein(town, "town")
+    minDist = querySet.aggregate(Min('levenshteinDistName'))
+    querySet = querySet.filter(levenshteinDistName=minDist.get('levenshteinDistName__min'))
+    minDist = querySet.aggregate(Min('levenshteinDistTown'))
+    querySet = querySet.filter(levenshteinDistTown=minDist.get('levenshteinDistTown__min'))
+    return querySet
 
 
 def followBody(request):
