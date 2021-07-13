@@ -62,25 +62,9 @@ class FollowRecommendations(models.Model):
     country = models.CharField(max_length=64, blank=True, null=True, default=None)
     town = models.CharField(max_length=64, blank=True, null=True, default=None)
     language = models.CharField(max_length=256, blank=True, null=True,
-                                default=None)  # https://stackoverflow.com/questions/22340258/django-list-field-in-model
+                                default=None)
     profile_pic = models.ImageField(default='default.jpg', upload_to='profile_pics')
-
-
-
-
-class UnfollowRecommendations(models.Model):
-    layer = models.IntegerField(default=None)
-    bacnet_id = models.CharField(max_length=64, primary_key=True)
-    id = models.CharField(max_length=64)
-    name = models.CharField(max_length=64)
-    gender = models.CharField(max_length=6, blank=True, null=True, default=None)
-    birthday = models.DateField(blank=True, null=True, default=None)
-    age = models.IntegerField(default=None)
-    influencer = models.BooleanField(blank=True, null=True, default=None)
-    country = models.CharField(max_length=64, blank=True, null=True, default=None)
-    town = models.CharField(max_length=64, blank=True, null=True, default=None)
-    language = models.CharField(max_length=256, blank=True, null=True,
-                                default=None)  # https://stackoverflow.com/questions/22340258/django-list-field-in-model
-    profile_pic = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    levenshteinDistName = models.IntegerField(default=None)
+    levenshteinDistTown = models.IntegerField(default=None)
 
 

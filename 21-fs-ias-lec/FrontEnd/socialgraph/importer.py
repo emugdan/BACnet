@@ -5,10 +5,12 @@ import json
 from datetime import datetime
 import datetime as dt
 
+
 import pytz
 import tzlocal as tzlocal
 
-from socialgraph.models import Profile, FollowRecommendations, Status, UnfollowRecommendations
+
+from socialgraph.models import Profile, FollowRecommendations, Status
 
 
 def create_profiles(data):
@@ -64,13 +66,12 @@ def create_Recommendations(data):
 
     FollowRecommendations.objects.all().delete()
     for node in data['nodes']:
-        r = FollowRecommendations(layer=node.get('hopLayer'), bacnet_id=node.get('BACnetID'), id=node.get('id'),
-                                  name=node.get('name'),
+        r = FollowRecommendations(layer=node.get('hopLayer'), bacnet_id=node.get('BACnetID'), id = node.get('id'), name=node.get('name'),
                                   gender=node.get('gender'),
-                                  birthday=node.get('birthday'), influencer=node.get('influencer'),
-                                  age=calculate_age(node.get('birthday')), country=node.get('country'),
-                                  town=node.get('town'),
+                                  birthday=node.get('birthday'), influencer = node.get('influencer'), age = calculate_age(node.get('birthday')), country=node.get('country'), town=node.get('town'),
                                   language=node.get('language'),
+                                  levenshteinDistName = 100000,
+                                  levenshteinDistTown = 100000,
                                   profile_pic=node.get('profile_pic') if node.get(
                                       'profile_pic') is not None else 'default.jpg')
         r.save()

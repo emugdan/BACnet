@@ -277,7 +277,7 @@
                 type: "POST",
                 url: '{{ '' }}',
                 async: false,
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}', text: "reset", mode: getMode(), layer : getHopsSliderVal(), influencer : getInfluencerChecked()},
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', name: "", town: "",text: "reset", mode: getMode(), layer : getHopsSliderVal(), influencer : getInfluencerChecked()},
                 success: function (response){
                     $('#test').html('').replaceWith(response)
                 }
