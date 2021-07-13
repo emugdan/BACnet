@@ -87,9 +87,9 @@ def main(argv):  # generates dummy feeds, later not used anymore -> feeds should
                     pers.follow(follow_entry["Feed ID"], p.name)
                     break
 
-    # this can be used for testing the attributes (used by the FrontEnd group)
-    #for pers in list_of_persons:
-    #    createRandomAttributes(pers)
+    # code of FrontEnd: add random attributes to the random generated users, can be deleted if line 18 is deleted
+    for pers in list_of_persons:
+        createRandomAttributes(pers)
 
     # Json file for FrontEnd
     generate_json(list_of_persons, main_person)
