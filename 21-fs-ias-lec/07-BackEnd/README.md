@@ -15,7 +15,7 @@ First, there is a list of nodes, followed by a list of edges.
 For each node, the attributes of the user are saved. 
 The attributes are: gender, birthday, country, town, language, status etc.. We also compute an activity level and an influencer status.
 
---> MUEMER DAS SO GNAU BESCHRIEBE DA ODER NED?
+--> MUEMER DAS SO GNAU BESCHRIEBE DA ODER NED? Ehner ned oder?
 
 There are 5 levels of activity: 
 * < 10 activities: level 0
@@ -32,6 +32,11 @@ For each edge the start and end user-ID are saved.
 This module can be used for changes in the graph while the user is online. The module provides methods to 
 change the attributes and methods that handle following and unfollowing. 
 
+## run code
+Run "main.py".
+Aferwards a data order that includes all users is generated and the Json-file will be current after.
+  
+To look at the GUI of the graph read the readme of the FrontEnd group.
 
 --> D LINKS CHAMER USENEH ODER?
 ## Links:
