@@ -34,7 +34,7 @@ change the attributes and methods that handle following and unfollowing.
 
 ## run code
 Run "main.py".
-Aferwards a data order that includes all users is generated and the Json-file will be current after.
+Afterwards, a data order that includes an order for each user will be generated. Also, the Json-file will be current after.
   
 To look at the GUI of the graph read the readme of the FrontEnd group.
 
